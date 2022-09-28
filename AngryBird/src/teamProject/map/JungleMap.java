@@ -45,7 +45,7 @@ public class JungleMap extends Background {
 		jungelMap = new JLabel(new ImageIcon("images/bg1.png"));
 		holder = new JLabel(new ImageIcon("images/img.png"));
 		myAdapter = new MyMouseAdapter();
-		block2 = new TreeBlock(mContext);
+//		block2 = new TreeBlock(mContext);
 	}
 
 	private void setInitLayout() {

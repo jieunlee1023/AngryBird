@@ -9,6 +9,7 @@ public abstract class Block extends JLabel {
 
 	public Block(ImageIcon images) {
 		this.image = images;
+		setIcon(image);
 	}
 
 	public ImageIcon getImage() {

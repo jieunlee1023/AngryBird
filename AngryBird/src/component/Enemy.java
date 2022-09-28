@@ -3,43 +3,40 @@ package component;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import lombok.Getter;
-import lombok.Setter;
-import teamProject.frame.MainFrame;
-
-@Getter
-@Setter
 public class Enemy extends JLabel {
 
-	private MainFrame mContext;
 	private ImageIcon pig;
 	private ImageIcon savedPig;
 
-	// 위치상태
-	private int pigX;
-	private int pigY;
+	public ImageIcon getPig() {
+		return pig;
+	}
 
-	public Enemy(MainFrame mContext) {
-		this.mContext = mContext;
+	public void setPig(ImageIcon pig) {
+		this.pig = pig;
+	}
+
+	public ImageIcon getSavedPig() {
+		return savedPig;
+	}
+
+	public void setSavedPig(ImageIcon savedPig) {
+		this.savedPig = savedPig;
+	}
+
+	public Enemy(ImageIcon pig) {
+		this.pig = pig;
 		initData();
 		setInitLayout();
 	}
 
 	// 초기 데이터
 	private void initData() {
-		pig = (new ImageIcon("images/pig.png"));
-		savedPig = new ImageIcon("images/bumb1.png");
-
-		pigX = 760;
-		pigY = 380;
-
+		setVisible(true);
 	}
 
 	private void setInitLayout() {
 		setIcon(pig);
-		this.setLocation(pigX, pigY);
-		this.setSize(80, 80);
-
 	}
 
 //	public void saveEnemy() {
