@@ -6,7 +6,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import component.TreeBlock;
+import component.Block2;
+import component.Pointer;
+import component.player.Player;
 import lombok.Getter;
 import lombok.Setter;
 import teamProject.frame.MainFrame;
@@ -29,23 +31,51 @@ public class JungleMap extends Background {
 	private JLabel jungelMap;
 	private JLabel holder;
 
-	private TreeBlock block2;
+	private Block2 block2;
+	private Player[] player;
+	private Pointer[] pointer;
+	JLabel[] blackBang;
 
 	public JungleMap(MainFrame mContext) {
 		this.mContext = mContext;
 		initData();
 		setInitLayout();
 		addEventListener();
+
 	}
 
 	private void initData() {
 		setTitle("Jungel Map");
 		setSize(1000, 570);
-//		mContext.addEventListenr();
+		state = 0;
+
 		jungelMap = new JLabel(new ImageIcon("images/bg1.png"));
 		holder = new JLabel(new ImageIcon("images/img.png"));
 		myAdapter = new MyMouseAdapter();
-//		block2 = new TreeBlock(mContext);
+		block2 = new Block2(mContext);
+
+		// 플레이어 주소값 입력
+		player = new Player[3];
+		player[0] = new Player(new ImageIcon("images/redbird.png"), 140, 440, 0);
+		player[1] = new Player(new ImageIcon("images/blackbird.png"), 100, 440, 0);
+		player[2] = new Player(new ImageIcon("images/yellowbird.png"), 60, 440, 0);
+
+		// pointer 주소값입력
+		pointer = new Pointer[4];
+		for (int i = 0; i < player.length; i++) {
+			pointer[i] = new Pointer(new ImageIcon("images/pointer.png"));
+			pointer[i].setSize(100, 100);
+		}
+		
+//		blackBang = new JLabel[3];
+//		for (int i = 0; i < player.length; i++) {
+//			pointer[i] = new Pointer(new ImageIcon("images/bang.png"));
+//		}
+		
+		
+	
+
+
 	}
 
 	private void setInitLayout() {
@@ -53,21 +83,43 @@ public class JungleMap extends Background {
 		setLayout(null);
 		setLocationRelativeTo(null);
 
-		add(mContext.getPlayer().getPlayer()[0]);
-		add(mContext.getPlayer().getPlayer()[1]);
-		add(mContext.getPlayer().getPlayer()[2]);
+		
+		
+		// 플레이어 사이즈 로케이션
+		player[0].setSize(80, 60);
+		player[0].setLocation(player[0].getPlayerX(), player[0].getPlayerY());
+		player[1].setSize(80, 60);
+		player[1].setLocation(player[1].getPlayerX(), player[1].getPlayerY());
+		player[2].setSize(80, 60);
+		player[2].setLocation(player[2].getPlayerX(), player[2].getPlayerY());
+		add(player[0]);
+		add(player[1]);
+		add(player[2]);
+		
+//		blackBang[0].setSize(50, 50);
+//		blackBang[1].setSize(75, 70);
+//		blackBang[2].setSize(115, 100);
+//
+//		blackBang[0].setLocation(player[1].getX(), player[1].getY() - 30);
+//		blackBang[1].setLocation(player[1].getX()+30, player[1].getY() - 70);
+//		blackBang[2].setLocation(player[1].getX() - 40, player[1].getY()- 100);
+		
 
+		
+		// 거치대
 		holder.setSize(60, 150);
 		holder.setLocation(80, 340);
 		add(holder);
-
+		System.out.println(player[0]);
+		// 맵
 		jungelMap.setSize(1000, 570);
 		jungelMap.setLocation(0, 0);
 		add(jungelMap);
 
-		add(block2);
+		// add(block2);
 	}
 
+	// 맵에서 사용하는 마우스 리스너
 	public void addEventListener() {
 		addMouseListener(myAdapter);
 		addMouseMotionListener(myAdapter);
@@ -84,66 +136,88 @@ public class JungleMap extends Background {
 		@Override
 		public void mouseDragged(MouseEvent e) {
 
+		
+
 			double a = getPressX() - e.getX();
 			double b = getPressY() - e.getY();
 			int c = ((Number) Math.sqrt((a * a) + (b * b))).intValue();
-			double slope = (b / a);
+			double slope = (b / a); 
 
 			int x = ((Number) getPressX()).intValue();
 			int y = ((Number) getPressY()).intValue() - 50;
+			
+		
+			
+			
+			
 			new Thread(new Runnable() {
 
 				@Override
-				public void run() {
-
+				public synchronized void run() {
+				
+					
 					try {
+						
 						Thread.sleep(100);
 //						System.out.println("slope: " + slope);
 //						if (slope == -1) {
-////							System.out.println("-1");
-//							mContext.getPointer1().setLocation(x + c / 4, y - 5);
-//							mContext.getPointer2().setLocation(x + c / 2, y - 25);
-//							mContext.getPointer3().setLocation(x + (c / 2) + (c / 4), y - 45);
-//							mContext.getPointer4().setLocation(x + c, y - 65);
+//							System.out.println("-1");
+//							pointer[0].setLocation(x + c / 4, y - 5);
+//							pointer[1].setLocation(x + c / 2, y - 25);
+//							pointer[2].setLocation(x + (c / 2) + (c / 4), y - 45);
+//							pointer[3].setLocation(x + c, y - 65);
 //
 //						} else if (slope > -1 && slope <= 0.5) {
-////							System.out.println(" -1 초과 0.5 이");
-//							mContext.getPointer1().setLocation(x + c / 4, y - 5);
-//							mContext.getPointer2().setLocation(x + c / 2, y - 15);
-//							mContext.getPointer3().setLocation(x + c / 2 + c / 4, y - 25);
-//							mContext.getPointer4().setLocation(x + c, y - 35);
+//							System.out.println(" -1 초과 0.5 이");
+//							pointer[0].setLocation(x + c / 4, y - 5);
+//							pointer[1].setLocation(x + c / 2, y - 15);
+//							pointer[2].setLocation(x + c / 2 + c / 4, y - 25);
+//							pointer[3].setLocation(x + c, y - 35);
 //
 //						} else if (slope > 0.5 && slope <= 0) {
-////							System.out.println("05초과  0 이하  ");
-//							mContext.getPointer1().setLocation(x + c / 4, y - 0);
-//							mContext.getPointer2().setLocation(x + c / 2, y - 5);
-//							mContext.getPointer3().setLocation(x + c / c / 2 + c / 4, y - 10);
-//							mContext.getPointer4().setLocation(x + c, y - 15);
+//							System.out.println("05초과  0 이하  ");
+//							pointer[0].setLocation(x + c / 4, y - 0);
+//							pointer[1].setLocation(x + c / 2, y - 5);
+//							pointer[2].setLocation(x + c / c / 2 + c / 4, y - 10);
+//							pointer[3].setLocation(x + c, y - 15);
 //
 //						} else if (slope < -1 && slope >= 1.5) {
-////							System.out.println("-1초과  1.5 이하 ");
-//							mContext.getPointer1().setLocation(x + c / 4, y - 5);
-//							mContext.getPointer2().setLocation(x + c / 2, y - 40);
-//							mContext.getPointer3().setLocation(x + c / 2 + c / 4, y - 75);
-//							mContext.getPointer4().setLocation(x + c, y - 105);
+//							System.out.println("-1초과  1.5 이하 ");
+//							pointer[0].setLocation(x + c / 4, y - 5);
+//							pointer[1].setLocation(x + c / 2, y - 40);
+//							pointer[2].setLocation(x + c / 2 + c / 4, y - 75);
+//							pointer[3].setLocation(x + c, y - 105);
 //
 //						} else if (slope < 1.5) {
-////							System.out.println("1.5 이하 ");
-//							mContext.getPointer1().setLocation(x + c / 4, y - 5);
-//							mContext.getPointer2().setLocation(x + c / 2, y - 50);
-//							mContext.getPointer3().setLocation(x + c / 2 + c / 4, y - 85);
-//							mContext.getPointer4().setLocation(x + c, y - 120);
+//							System.out.println("1.5 이하 ");
+//							pointer[0].setLocation(x + c / 4, y - 5);
+//							pointer[1].setLocation(x + c / 2, y - 50);
+//							pointer[2].setLocation(x + c / 2 + c / 4, y - 85);
+//							pointer[3].setLocation(x + c, y - 120);
 //
 //						}
 //
-//						add(mContext.getPointer1());
-//						add(mContext.getPointer2());
-//						add(mContext.getPointer3());
-//						add(mContext.getPointer4());
+//						add(pointer[0]);
+//						add(pointer[1]);
+//						add(pointer[2]);
+//						add(pointer[3]);
 
-						// 오류 있음
-						mContext.getPlayer().getPlayer()[mContext.getPlayer().getState()].setLocation(e.getX() - 80 / 2,
-								e.getY() - 65);
+						// 드래그 모션
+						if (state == 0) {
+							player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+						} else if (state == 1) {
+							player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+						} else if (state == 2) {
+							player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+						} else {
+
+//							if(pig[1].getState == 0 && pig[1].getState == 0){
+//							gameover
+//						}else {
+//							nextstage
+//						}
+
+						}
 
 					} catch (InterruptedException e1) {
 						e1.printStackTrace();
@@ -158,19 +232,8 @@ public class JungleMap extends Background {
 			releaseX = ((Number) e.getX()).doubleValue();
 			releaseY = ((Number) e.getY()).doubleValue();
 
-			if (mContext.getPlayer().getState() == 0) {
-				playerMove();
-
-			} else if (mContext.getPlayer().getState() == 1) {
-
-				playerMove();
-			} else if (mContext.getPlayer().getState() == 2) {
-
-				playerMove();
-			}
-
+			playerMove();
 		}
-
 	}
 
 	public void playerMove() {
@@ -183,8 +246,8 @@ public class JungleMap extends Background {
 				double b = getPressY() - getReleaseY();
 				// 빗변
 				int c = ((Number) Math.sqrt((a * a) + (b * b))).intValue();
-				int playerX = mContext.getPlayer().getPlayer()[state].getX();
-				int playerY = mContext.getPlayer().getPlayer()[state].getY();
+				int playerX = player[state].getX();
+				int playerY = player[state].getY();
 
 				System.out.println();
 				// 기울기
@@ -196,11 +259,7 @@ public class JungleMap extends Background {
 					for (int i = 0; i < c; i++) {
 
 						playerX += 2;
-
-						mContext.getPlayer().getPlayer()[state].setLocation(playerX, playerY);
-
-						System.out.println("새X:" + playerX);
-						System.out.println("새Y:" + playerY);
+						player[state].setLocation(playerX, playerY);
 
 						try {
 							Thread.sleep(1);
@@ -209,11 +268,9 @@ public class JungleMap extends Background {
 						}
 					}
 					for (int j = 0; j < c; j++) {
-						playerX += 2;
 
-						mContext.getPlayer().getPlayer()[state].setLocation(playerX, playerY);
-						System.out.println("새X:" + playerX);
-						System.out.println("새Y:" + playerY);
+						playerX += 2;
+						player[state].setLocation(playerX, playerY);
 
 						try {
 							Thread.sleep(1);
@@ -225,11 +282,10 @@ public class JungleMap extends Background {
 				} else if (slope > -0.5 && slope <= 0) {
 
 					for (int i = 0; i < c; i++) {
+
 						playerX += 3;
 						playerY -= 1;
-						mContext.getPlayer().getPlayer()[state].setLocation(playerX, playerY);
-						System.out.println("새X:" + playerX);
-						System.out.println("새Y:" + playerY);
+						player[state].setLocation(playerX, playerY);
 
 						try {
 							Thread.sleep(1);
@@ -238,11 +294,10 @@ public class JungleMap extends Background {
 						}
 					}
 					for (int j = 0; j < c; j++) {
+
 						playerX += 3;
 						playerY += 1;
-						mContext.getPlayer().getPlayer()[state].setLocation(playerX, playerY);
-						System.out.println("새X:" + playerX);
-						System.out.println("새Y:" + playerY);
+						player[state].setLocation(playerX, playerY);
 
 						try {
 							Thread.sleep(1);
@@ -253,11 +308,10 @@ public class JungleMap extends Background {
 					// 30도
 				} else if (slope > -1 && slope <= -0.5) {
 					for (int i = 0; i < c; i++) {
+
 						playerX += 2;
 						playerY -= 1;
-						mContext.getPlayer().getPlayer()[state].setLocation(playerX, playerY);
-						System.out.println("새X:" + playerX);
-						System.out.println("새Y:" + playerY);
+						player[state].setLocation(playerX, playerY);
 
 						try {
 							Thread.sleep(1);
@@ -266,11 +320,10 @@ public class JungleMap extends Background {
 						}
 					}
 					for (int j = 0; j < c; j++) {
+
 						playerX += 2;
 						playerY += 1;
-						mContext.getPlayer().getPlayer()[state].setLocation(playerX, playerY);
-						System.out.println("새X:" + playerX);
-						System.out.println("새Y:" + playerY);
+						player[state].setLocation(playerX, playerY);
 
 						try {
 							Thread.sleep(1);
@@ -282,11 +335,10 @@ public class JungleMap extends Background {
 					// 60 도
 				} else if (slope > -1.5 && slope <= -1) {
 					for (int i = 0; i < c; i++) {
+
 						playerX += 1;
 						playerY -= 2;
-						mContext.getPlayer().getPlayer()[state].setLocation(playerX, playerY);
-						System.out.println("새X:" + playerX);
-						System.out.println("새Y:" + playerY);
+						player[state].setLocation(playerX, playerY);
 
 						try {
 							Thread.sleep(1);
@@ -295,11 +347,10 @@ public class JungleMap extends Background {
 						}
 					}
 					for (int j = 0; j < c; j++) {
+
 						playerX += 1;
 						playerY += 2;
-						mContext.getPlayer().getPlayer()[state].setLocation(playerX, playerY);
-						System.out.println("새X:" + playerX);
-						System.out.println("새Y:" + playerY);
+						player[state].setLocation(playerX, playerY);
 
 						try {
 							Thread.sleep(1);
@@ -311,11 +362,10 @@ public class JungleMap extends Background {
 					// 매우 가파름 80도 언저리
 				} else if (slope < -1.5) {
 					for (int i = 0; i < c; i++) {
+
 						playerX += 1;
 						playerY -= 3;
-						mContext.getPlayer().getPlayer()[state].setLocation(playerX, playerY);
-						System.out.println("새X:" + playerX);
-						System.out.println("새Y:" + playerY);
+						player[state].setLocation(playerX, playerY);
 
 						try {
 							Thread.sleep(1);
@@ -326,9 +376,7 @@ public class JungleMap extends Background {
 					for (int j = 0; j < c; j++) {
 						playerX += 1;
 						playerY += 3;
-						mContext.getPlayer().getPlayer()[state].setLocation(playerX, playerY);
-						System.out.println("새X:" + playerX);
-						System.out.println("새Y:" + playerY);
+						player[state].setLocation(playerX, playerY);
 
 						try {
 							Thread.sleep(1);
@@ -342,9 +390,7 @@ public class JungleMap extends Background {
 					for (int i = 0; i < c; i++) {
 
 						playerY -= 2;
-						mContext.getPlayer().getPlayer()[state].setLocation(playerX, playerY);
-						System.out.println("새X:" + playerX);
-						System.out.println("새Y:" + playerY);
+						player[state].setLocation(playerX, playerY);
 
 						try {
 							Thread.sleep(1);
@@ -355,9 +401,7 @@ public class JungleMap extends Background {
 					for (int j = 0; j < c; j++) {
 
 						playerY += 2;
-						mContext.getPlayer().getPlayer()[state].setLocation(playerX, playerY);
-						System.out.println("새X:" + playerX);
-						System.out.println("새Y:" + playerY);
+						player[state].setLocation(playerX, playerY);
 
 						try {
 							Thread.sleep(1);
@@ -366,20 +410,52 @@ public class JungleMap extends Background {
 						}
 					}
 				}
+				//skill();
 				if (state < 2) {
 					state += 1;
 				}
 
-//				player[i]
-
-				mContext.getBlock1().squareBlockArrayCrash();
-				System.out.println("dead");
-				state = 0;
+//				mContext.getBlock1().squareBlockArrayCrash();
 
 			}
 
 		}).start();
 
 	}
+	
+//	public void skill() {
+//		if (state == 0) {
+//
+//		} else if (state == 1) {
+//			try {
+//				Thread.sleep(800);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			add(blackBang[0]);
+//			try {
+//				Thread.sleep(800);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			add(blackBang[1]);
+//			try {
+//				Thread.sleep(800);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			add(blackBang[2]);
+//			try {
+//				Thread.sleep(800);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			
+//
+//		} else if (state == 3) {
+//
+//		}
+//	}
+	
 
 }
