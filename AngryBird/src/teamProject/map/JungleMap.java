@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import component.Block2;
+import component.TreeBlock;
 import lombok.Getter;
 import lombok.Setter;
 import teamProject.frame.MainFrame;
@@ -29,7 +29,7 @@ public class JungleMap extends Background {
 	private JLabel jungelMap;
 	private JLabel holder;
 
-	private Block2 block2;
+	private TreeBlock block2;
 
 	public JungleMap(MainFrame mContext) {
 		this.mContext = mContext;
@@ -45,7 +45,7 @@ public class JungleMap extends Background {
 		jungelMap = new JLabel(new ImageIcon("images/bg1.png"));
 		holder = new JLabel(new ImageIcon("images/img.png"));
 		myAdapter = new MyMouseAdapter();
-		block2 = new Block2(mContext);
+		block2 = new TreeBlock(mContext);
 	}
 
 	private void setInitLayout() {

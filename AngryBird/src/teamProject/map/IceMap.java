@@ -1,10 +1,9 @@
 package teamProject.map;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import component.IceBlock;
 import teamProject.frame.MainFrame;
 
 public class IceMap extends Background {
@@ -13,6 +12,15 @@ public class IceMap extends Background {
 
 	private JLabel iceMap;
 	private JLabel holder;
+
+	IceBlock iceBlock;
+
+
+
+	public IceMap() {
+		initData();
+		setInitLayout();
+	}
 
 	public IceMap(MainFrame mContext) {
 		this.mContext = mContext;
@@ -24,8 +32,10 @@ public class IceMap extends Background {
 		setTitle("Ice Map");
 		setSize(1000, 570);
 		iceMap = new JLabel(new ImageIcon("images/bg2.png"));
-
 		holder = new JLabel(new ImageIcon("images/img.png"));
+
+		iceBlock = new IceBlock(new ImageIcon());
+
 	}
 
 	private void setInitLayout() {
@@ -37,10 +47,13 @@ public class IceMap extends Background {
 		holder.setLocation(80, 340);
 		add(holder);
 
-		iceMap.setSize(1000, 570);
-		iceMap.setLocation(0, 0);
-		add(iceMap);
+//		iceMap.setSize(1000, 570);
+//		iceMap.setLocation(0, 0);
+//		add(iceMap);
 
 	}
 
+	public static void main(String[] args) {
+		new IceMap();
+	}
 }

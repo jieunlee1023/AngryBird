@@ -3,8 +3,8 @@ package teamProject.frame;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import component.Block1;
-import component.Block2;
+import component.IceBlock;
+import component.TreeBlock;
 import component.Pointer;
 import component.player.Player;
 import lombok.Getter;
@@ -22,9 +22,9 @@ public class MainFrame extends JFrame {
 	private Player player;
 
 	// 이외의 컴포넌트
-	private Block1 block1;
-	private Block2 block2;
-	private Block2 block3;
+	private IceBlock block1;
+	private TreeBlock block2;
+	private TreeBlock block3;
 
 //	private JLabel pointer1;
 //	private JLabel pointer2;
