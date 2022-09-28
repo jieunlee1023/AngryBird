@@ -21,18 +21,6 @@ public class MainFrame extends JFrame {
 	// 컴포넌트 플레이
 	private Player player;
 
-	// 이외의 컴포넌트
-	private IceBlock block1;
-	private TreeBlock block2;
-	private TreeBlock block3;
-
-//	private JLabel pointer1;
-//	private JLabel pointer2;
-//	private JLabel pointer3;
-//	private JLabel pointer4;
-//	private Pointer pointer;
-//	private Pointer pointer;
-
 	// 맵
 	private StartPage startPage;
 
@@ -48,7 +36,7 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		startPage = new StartPage(mContext);
-		player = new Player(mContext);
+	
 
 //		pointer = new Pointer(mContext);
 //		myAdapter = new MyMouseAdapter();

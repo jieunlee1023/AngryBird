@@ -79,15 +79,15 @@ public class MapSelectPage extends JFrame implements ActionListener {
 
 		JButton targetButton = (JButton) e.getSource();
 		if (targetButton.equals(button1)) {
-			new JungleMap(mContext);
+			new JungleMapFrame("images/bg1.png");
 			setVisible(false);
 
 		} else if (targetButton.equals(button2)) {
-			new IceMap(mContext);
+			new IceMapFrame();
 			setVisible(false);
 
 		} else if (targetButton.equals(button3)) {
-			new HalloweenMap(mContext);
+			new HolloweenMapFrame("images/bg3.png");
 			setVisible(false);
 
 		}
