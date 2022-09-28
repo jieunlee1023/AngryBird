@@ -8,23 +8,7 @@ import teamProject.frame.MainFrame;
 
 public class TempMap extends Background {
 //	
-//	String[] images = { "images/woodBlock_downRec.png", "images/woodBlock_upRec.png",
-//			"images/woodBlock_thinUpRec.png", "images/woodBlock_thinDownRec.png",
-//	"images/woodBlock_square.png" };
-//
-//   private TreeBlock[] treeSquare = new TreeBlock[40];
-//   private TreeBlock[] treeDownRec = new TreeBlock[14];
-//   private TreeBlock[] treeUpRec = new TreeBlock[5];
-//   private TreeBlock[] treeThinDownRec = new TreeBlock[5];
-//   private TreeBlock[] treeThinUpRec = new TreeBlock[5];
-//	
-//   MainFrame mContext;
-//
-//   private JLabel iceMap;
-//   private JLabel holder;
-//
-//   TreeBlock treeBlock; 
-//
+
 //   public TempMap() {
 //      initData();
 //      setInitLayout();
@@ -37,10 +21,6 @@ public class TempMap extends Background {
 //   }
 //
 //   private void initData() {
-//      setTitle("JungleMap");
-//      setSize(1000, 570);
-//      iceMap = new JLabel(new ImageIcon("images/bg2.png"));
-//      holder = new JLabel(new ImageIcon("images/img.png"));
 //
 //      // 정사각형
 //      for (int i = 0; i < treeSquare.length; i++) {
@@ -139,7 +119,4 @@ public class TempMap extends Background {
 //   }
 //
 //
-//   public static void main(String[] args) {
-//      new TempMap();
-//   }
 }
