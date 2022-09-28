@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import component.Enemy;
 import component.Pointer;
 import component.TreeBlock;
 import component.player.Player;
@@ -27,6 +28,10 @@ public class JungleMapFrame extends Background {
 	private TreeBlock[] treeThinUpRec = new TreeBlock[5];
 
 	TreeBlock treeBlock;
+	
+	private ImageIcon pig;
+	private ImageIcon treeRoop;
+	Enemy enemy;
 
 	public JungleMapFrame(String fileName) {
 		super(fileName);
@@ -36,6 +41,18 @@ public class JungleMapFrame extends Background {
 
 	private void initData() {
 		setTitle("jungle Maps");
+		//pig
+		enemy = new Enemy(new ImageIcon("images/pig.png"));
+
+		backgroundImageLabel.add(enemy);
+		enemy.setSize(100, 100);
+		enemy.setLocation(750, 235);
+		//roop
+		TreeBlock treeRoop = new TreeBlock(new ImageIcon("images/wood_roop.png"));
+		backgroundImageLabel.add(treeRoop);
+		treeRoop.setSize(300, 180);
+		treeRoop.setLocation(625, 65);
+		
 		// 정사각형
 		for (int i = 0; i < treeSquare.length; i++) {
 			treeSquare[i] = new TreeBlock(new ImageIcon(images[4]));
@@ -60,19 +77,23 @@ public class JungleMapFrame extends Background {
 		for (int i = 0; i < treeThinUpRec.length; i++) {
 			treeThinUpRec[i] = new TreeBlock(new ImageIcon(images[2]));
 		}
+		
+//------------------------------------------------------------------------------------------------
+		
+		
 
 //      정사각형-----------------------------------------------------------
-		for (int i = 0; i < 20; i++) { // 맨앞 정사각형
-			treeSquare[i].setSize(50, 50);
-			treeSquare[i].setLocation(500, 450 - (i * 20));
-			backgroundImageLabel.add(treeSquare[i]);
-		}
-
-		for (int i = 20; i < 40; i++) { // 맨앞 정사각형
-			treeSquare[i].setSize(50, 50);
-			treeSquare[i].setLocation(525, 850 - (i * 20));
-			backgroundImageLabel.add(treeSquare[i]);
-		}
+//		for (int i = 0; i < 20; i++) { // 맨앞 정사각형
+//			treeSquare[i].setSize(50, 50);
+//			treeSquare[i].setLocation(500, 450 - (i * 20));
+//			backgroundImageLabel.add(treeSquare[i]);
+//		}
+//
+//		for (int i = 20; i < 40; i++) { // 맨앞 정사각형
+//			treeSquare[i].setSize(50, 50);
+//			treeSquare[i].setLocation(525, 850 - (i * 20));
+//			backgroundImageLabel.add(treeSquare[i]);
+//		}
 
 		// 가로 사각형--------------------------------------------------------
 		for (int i = 0; i < 7; i++) { // 1. 바닥
