@@ -11,7 +11,7 @@ public class IceMapFrame extends Background {
 
 	String[] images = { "images/ice_block_square.png", "images/ice_block_width_rectangle.png",
 			"images/ice_block_height_rectangle.png", "images/ice_block_width_long.png",
-			"images/ice_block_height_long.png" };
+			"images/ice_block_height_long.png", "images/ice_roop.png" };
 
 	protected IceBlock[] squareBlocks = new IceBlock[15];
 	protected IceBlock[] heightLongBottom = new IceBlock[3];
@@ -21,7 +21,7 @@ public class IceMapFrame extends Background {
 	protected IceBlock[] widthRectangleCenter = new IceBlock[3];
 	protected IceBlock[] heightLongTop = new IceBlock[2];
 	protected IceBlock[] widthLongTop = new IceBlock[1];
-	protected JLabel iceRoop;
+	protected IceBlock[] iceRoop = new IceBlock[1];
 
 	protected Enemy enemyBottom;
 	protected Enemy enemyTop;
@@ -53,6 +53,9 @@ public class IceMapFrame extends Background {
 				crash(widthRectangleCenter);
 				crash(heightLongTop);
 				crash(widthLongTop);
+				crash(iceRoop);
+				enemyCrash(enemyTop);
+				enemyCrash(enemyBottom);
 			} // end of while
 			flag = false;
 		}).start();
@@ -87,12 +90,12 @@ public class IceMapFrame extends Background {
 			heightLongTop[i] = new IceBlock(new ImageIcon(images[4]));
 		}
 		widthLongTop[0] = new IceBlock(new ImageIcon(images[3]));
+		iceRoop[0] = new IceBlock(new ImageIcon(images[5]));
 
 		enemyBottom = new Enemy(new ImageIcon("images/pig.png"));
 		enemyTop = new Enemy(new ImageIcon("images/pig.png"));
 
 		iceBreakBlock = new ImageIcon("images/icebreak.png");
-		iceRoop = new JLabel(new ImageIcon("images/ice_roop.png"));
 
 		for (int i = 0; i < squareBlocks.length; i++) {
 			squareBlocks[i].setSize(50, 50);
@@ -134,9 +137,9 @@ public class IceMapFrame extends Background {
 		widthLongTop[0].setLocation(780, 135);
 		backgroundImageLabel.add(widthLongTop[0]);
 
-		iceRoop.setSize(135, 80);
-		iceRoop.setLocation(760, 60);
-		backgroundImageLabel.add(iceRoop);
+		iceRoop[0].setSize(135, 80);
+		iceRoop[0].setLocation(760, 60);
+		backgroundImageLabel.add(iceRoop[0]);
 
 		enemyBottom.setSize(60, 60);
 		enemyBottom.setLocation(850, 430);
@@ -159,6 +162,25 @@ public class IceMapFrame extends Background {
 				}
 			} // end of j-for
 		} // end of i-for
+	}
+
+	public void enemyCrash(Enemy enemy) {
+
+		for (int i = 0; i < player.length; i++) {
+			if (Math.abs(enemy.getX() - player[i].getX()) < 50 && Math.abs(enemy.getY() - player[i].getY()) < 50) {
+				JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
+				enemyOut.setSize(60, 60);
+				enemyOut.setLocation(enemy.getX(), enemy.getY());
+				backgroundImageLabel.add(enemyOut);
+				enemy.setVisible(false);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				enemyOut.setVisible(false);
+			}
+		}
 
 	}
 
