@@ -116,7 +116,7 @@ public class Player extends JLabel {
 					fly(0, c, true, 0, 2);
 					fly(0, c, false, 0, 2);
 				}
-
+				
 				// 상태값 변경
 				mContext.setBirdState(0);
 				if (mContext.getBirdType() == 0) {
@@ -126,6 +126,7 @@ public class Player extends JLabel {
 				} else if (mContext.getBirdType() == 2) {
 					mContext.setBirdType(2);
 				}
+				
 			}
 		}).start();
 
@@ -145,8 +146,7 @@ public class Player extends JLabel {
 	public void blackSkill() {
 		int playerX = mContext.player[1].getX();
 		int playerY = mContext.player[1].getY();
-		if (mContext.getBirdType() == 1 && isMove == false) {
-			System.out.println("블랙 스킬 ");
+		if (mContext.getBirdType() == 1) {
 			try {
 				Thread.sleep(5);
 			} catch (InterruptedException e) {
@@ -156,8 +156,8 @@ public class Player extends JLabel {
 				blackSkill[0].setLocation(playerX, playerY - 30);
 				blackSkill[1].setLocation(playerX + 30, playerY - 70);
 				blackSkill[2].setLocation(playerX - 40, playerY - 100);
-				mContext.backgroundImageLabel.add(blackSkill[0]);
-				mContext.backgroundImageLabel.add(blackSkill[1]);
+				mContext.backgroundImageLabel.add(blackSkill[0]);			
+				mContext.backgroundImageLabel.add(blackSkill[1]);			
 				mContext.backgroundImageLabel.add(blackSkill[2]);
 
 			
@@ -199,11 +199,12 @@ public class Player extends JLabel {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				blackSkill();
+				
 //				if (isMove == false) {
 //
 //					break;
 //				}
+				blackSkill();
 			}
 
 		}
