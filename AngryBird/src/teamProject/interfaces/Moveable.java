@@ -2,5 +2,5 @@ package teamProject.interfaces;
 
 public interface Moveable {
 
-	public abstract void move();
+	public abstract void playerMove();
 }

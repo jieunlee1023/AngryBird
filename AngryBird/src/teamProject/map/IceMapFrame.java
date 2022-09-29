@@ -27,7 +27,20 @@ public class IceMapFrame extends Background {
 
 	private ImageIcon iceBreakBlock;
 
-	boolean state;
+	boolean crashState;
+
+
+	public boolean isState() {
+		return crashState;
+	}
+
+
+
+	public void setState(boolean state) {
+		this.crashState = state;
+	}
+
+
 
 	public IceMapFrame(String fileName) {
 		super(fileName);
@@ -36,10 +49,12 @@ public class IceMapFrame extends Background {
 
 	}
 
+	
+	
 	protected void initData() {
 		setTitle("Ice Map");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		state = false;
+		crashState = false;
 
 		for (int i = 0; i < squareBlocks.length; i++) {
 			squareBlocks[i] = new IceBlock(new ImageIcon(images[0]));
@@ -124,24 +139,31 @@ public class IceMapFrame extends Background {
 		backgroundImageLabel.add(enemyTop);
 
 	}
-
+	
+	//Todo test code 지울예정 !!!!!
+	boolean flag = true;
 	public void squareBlockArrayCrash() {
+		
 		new Thread(() -> {
-			while (true) {
+			while (flag) {
 				for (int i = 0; i < squareBlocks.length; i++) {
 					for (int j = 0; j < player.length; j++) {
 						if (Math.abs(squareBlocks[i].getX() - player[j].getX()) < 50
 								&& Math.abs(squareBlocks[i].getY() - player[j].getY()) < 50) {
 							squareBlocks[i].setIcon(iceBreakBlock);
 							System.out.println("부딪힘");
-
-						}
+							crashState = true;
+							player[birdType].isMove = false;
+							flag = false;
+						}		
 					} // end of j-for
 				} // end of i-for
 
-			} // end of while
+			} 
+			// end of while
 		}).start();
 
-	}// end of square~
+	}
+// end of square~
 
 }

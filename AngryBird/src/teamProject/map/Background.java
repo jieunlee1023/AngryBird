@@ -14,7 +14,7 @@ public abstract class Background extends JFrame {
 
 	String fileName;
 	Background mContext = this;
-	protected JLabel backgroundImageLabel;
+	public JLabel backgroundImageLabel;
 	protected JLabel holderLabel;
 
 	private MyMouseAdapter myAdapter;
@@ -24,19 +24,29 @@ public abstract class Background extends JFrame {
 	private double releaseX;
 	private double releaseY;
 
-	private int birdType;
+	protected int birdType;
+	protected int birdState;
+
+	boolean crashState;
 
 	public Player[] player;
 	public Pointer[] pointer;
+	
 
-	
-	
 	public int getBirdType() {
 		return birdType;
 	}
 
 	public void setBirdType(int birdType) {
 		this.birdType = birdType;
+	}
+
+	public int getBirdState() {
+		return birdState;
+	}
+
+	public void setBirdState(int birdState) {
+		this.birdState = birdState;
 	}
 
 	public double getPressX() {
@@ -80,12 +90,15 @@ public abstract class Background extends JFrame {
 		initDate();
 		setInitLayout();
 		addEventListener();
-		
+
 	}
 
 	protected void initDate() {
 		setSize(1000, 570);
-		birdType = 0;
+		birdType = 0; // 0 레드 1블랙 2 옐로
+		birdState = 0; // 1살아있음 0죽음
+
+		
 		// 플레이어 주소값 입력
 		player = new Player[3];
 		player[0] = new Player(new ImageIcon("images/redbird.png"), 140, 440, this);
@@ -154,7 +167,7 @@ public abstract class Background extends JFrame {
 			} else if (birdType == 2) {
 				player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
 			}
-			
+
 		}
 
 		@Override
@@ -253,6 +266,8 @@ public abstract class Background extends JFrame {
 		}
 	}
 
-	
+
+
+
 
 }
