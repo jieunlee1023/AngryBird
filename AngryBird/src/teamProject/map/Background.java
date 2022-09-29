@@ -81,6 +81,7 @@ public abstract class Background extends JFrame {
 		initDate();
 		setInitLayout();
 		addEventListener();
+		
 	}
 
 	protected void initDate() {
