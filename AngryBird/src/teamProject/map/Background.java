@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import component.Enemy;
 import component.Pointer;
 import component.player.Player;
 
@@ -411,13 +412,12 @@ public abstract class Background extends JFrame {
 				if (state < 2) {
 					state += 1;
 				}
-
 //				mContext.getBlock1().squareBlockArrayCrash();
-
+				
 			}
 
 		}).start();
-
+		
 	}
 
 }
