@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import teamProject.map.Background;
-import teamProject.map.IceMapFrame;
+import teamProject.map.JungleMapFrame;
 
 public class Player extends JLabel {
 
@@ -16,7 +16,8 @@ public class Player extends JLabel {
 	private Background mContext;
 
 	// 움직임 상태
-	private boolean move;
+
+	public boolean isMove = true;
 
 	public int getPlayerX() {
 		return playerX;
@@ -36,8 +37,8 @@ public class Player extends JLabel {
 
 	// 상태 : 0 red / 1 black 2 yellow
 
-//	private JLabel[] player = new JLabel[3];
-//	private JLabel[] blackBang = new JLabel[3];
+	private JLabel[] yellowSkill = new JLabel[2];
+	private JLabel[] blackSkill = new JLabel[3];
 
 	public Player(ImageIcon imageicon, int playerX, int playerY, Background mContext) {
 		this.mContext = mContext;
@@ -49,11 +50,25 @@ public class Player extends JLabel {
 	}
 
 	private void initDate() {
-		move = false;
+
 		setIcon(imageicon);
+
+		blackSkill[0] = new JLabel(new ImageIcon("images/bang1.png"));
+		blackSkill[1] = new JLabel(new ImageIcon("images/bang2.png"));
+		blackSkill[2] = new JLabel(new ImageIcon("images/bang3.png"));
+		yellowSkill[0] = new JLabel(new ImageIcon("images/yellowbird.png"));
+		yellowSkill[1] = new JLabel(new ImageIcon("images/yellowbird.png"));
+
+		blackSkill[0].setSize(50, 50);
+		blackSkill[1].setSize(75, 70);
+		blackSkill[2].setSize(115, 100);
+		yellowSkill[0].setSize(60, 60);
+		yellowSkill[1].setSize(60, 60);
+
 	}
 
 	public void playerMove() {
+
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -63,8 +78,6 @@ public class Player extends JLabel {
 				double b = mContext.getPressY() - mContext.getReleaseY();
 				// 빗변
 				int c = ((Number) Math.sqrt((a * a) + (b * b))).intValue();
-				int playerX = mContext.player[mContext.getBirdType()].getX();
-				int playerY = mContext.player[mContext.getBirdType()].getY();
 
 				System.out.println();
 				// 기울기
@@ -73,179 +86,127 @@ public class Player extends JLabel {
 				// 무브 세분화
 				// 1 수평 내려오는거 없음
 				if (slope > 0 && slope < 1) {
-					for (int i = 0; i < c; i++) {
 
-						playerX += 2;
-						mContext.player[mContext.getBirdType()].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					for (int j = 0; j < c; j++) {
-
-						playerX += 2;
-						mContext.player[mContext.getBirdType()].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
+					fly(0, c, true, 2, 0);
+					fly(0, c, true, 2, 0);
 					// 15도 완만
 				} else if (slope > -0.5 && slope <= 0) {
 
-					for (int i = 0; i < c; i++) {
-
-						playerX += 3;
-						playerY -= 1;
-						mContext.player[mContext.getBirdType()].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					for (int j = 0; j < c; j++) {
-
-						playerX += 3;
-						playerY += 1;
-						mContext.player[mContext.getBirdType()].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
+					fly(0, c, true, 3, 1);
+					fly(0, c, false, 3, 1);
 					// 30도
 				} else if (slope > -1 && slope <= -0.5) {
-					for (int i = 0; i < c; i++) {
 
-						playerX += 2;
-						playerY -= 1;
-						mContext.player[mContext.getBirdType()].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					for (int j = 0; j < c; j++) {
-
-						playerX += 2;
-						playerY += 1;
-						mContext.player[mContext.getBirdType()].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
+					fly(0, c, true, 2, 1);
+					fly(0, c, false, 2, 1);
 
 					// 60 도
 				} else if (slope > -1.5 && slope <= -1) {
-					for (int i = 0; i < c; i++) {
-
-						playerX += 1;
-						playerY -= 2;
-						mContext.player[mContext.getBirdType()].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					for (int j = 0; j < c; j++) {
-
-						playerX += 1;
-						playerY += 2;
-						mContext.player[mContext.getBirdType()].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
+					fly(0, c, true, 1, 2);
+					fly(0, c, false, 1, 2);
 
 					// 매우 가파름 80도 언저리
 				} else if (slope < -1.5) {
-					for (int i = 0; i < c; i++) {
+					fly(0, c, true, 1, 3);
+					fly(0, c, false, 1, 3);
 
-						playerX += 1;
-						playerY -= 3;
-						mContext.player[mContext.getBirdType()].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					for (int j = 0; j < c; j++) {
-						playerX += 1;
-						playerY += 3;
-						mContext.player[mContext.getBirdType()].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
 					// 수직
 				} else if (slope > 1) {
 
-					for (int i = 0; i < c; i++) {
-
-						playerY -= 2;
-						mContext.player[mContext.getBirdType()].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					for (int j = 0; j < c; j++) {
-
-						playerY += 2;
-						mContext.player[mContext.getBirdType()].setLocation(playerX, playerY);
-						
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
+					fly(0, c, true, 0, 2);
+					fly(0, c, false, 0, 2);
 				}
+
 				// 상태값 변경
+				mContext.setBirdState(0);
 				if (mContext.getBirdType() == 0) {
 					mContext.setBirdType(1);
 				} else if (mContext.getBirdType() == 1) {
 					mContext.setBirdType(2);
 				} else if (mContext.getBirdType() == 2) {
-
+					mContext.setBirdType(2);
 				}
-
-//				mContext.getBlock1().squareBlockArrayCrash();
-
 			}
-
 		}).start();
 
 	}
 
-	public void move() {
+	public void yellowSkill() {
 
+		if (mContext.getBirdType() == 2 && mContext.player[2].getX() >= 400) {
+
+			mContext.backgroundImageLabel.add(yellowSkill[0]);
+			mContext.backgroundImageLabel.add(yellowSkill[1]);
+
+		}
+
+	}
+
+	public void blackSkill() {
+		int playerX = mContext.player[1].getX();
+		int playerY = mContext.player[1].getY();
+		if (mContext.getBirdType() == 1 && isMove == false) {
+			System.out.println("블랙 스킬 ");
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+			e.printStackTrace();
+			}
+				blackSkill[0].setLocation(playerX, playerY - 30);
+				blackSkill[1].setLocation(playerX + 30, playerY - 70);
+				blackSkill[2].setLocation(playerX - 40, playerY - 100);
+				mContext.backgroundImageLabel.add(blackSkill[0]);
+				mContext.backgroundImageLabel.add(blackSkill[1]);
+				mContext.backgroundImageLabel.add(blackSkill[2]);
+
+			
+		}
+	}
+
+	public void redSkill() {
+		if (mContext.getBirdType() == 0) {
+
+		}
+	}
+
+	// 포물선 메서드를 통해 간소화
+	private void fly(int start, int end, boolean type, int moveX, int moveY) {
+		int playerX = mContext.player[mContext.getBirdType()].getX();
+		int playerY = mContext.player[mContext.getBirdType()].getY();
+
+		for (int j = start; j < end; j++) {
+
+			if (type) {
+				playerX += moveX;
+				playerY -= moveY;
+				mContext.player[mContext.getBirdType()].setLocation(playerX, playerY);
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			} else {
+				playerX += moveX;
+				playerY += moveY;
+				mContext.player[mContext.getBirdType()].setLocation(playerX, playerY);
+				yellowSkill[0].setLocation(playerX + 50, playerY + 50);
+				yellowSkill[1].setLocation(playerX + 100, playerY - 100);
+				yellowSkill();
+
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				blackSkill();
+//				if (isMove == false) {
+//
+//					break;
+//				}
+			}
+
+		}
 	}
 
 }

@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import component.Enemy;
 import component.Pointer;
 import component.player.Player;
 
@@ -14,7 +15,7 @@ public abstract class Background extends JFrame {
 
 	String fileName;
 	Background mContext = this;
-	protected JLabel backgroundImageLabel;
+	public JLabel backgroundImageLabel;
 	protected JLabel holderLabel;
 
 	private MyMouseAdapter myAdapter;
@@ -24,19 +25,28 @@ public abstract class Background extends JFrame {
 	private double releaseX;
 	private double releaseY;
 
-	private int birdType;
+	protected int birdType;
+	protected int birdState;
+
+	boolean crashState;
 
 	public Player[] player;
 	public Pointer[] pointer;
 
-	
-	
 	public int getBirdType() {
 		return birdType;
 	}
 
 	public void setBirdType(int birdType) {
 		this.birdType = birdType;
+	}
+
+	public int getBirdState() {
+		return birdState;
+	}
+
+	public void setBirdState(int birdState) {
+		this.birdState = birdState;
 	}
 
 	public double getPressX() {
@@ -80,12 +90,14 @@ public abstract class Background extends JFrame {
 		initDate();
 		setInitLayout();
 		addEventListener();
-		
+
 	}
 
 	protected void initDate() {
 		setSize(1000, 570);
-		birdType = 0;
+		birdType = 0; // 0 레드 1블랙 2 옐로
+		birdState = 0; // 1살아있음 0죽음
+
 		// 플레이어 주소값 입력
 		player = new Player[3];
 		player[0] = new Player(new ImageIcon("images/redbird.png"), 140, 440, this);
@@ -154,28 +166,29 @@ public abstract class Background extends JFrame {
 			} else if (birdType == 2) {
 				player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
 			}
-			
+
 		}
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
 
-			double a = getPressX() - e.getX();
-			double b = getPressY() - e.getY();
-			int c = ((Number) Math.sqrt((a * a) + (b * b))).intValue();
-			double slope = (b / a);
+			if (e.getX() <= 130 && e.getY() >= 380) {
+				double a = getPressX() - e.getX();
+				double b = getPressY() - e.getY();
+				int c = ((Number) Math.sqrt((a * a) + (b * b))).intValue();
+				double slope = (b / a);
 
-			int x = ((Number) getPressX()).intValue();
-			int y = ((Number) getPressY()).intValue() - 50;
+				int x = ((Number) getPressX()).intValue();
+				int y = ((Number) getPressY()).intValue() - 50;
 
-			new Thread(new Runnable() {
+				new Thread(new Runnable() {
 
-				@Override
-				public synchronized void run() {
+					@Override
+					public synchronized void run() {
 
-					try {
+						try {
 
-						Thread.sleep(100);
+							Thread.sleep(100);
 //						System.out.println("slope: " + slope);
 //						if (slope == -1) {
 //							System.out.println("-1");
@@ -219,14 +232,14 @@ public abstract class Background extends JFrame {
 //						add(pointer[2]);
 //						add(pointer[3]);
 
-						// 드래그 모션
-						if (birdType == 0) {
-							player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-						} else if (birdType == 1) {
-							player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-						} else if (birdType == 2) {
-							player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-						} else {
+							// 드래그 모션
+							if (birdType == 0) {
+								player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+							} else if (birdType == 1) {
+								player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+							} else if (birdType == 2) {
+								player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+							} else {
 
 //							if(pig[1].getState == 0 && pig[1].getState == 0){
 //							gameover
@@ -234,13 +247,14 @@ public abstract class Background extends JFrame {
 //							nextstage
 //						}
 
-						}
+							}
 
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
+						} catch (InterruptedException e1) {
+							e1.printStackTrace();
+						}
 					}
-				}
-			}).start();
+				}).start();
+			}
 		}
 
 		@Override
@@ -252,7 +266,5 @@ public abstract class Background extends JFrame {
 			player[birdType].playerMove();
 		}
 	}
-
-	
 
 }

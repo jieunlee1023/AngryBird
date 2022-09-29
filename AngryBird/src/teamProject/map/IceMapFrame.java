@@ -28,11 +28,20 @@ public class IceMapFrame extends Background {
 
 	private ImageIcon iceBreakBlock;
 
-	boolean state;
+	boolean crashState;
+
+	public boolean isState() {
+		return crashState;
+	}
+
+	public void setState(boolean state) {
+		this.crashState = state;
+	}
 
 	public IceMapFrame(String fileName) {
 		super(fileName);
 		initData();
+
 		new Thread(() -> {
 			boolean flag = true;
 			while (flag) {
@@ -56,7 +65,7 @@ public class IceMapFrame extends Background {
 	protected void initData() {
 		setTitle("Ice Map");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		state = false;
+		crashState = false;
 
 		for (int i = 0; i < squareBlocks.length; i++) {
 			squareBlocks[i] = new IceBlock(new ImageIcon(images[0]));
@@ -139,9 +148,9 @@ public class IceMapFrame extends Background {
 		enemyTop.setSize(60, 60);
 		enemyTop.setLocation(800, 170);
 		backgroundImageLabel.add(enemyTop);
-
+		
 	}
-
+	
 	public void crash(IceBlock[] iceBlock) {
 		for (int i = 0; i < iceBlock.length; i++) {
 			for (int j = 0; j < player.length; j++) {
@@ -149,6 +158,7 @@ public class IceMapFrame extends Background {
 						&& Math.abs(iceBlock[i].getY() - player[j].getY()) < 50) {
 //					System.out.println("부딪힘");
 					iceBlock[i].setVisible(false);
+					player[j].isMove = false;
 				}
 			} // end of j-for
 		} // end of i-for
