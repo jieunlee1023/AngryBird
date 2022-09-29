@@ -1,31 +1,25 @@
 package teamProject.map;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 import component.Enemy;
-import component.Pointer;
 import component.TreeBlock;
-import component.player.Player;
 import lombok.Getter;
 import lombok.Setter;
-import teamProject.frame.MainFrame;
 
 @Getter
 @Setter
 public class JungleMapFrame extends Background {
 
 	String[] images = { "images/woodBlock_downRec.png", "images/woodBlock_upRec.png", "images/woodBlock_thinUpRec.png",
-			"images/woodBlock_thinDownRec.png", "images/woodBlock_square.png" };
+			"images/woodBlock_thinDownRec.png", "images/woodBlock_square.png", "images/wood_roop.png" };
 
 	private TreeBlock[] woodSquare = new TreeBlock[40];
 	private TreeBlock[] woodBlock = new TreeBlock[14];
 	private TreeBlock[] longWoodBlock = new TreeBlock[5];
 	private TreeBlock[] WoodOblongBlock = new TreeBlock[5];
 	private TreeBlock[] longWoodOblongBlock = new TreeBlock[5];
+	private TreeBlock[] roofBlock = new TreeBlock[1];
 
 	private int WOODSQUARE_WIDTH = 50;
 	private int WOODSQUARE_HEIGHT = 50;
@@ -46,7 +40,6 @@ public class JungleMapFrame extends Background {
 
 	private ImageIcon pig;
 	private ImageIcon bomb;
-	private ImageIcon woodRoof;
 
 	Enemy enemy;
 
@@ -60,7 +53,6 @@ public class JungleMapFrame extends Background {
 
 	public JungleMapFrame(String fileName) {
 		super(fileName);
-		this.mContext = mContext;
 		initData();
 
 	}
@@ -72,14 +64,14 @@ public class JungleMapFrame extends Background {
 		backgroundImageLabel.add(enemy);
 		enemy.setSize(100, 100);
 		enemy.setLocation(750, 235);
-		// roof
-		TreeBlock woodRoof = new TreeBlock(new ImageIcon("images/wood_roop.png"));
-		backgroundImageLabel.add(woodRoof);
-		woodRoof.setSize(300, 180);
-		woodRoof.setLocation(625, 65);
+
 		// 터지는 모션
 		bomb = new ImageIcon("images/bumb1.png");
-
+		
+		//roof
+		for (int i = 0; i < roofBlock.length; i++) {
+			roofBlock[i] = new TreeBlock(new ImageIcon(images[5]));
+		}
 
 		// 정사각형
 		for (int i = 0; i < woodSquare.length; i++) {
@@ -107,6 +99,12 @@ public class JungleMapFrame extends Background {
 		}
 
 //------------------------------------------------------------------------------------------------
+		// 지붕
+		for (int i = 0; i < roofBlock.length; i++) {
+			roofBlock[i].setSize(300, 180);
+			roofBlock[i].setLocation(625, 65);
+			backgroundImageLabel.add(roofBlock[i]);
+		}
 
 //      정사각형-----------------------------------------------------------
 		for (int i = 0; i < 20; i++) { // 맨앞 정사각형
@@ -159,10 +157,11 @@ public class JungleMapFrame extends Background {
 			WoodOblongBlock[i].setLocation(725, 310 + (i * 15));
 			backgroundImageLabel.add(WoodOblongBlock[i]);
 		}
-		squareBlockArrayCrush();
+		crush();
+		allBlockArrayCrush();
 	}
 
-	public void squareBlockArrayCrush() {
+	public void crush() {
 		new Thread(() -> {
 			while (true) {
 				for (int i = 0; i < player.length; i++) {
@@ -171,17 +170,97 @@ public class JungleMapFrame extends Background {
 								&& Math.abs(woodSquare[j].getY() - player[i].getY()) < 100) {
 							try {
 								woodSquare[j].setIcon(bomb);
-								Thread.sleep(100);
+								Thread.sleep(50);
+								woodSquare[j].setVisible(false);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
-//								player[i].
 							}
 						}
 					}
 				}
 
 			}
+		}).start();
+	}
+
+	public void allBlockArrayCrush() {
+		new Thread(() -> {
+			while (true) {
+				for (int i = 0; i < player.length; i++) {
+					for (int j = 0; j < longWoodBlock.length; j++) {
+						if (Math.abs(longWoodBlock[j].getX() - player[i].getX()) < 100
+								&& Math.abs(longWoodBlock[j].getY() - player[i].getY()) < 100) {
+							allBomb();
+							
+
+						}
+					}
+				}
+
+			}
+		}).start();
+	}
+
+	public void allBomb() {
+		new Thread(() -> {
+			for (int i = 0; i < woodBlock.length; i++) {
+				woodBlock[i].setIcon(bomb);
+				try {
+					Thread.sleep(40);
+					woodBlock[i].setVisible(false);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			for (int i = 0; i < longWoodOblongBlock.length; i++) {
+				longWoodOblongBlock[i].setIcon(bomb);
+				try {
+					Thread.sleep(40);
+					longWoodOblongBlock[i].setVisible(false);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+			for (int i = 0; i < WoodOblongBlock.length; i++) {
+				WoodOblongBlock[i].setIcon(bomb);
+				try {
+					Thread.sleep(40);
+					WoodOblongBlock[i].setVisible(false);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			for (int i = 0; i < longWoodBlock.length; i++) {
+				longWoodBlock[i].setIcon(bomb);
+				try {
+					Thread.sleep(40);
+					longWoodBlock[i].setVisible(false);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+					enemy.setLocation(750, 420);
+				
+			}
+			
+			for (int i = 0; i < roofBlock.length; i++) {
+				roofBlock[i].setIcon(bomb);
+				try {
+					Thread.sleep(40);
+					roofBlock[i].setVisible(false);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+
 		}).start();
 
 	}

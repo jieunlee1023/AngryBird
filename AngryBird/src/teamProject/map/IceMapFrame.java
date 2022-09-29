@@ -32,7 +32,6 @@ public class IceMapFrame extends Background {
 	public IceMapFrame(String fileName) {
 		super(fileName);
 		initData();
-		squareBlockArrayCrash();
 
 	}
 
@@ -126,23 +125,5 @@ public class IceMapFrame extends Background {
 	}
 	
 
-	public void squareBlockArrayCrash() {
-		new Thread(() -> {
-			while (true) {
-				for (int i = 0; i < squareBlocks.length; i++) {
-					for (int j = 0; j < player.length; j++) {
-						if (Math.abs(squareBlocks[i].getX() - player[j].getX()) < 50
-								&& Math.abs(squareBlocks[i].getY() - player[j].getY()) < 50) {
-							squareBlocks[i].setIcon(iceBreakBlock);
-							System.out.println("부딪힘");
-
-						}
-					} // end of j-for
-				} // end of i-for
-
-			} // end of while
-		}).start();
-
-	}// end of square~
-
+	   
 }
