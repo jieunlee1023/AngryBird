@@ -1,9 +1,12 @@
 package teamProject.map;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -11,12 +14,15 @@ import component.Enemy;
 import component.Pointer;
 import component.player.Player;
 
-public abstract class Background extends JFrame {
+public abstract class Background extends JFrame implements ActionListener {
 
 	String fileName;
 	Background mContext = this;
 	public JLabel backgroundImageLabel;
 	protected JLabel holderLabel;
+	public JLabel clickHereLabel;
+	public JLabel clickHereLetterLabel;
+	public JButton goBackButton;
 
 	private MyMouseAdapter myAdapter;
 
@@ -112,9 +118,11 @@ public abstract class Background extends JFrame {
 			pointer[i] = new Pointer(new ImageIcon("images/pointer.png"));
 			pointer[i].setSize(10, 10);
 		}
-
+		goBackButton = new JButton(new ImageIcon("images/goback.png"));
 		holderLabel = new JLabel(new ImageIcon("images/img.png"));
 		backgroundImageLabel = new JLabel(new ImageIcon(fileName));
+		clickHereLabel = new JLabel(new ImageIcon("images/clickhere.png"));
+		clickHereLetterLabel = new JLabel(new ImageIcon("images/clickhere2.png"));
 
 		myAdapter = new MyMouseAdapter();
 
@@ -141,21 +149,41 @@ public abstract class Background extends JFrame {
 		backgroundImageLabel.add(player[0]);
 		backgroundImageLabel.add(player[1]);
 		backgroundImageLabel.add(player[2]);
+		
+		goBackButton.setSize(60, 50);
+		goBackButton.setLocation(10, 10);
+		backgroundImageLabel.add(goBackButton);
+
+		// click here
+		clickHereLabel.setSize(45, 45);
+		clickHereLabel.setLocation(80, 320);
+		backgroundImageLabel.add(clickHereLabel);
+		clickHereLetterLabel.setSize(75, 50);
+		clickHereLetterLabel.setLocation(75, 270);
+		backgroundImageLabel.add(clickHereLetterLabel);
 
 		// 거치대
 		holderLabel.setSize(60, 150);
 		holderLabel.setLocation(80, 340);
 		backgroundImageLabel.add(holderLabel);
 
-		// 맵
-
 	}
 
 	public void addEventListener() {
 		addMouseListener(myAdapter);
 		addMouseMotionListener(myAdapter);
+		goBackButton.addActionListener(this);
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		JButton targetButton = (JButton) e.getSource();
+		if (targetButton.equals(goBackButton)) {
+			new MapSelectPage();
+			mContext.setVisible(false);
+		}
+	}
+	
 	class MyMouseAdapter extends MouseAdapter {
 
 		@Override
