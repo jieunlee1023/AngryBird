@@ -83,7 +83,6 @@ public class MapSelectPage extends JFrame implements ActionListener {
 			setVisible(false);
 
 		} else if (targetButton.equals(button2)) {
-			
 			new IceMapFrame("images/bg2.png");
 			setVisible(false);
 

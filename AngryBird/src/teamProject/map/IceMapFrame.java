@@ -2,11 +2,9 @@ package teamProject.map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import component.Enemy;
 import component.IceBlock;
-import teamProject.frame.MainFrame;
 
 public class IceMapFrame extends Background {
 
@@ -27,18 +25,21 @@ public class IceMapFrame extends Background {
 	protected Enemy enemyCenter;
 	protected Enemy enemyTop;
 
-	final int SQUARE_BLOCKS_W = 50;
-	final int SQUARE_BLOCKS_H = 50;
+	private ImageIcon iceBreakBlock;
+
+	boolean state;
 
 	public IceMapFrame(String fileName) {
 		super(fileName);
 		initData();
+		squareBlockArrayCrash();
 
 	}
 
 	protected void initData() {
 		setTitle("Ice Map");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		state = false;
 
 		for (int i = 0; i < squareBlocks.length; i++) {
 			squareBlocks[i] = new IceBlock(new ImageIcon(images[0]));
@@ -68,9 +69,11 @@ public class IceMapFrame extends Background {
 		enemyCenter = new Enemy(new ImageIcon("images/pig.png"));
 		enemyTop = new Enemy(new ImageIcon("images/pig.png"));
 
+		iceBreakBlock = new ImageIcon("images/icebreak.png");
+
 		for (int i = 0; i < squareBlocks.length; i++) {
-			squareBlocks[i].setSize(SQUARE_BLOCKS_W, SQUARE_BLOCKS_H);
-			squareBlocks[i].setLocation(650, (i * SQUARE_BLOCKS_W / 2) + 110);
+			squareBlocks[i].setSize(50, 50);
+			squareBlocks[i].setLocation(650, (i * 50 / 2) + 110);
 			backgroundImageLabel.add(squareBlocks[i]);
 		}
 		for (int i = 0; i < 3; i++) {
@@ -121,5 +124,24 @@ public class IceMapFrame extends Background {
 		backgroundImageLabel.add(enemyTop);
 
 	}
+
+	public void squareBlockArrayCrash() {
+		new Thread(() -> {
+			while (true) {
+				for (int i = 0; i < squareBlocks.length; i++) {
+					for (int j = 0; j < player.length; j++) {
+						if (Math.abs(squareBlocks[i].getX() - player[j].getX()) < 50
+								&& Math.abs(squareBlocks[i].getY() - player[j].getY()) < 50) {
+							squareBlocks[i].setIcon(iceBreakBlock);
+							System.out.println("부딪힘");
+
+						}
+					} // end of j-for
+				} // end of i-for
+
+			} // end of while
+		}).start();
+
+	}// end of square~
 
 }

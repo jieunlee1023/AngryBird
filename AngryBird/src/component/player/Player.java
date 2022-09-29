@@ -3,11 +3,8 @@ package component.player;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import lombok.Getter;
-import teamProject.frame.MainFrame;
-import teamProject.interfaces.Moveable;
 import teamProject.map.Background;
-import teamProject.map.MapSelectPage;
+import teamProject.map.IceMapFrame;
 
 public class Player extends JLabel {
 
@@ -16,9 +13,26 @@ public class Player extends JLabel {
 	private int playerY;
 
 	private ImageIcon imageicon;
-	Background mContext;
+	private Background mContext;
+
 	// 움직임 상태
 	private boolean move;
+
+	public int getPlayerX() {
+		return playerX;
+	}
+
+	public void setPlayerX(int playerX) {
+		this.playerX = playerX;
+	}
+
+	public int getPlayerY() {
+		return playerY;
+	}
+
+	public void setPlayerY(int playerY) {
+		this.playerY = playerY;
+	}
 
 	// 상태 : 0 red / 1 black 2 yellow
 
@@ -36,7 +50,6 @@ public class Player extends JLabel {
 
 	private void initDate() {
 		move = false;
-
 		setIcon(imageicon);
 	}
 
@@ -206,7 +219,7 @@ public class Player extends JLabel {
 
 						playerY += 2;
 						mContext.player[mContext.getBirdType()].setLocation(playerX, playerY);
-
+						
 						try {
 							Thread.sleep(1);
 						} catch (InterruptedException e) {
@@ -231,40 +244,8 @@ public class Player extends JLabel {
 
 	}
 
-//		bang = new ImageIcon("images/bang.png");
-//		blackBang[0] = new JLabel(new ImageIcon("images/bang1.png"));
-//		blackBang[1] = new JLabel(new ImageIcon("images/bang2.png"));
-//		blackBang[2] = new JLabel(new ImageIcon("images/bang3.png"));
-
-//	private void setInitLayout() {
-
-//		blackBang[0].setSize(50, 50);
-//		blackBang[1].setSize(75, 70);
-//		blackBang[2].setSize(115, 100);
-
-//		blackBang[0].setLocation(playerX, playerY - 30));
-//		blackBang[1].setLocation(playerX + 30, playerY - 70);
-//		blackBang[2].setLocation(playerX - 40, playerY - 100);
-//	}
-
 	public void move() {
 
-	}
-
-	public int getPlayerX() {
-		return playerX;
-	}
-
-	public void setPlayerX(int playerX) {
-		this.playerX = playerX;
-	}
-
-	public int getPlayerY() {
-		return playerY;
-	}
-
-	public void setPlayerY(int playerY) {
-		this.playerY = playerY;
 	}
 
 }
