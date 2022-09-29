@@ -26,52 +26,61 @@ public class JungleMapFrame extends Background {
 	private TreeBlock[] longWoodBlock = new TreeBlock[5];
 	private TreeBlock[] WoodOblongBlock = new TreeBlock[5];
 	private TreeBlock[] longWoodOblongBlock = new TreeBlock[5];
-	
-//	private int TREESQUARE_WIDTH = 50; 
-//	private int TREESQUARE_HEIGHT = 50;
-	
+
+	private int WOODSQUARE_WIDTH = 50;
+	private int WOODSQUARE_HEIGHT = 50;
+
 	private int WOODBLOCK_WIDTH = 50;
 	private int WOODBLOCK_HEIGHT = 50;
-	
+
 	private int WOODBLOCK_L_WIDTH = 50;
 	private int WOODBLOCK_L_HEIGHT = 50;
-	
+
 	private int OBLONGWOODBLOCK_WIDTH = 100;
 	private int OBLONGWOODBLOCK_HEIGHT = 15;
-	
+
 	private int OBLONGWOODBLOCK_L_WIDTH = 15;
 	private int OBLONGWOODBLOCK_L_HEIGHT = 100;
 
 	TreeBlock treeBlock;
-	
-	private ImageIcon pig;
-	private ImageIcon treeRoop;
-<<<<<<< HEAD
-	Enemy enemy;
-	
-=======
-	Enemy enemy; 
 
->>>>>>> fa1ffee11f9f1d5d3bca17673f7babb26448e3ad
+	private ImageIcon pig;
+	private ImageIcon bomb;
+	private ImageIcon woodRoof;
+
+	Enemy enemy;
+
+	public Enemy getEnemy() {
+		return enemy;
+	}
+
+	public void setEnemy(Enemy enemy) {
+		this.enemy = enemy;
+	}
+
 	public JungleMapFrame(String fileName) {
 		super(fileName);
+		this.mContext = mContext;
 		initData();
 
 	}
 
 	private void initData() {
 		setTitle("jungle Maps");
-		//pig
+		// pig
 		enemy = new Enemy(new ImageIcon("images/pig.png"));
 		backgroundImageLabel.add(enemy);
 		enemy.setSize(100, 100);
 		enemy.setLocation(750, 235);
-		//roof
+		// roof
 		TreeBlock woodRoof = new TreeBlock(new ImageIcon("images/wood_roop.png"));
 		backgroundImageLabel.add(woodRoof);
 		woodRoof.setSize(300, 180);
 		woodRoof.setLocation(625, 65);
-		
+		// 터지는 모션
+		bomb = new ImageIcon("images/bumb1.png");
+
+
 		// 정사각형
 		for (int i = 0; i < woodSquare.length; i++) {
 			woodSquare[i] = new TreeBlock(new ImageIcon(images[4]));
@@ -96,23 +105,21 @@ public class JungleMapFrame extends Background {
 		for (int i = 0; i < longWoodOblongBlock.length; i++) {
 			longWoodOblongBlock[i] = new TreeBlock(new ImageIcon(images[2]));
 		}
-		
+
 //------------------------------------------------------------------------------------------------
-		
-		
 
 //      정사각형-----------------------------------------------------------
-//		for (int i = 0; i < 20; i++) { // 맨앞 정사각형
-//			treeSquare[i].setSize(TREESQUARE_WIDTH, TREESQUARE_HEIGHT);
-//			treeSquare[i].setLocation(500, 450 - (i * 20));
-//			backgroundImageLabel.add(treeSquare[i]);
-//		}
-//
-//		for (int i = 20; i < 40; i++) { // 맨앞 정사각형
-//			treeSquare[i].setSize(TREESQUARE_WIDTH, TREESQUARE_HEIGHT);
-//			treeSquare[i].setLocation(525, 850 - (i * 20));
-//			backgroundImageLabel.add(treeSquare[i]);
-//		}
+		for (int i = 0; i < 20; i++) { // 맨앞 정사각형
+			woodSquare[i].setSize(WOODSQUARE_WIDTH, WOODSQUARE_HEIGHT);
+			woodSquare[i].setLocation(500, 450 - (i * 20));
+			backgroundImageLabel.add(woodSquare[i]);
+		}
+
+		for (int i = 20; i < 40; i++) { // 맨앞 정사각형
+			woodSquare[i].setSize(WOODSQUARE_WIDTH, WOODSQUARE_HEIGHT);
+			woodSquare[i].setLocation(525, 850 - (i * 20));
+			backgroundImageLabel.add(woodSquare[i]);
+		}
 
 		// 가로 사각형--------------------------------------------------------
 		for (int i = 0; i < 7; i++) { // 1. 바닥
@@ -152,6 +159,30 @@ public class JungleMapFrame extends Background {
 			WoodOblongBlock[i].setLocation(725, 310 + (i * 15));
 			backgroundImageLabel.add(WoodOblongBlock[i]);
 		}
+		squareBlockArrayCrush();
+	}
+
+	public void squareBlockArrayCrush() {
+		new Thread(() -> {
+			while (true) {
+				for (int i = 0; i < player.length; i++) {
+					for (int j = 0; j < woodSquare.length; j++) {
+						if (Math.abs(woodSquare[j].getX() - player[i].getX()) < 100
+								&& Math.abs(woodSquare[j].getY() - player[i].getY()) < 100) {
+							try {
+								woodSquare[j].setIcon(bomb);
+								Thread.sleep(100);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+//								player[i].
+							}
+						}
+					}
+				}
+
+			}
+		}).start();
 
 	}
 }

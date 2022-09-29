@@ -20,7 +20,6 @@ public class TreeBlock extends Block {
 	}
 
 	private void setInitLayout() {
-		
 	}
 
 

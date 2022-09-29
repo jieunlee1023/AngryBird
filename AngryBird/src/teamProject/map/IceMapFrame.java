@@ -119,7 +119,8 @@ public class IceMapFrame extends Background {
 		enemyTop.setSize(60, 60);
 		enemyTop.setLocation(800, 170);
 		backgroundImageLabel.add(enemyTop);
-
+		
 	}
+	
 
 }

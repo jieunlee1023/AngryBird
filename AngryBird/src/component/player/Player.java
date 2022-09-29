@@ -3,10 +3,12 @@ package component.player;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import component.Enemy;
 import lombok.Getter;
 import teamProject.frame.MainFrame;
 import teamProject.interfaces.Moveable;
 import teamProject.map.Background;
+import teamProject.map.JungleMapFrame;
 import teamProject.map.MapSelectPage;
 
 public class Player extends JLabel {
@@ -19,6 +21,7 @@ public class Player extends JLabel {
 	Background mContext;
 	// 움직임 상태
 	private boolean move;
+	JungleMapFrame frame;
 
 	// 상태 : 0 red / 1 black 2 yellow
 
@@ -36,11 +39,11 @@ public class Player extends JLabel {
 
 	private void initDate() {
 		move = false;
-
 		setIcon(imageicon);
 	}
 
 	public void playerMove() {
+
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
