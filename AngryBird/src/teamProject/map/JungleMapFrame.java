@@ -46,8 +46,13 @@ public class JungleMapFrame extends Background {
 	
 	private ImageIcon pig;
 	private ImageIcon treeRoop;
+<<<<<<< HEAD
 	Enemy enemy;
 	
+=======
+	Enemy enemy; 
+
+>>>>>>> fa1ffee11f9f1d5d3bca17673f7babb26448e3ad
 	public JungleMapFrame(String fileName) {
 		super(fileName);
 		initData();
