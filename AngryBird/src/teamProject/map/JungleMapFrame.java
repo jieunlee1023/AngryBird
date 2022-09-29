@@ -1,37 +1,55 @@
 package teamProject.map;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 import component.Enemy;
-import component.Pointer;
 import component.TreeBlock;
-import component.player.Player;
 import lombok.Getter;
 import lombok.Setter;
-import teamProject.frame.MainFrame;
 
 @Getter
 @Setter
 public class JungleMapFrame extends Background {
 
 	String[] images = { "images/woodBlock_downRec.png", "images/woodBlock_upRec.png", "images/woodBlock_thinUpRec.png",
-			"images/woodBlock_thinDownRec.png", "images/woodBlock_square.png" };
+			"images/woodBlock_thinDownRec.png", "images/woodBlock_square.png", "images/wood_roop.png" };
 
-	private TreeBlock[] treeSquare = new TreeBlock[40];
-	private TreeBlock[] treeDownRec = new TreeBlock[14];
-	private TreeBlock[] treeUpRec = new TreeBlock[5];
-	private TreeBlock[] treeThinDownRec = new TreeBlock[5];
-	private TreeBlock[] treeThinUpRec = new TreeBlock[5];
+	private TreeBlock[] woodSquare = new TreeBlock[40];
+	private TreeBlock[] woodBlock = new TreeBlock[14];
+	private TreeBlock[] longWoodBlock = new TreeBlock[5];
+	private TreeBlock[] WoodOblongBlock = new TreeBlock[5];
+	private TreeBlock[] longWoodOblongBlock = new TreeBlock[5];
+	private TreeBlock[] roofBlock = new TreeBlock[1];
+
+	private int WOODSQUARE_WIDTH = 50;
+	private int WOODSQUARE_HEIGHT = 50;
+
+	private int WOODBLOCK_WIDTH = 50;
+	private int WOODBLOCK_HEIGHT = 50;
+
+	private int WOODBLOCK_L_WIDTH = 50;
+	private int WOODBLOCK_L_HEIGHT = 50;
+
+	private int OBLONGWOODBLOCK_WIDTH = 100;
+	private int OBLONGWOODBLOCK_HEIGHT = 15;
+
+	private int OBLONGWOODBLOCK_L_WIDTH = 15;
+	private int OBLONGWOODBLOCK_L_HEIGHT = 100;
 
 	TreeBlock treeBlock;
-	
+
 	private ImageIcon pig;
-	private ImageIcon treeRoop;
-	Enemy enemy; 
+	private ImageIcon bomb;
+
+	Enemy enemy;
+
+	public Enemy getEnemy() {
+		return enemy;
+	}
+
+	public void setEnemy(Enemy enemy) {
+		this.enemy = enemy;
+	}
 
 	public JungleMapFrame(String fileName) {
 		super(fileName);
@@ -41,98 +59,209 @@ public class JungleMapFrame extends Background {
 
 	private void initData() {
 		setTitle("jungle Maps");
-		//pig
+		// pig
 		enemy = new Enemy(new ImageIcon("images/pig.png"));
-
 		backgroundImageLabel.add(enemy);
 		enemy.setSize(100, 100);
 		enemy.setLocation(750, 235);
-		//roop
-		TreeBlock treeRoop = new TreeBlock(new ImageIcon("images/wood_roop.png"));
-		backgroundImageLabel.add(treeRoop);
-		treeRoop.setSize(300, 180);
-		treeRoop.setLocation(625, 65);
+
+		// 터지는 모션
+		bomb = new ImageIcon("images/bumb1.png");
 		
+		//roof
+		for (int i = 0; i < roofBlock.length; i++) {
+			roofBlock[i] = new TreeBlock(new ImageIcon(images[5]));
+		}
+
 		// 정사각형
-		for (int i = 0; i < treeSquare.length; i++) {
-			treeSquare[i] = new TreeBlock(new ImageIcon(images[4]));
+		for (int i = 0; i < woodSquare.length; i++) {
+			woodSquare[i] = new TreeBlock(new ImageIcon(images[4]));
 		}
 
 		// 가로 사각형
-		for (int i = 0; i < treeDownRec.length; i++) {
-			treeDownRec[i] = new TreeBlock(new ImageIcon(images[0]));
+		for (int i = 0; i < woodBlock.length; i++) {
+			woodBlock[i] = new TreeBlock(new ImageIcon(images[0]));
 		}
 
 		// 세로 사각형
-		for (int i = 0; i < treeUpRec.length; i++) {
-			treeUpRec[i] = new TreeBlock(new ImageIcon(images[1]));
+		for (int i = 0; i < longWoodBlock.length; i++) {
+			longWoodBlock[i] = new TreeBlock(new ImageIcon(images[1]));
 		}
 
 		// 얇은 가로 사각형
-		for (int i = 0; i < treeThinDownRec.length; i++) {
-			treeThinDownRec[i] = new TreeBlock(new ImageIcon(images[3]));
+		for (int i = 0; i < WoodOblongBlock.length; i++) {
+			WoodOblongBlock[i] = new TreeBlock(new ImageIcon(images[3]));
 		}
 
 		// 얇은 세로 사각형
-		for (int i = 0; i < treeThinUpRec.length; i++) {
-			treeThinUpRec[i] = new TreeBlock(new ImageIcon(images[2]));
+		for (int i = 0; i < longWoodOblongBlock.length; i++) {
+			longWoodOblongBlock[i] = new TreeBlock(new ImageIcon(images[2]));
 		}
-		
+
 //------------------------------------------------------------------------------------------------
-		
-		
+		// 지붕
+		for (int i = 0; i < roofBlock.length; i++) {
+			roofBlock[i].setSize(300, 180);
+			roofBlock[i].setLocation(625, 65);
+			backgroundImageLabel.add(roofBlock[i]);
+		}
 
 //      정사각형-----------------------------------------------------------
-//		for (int i = 0; i < 20; i++) { // 맨앞 정사각형
-//			treeSquare[i].setSize(50, 50);
-//			treeSquare[i].setLocation(500, 450 - (i * 20));
-//			backgroundImageLabel.add(treeSquare[i]);
-//		}
-//
-//		for (int i = 20; i < 40; i++) { // 맨앞 정사각형
-//			treeSquare[i].setSize(50, 50);
-//			treeSquare[i].setLocation(525, 850 - (i * 20));
-//			backgroundImageLabel.add(treeSquare[i]);
-//		}
+		for (int i = 0; i < 20; i++) { // 맨앞 정사각형
+			woodSquare[i].setSize(WOODSQUARE_WIDTH, WOODSQUARE_HEIGHT);
+			woodSquare[i].setLocation(500, 450 - (i * 20));
+			backgroundImageLabel.add(woodSquare[i]);
+		}
+
+		for (int i = 20; i < 40; i++) { // 맨앞 정사각형
+			woodSquare[i].setSize(WOODSQUARE_WIDTH, WOODSQUARE_HEIGHT);
+			woodSquare[i].setLocation(525, 850 - (i * 20));
+			backgroundImageLabel.add(woodSquare[i]);
+		}
 
 		// 가로 사각형--------------------------------------------------------
 		for (int i = 0; i < 7; i++) { // 1. 바닥
-			treeDownRec[i].setSize(50, 50);
-			treeDownRec[i].setLocation(600 + (i * 50), 450);
-			backgroundImageLabel.add(treeDownRec[i]);
+			woodBlock[i].setSize(WOODBLOCK_WIDTH, WOODBLOCK_HEIGHT);
+			woodBlock[i].setLocation(600 + (i * 50), 450);
+			backgroundImageLabel.add(woodBlock[i]);
 		}
 		for (int i = 7; i < 14; i++) { // 3. 바닥 위 바닥
-			treeDownRec[i].setSize(50, 50);
-			treeDownRec[i].setLocation(250 + (i * 50), 330);
-			backgroundImageLabel.add(treeDownRec[i]);
+			woodBlock[i].setSize(WOODBLOCK_WIDTH, WOODBLOCK_HEIGHT);
+			woodBlock[i].setLocation(250 + (i * 50), 330);
+			backgroundImageLabel.add(woodBlock[i]);
 		}
 
 		// 세로 사각형--------------------------------------------------------
 		for (int i = 0; i < 2; i++) { // 4. 바닥 위 바닥 모양 (1)
-			treeUpRec[i].setSize(50, 50);
-			treeUpRec[i].setLocation(660 + (i * 200), 290);
-			backgroundImageLabel.add(treeUpRec[i]);
+			longWoodBlock[i].setSize(WOODBLOCK_L_WIDTH, WOODBLOCK_L_HEIGHT);
+			longWoodBlock[i].setLocation(660 + (i * 200), 290);
+			backgroundImageLabel.add(longWoodBlock[i]);
 		}
 
 		for (int i = 2; i < 4; i++) { // 4. 바닥 위 바닥 모양 (2)
-			treeUpRec[i].setSize(50, 50);
-			treeUpRec[i].setLocation(260 + (i * 200), 240);
-			backgroundImageLabel.add(treeUpRec[i]);
+			longWoodBlock[i].setSize(WOODBLOCK_L_WIDTH, WOODBLOCK_L_HEIGHT);
+			longWoodBlock[i].setLocation(260 + (i * 200), 240);
+			backgroundImageLabel.add(longWoodBlock[i]);
 		}
 
 		// 얇은 세로 사각형----------------------------------------------------
 		for (int i = 0; i < 5; i++) { // 2. 바닥 위
-			treeThinUpRec[i].setSize(15, 100);
-			treeThinUpRec[i].setLocation(650 + (i * 60), 370);
-			backgroundImageLabel.add(treeThinUpRec[i]);
+			longWoodOblongBlock[i].setSize(OBLONGWOODBLOCK_L_WIDTH, OBLONGWOODBLOCK_L_HEIGHT);
+			longWoodOblongBlock[i].setLocation(650 + (i * 60), 370);
+			backgroundImageLabel.add(longWoodOblongBlock[i]);
 		}
 
 		// 얇은 가로 사각형----------------------------------------------------
 		for (int i = 0; i < 2; i++) { // 2. 바닥 위
-			treeThinDownRec[i].setSize(100, 15);
-			treeThinDownRec[i].setLocation(725, 310 + (i * 15));
-			backgroundImageLabel.add(treeThinDownRec[i]);
+			WoodOblongBlock[i].setSize(OBLONGWOODBLOCK_WIDTH, OBLONGWOODBLOCK_HEIGHT);
+			WoodOblongBlock[i].setLocation(725, 310 + (i * 15));
+			backgroundImageLabel.add(WoodOblongBlock[i]);
 		}
+		crush();
+		allBlockArrayCrush();
+	}
+
+	public void crush() {
+		new Thread(() -> {
+			while (true) {
+				for (int i = 0; i < player.length; i++) {
+					for (int j = 0; j < woodSquare.length; j++) {
+						if (Math.abs(woodSquare[j].getX() - player[i].getX()) < 100
+								&& Math.abs(woodSquare[j].getY() - player[i].getY()) < 100) {
+							try {
+								woodSquare[j].setIcon(bomb);
+								Thread.sleep(50);
+								woodSquare[j].setVisible(false);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}
+				}
+
+			}
+		}).start();
+	}
+
+	public void allBlockArrayCrush() {
+		new Thread(() -> {
+			while (true) {
+				for (int i = 0; i < player.length; i++) {
+					for (int j = 0; j < longWoodBlock.length; j++) {
+						if (Math.abs(longWoodBlock[j].getX() - player[i].getX()) < 100
+								&& Math.abs(longWoodBlock[j].getY() - player[i].getY()) < 100) {
+							allBomb();
+							
+
+						}
+					}
+				}
+
+			}
+		}).start();
+	}
+
+	public void allBomb() {
+		new Thread(() -> {
+			for (int i = 0; i < woodBlock.length; i++) {
+				woodBlock[i].setIcon(bomb);
+				try {
+					Thread.sleep(40);
+					woodBlock[i].setVisible(false);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			for (int i = 0; i < longWoodOblongBlock.length; i++) {
+				longWoodOblongBlock[i].setIcon(bomb);
+				try {
+					Thread.sleep(40);
+					longWoodOblongBlock[i].setVisible(false);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+			for (int i = 0; i < WoodOblongBlock.length; i++) {
+				WoodOblongBlock[i].setIcon(bomb);
+				try {
+					Thread.sleep(40);
+					WoodOblongBlock[i].setVisible(false);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			for (int i = 0; i < longWoodBlock.length; i++) {
+				longWoodBlock[i].setIcon(bomb);
+				try {
+					Thread.sleep(40);
+					longWoodBlock[i].setVisible(false);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+					enemy.setLocation(750, 420);
+				
+			}
+			
+			for (int i = 0; i < roofBlock.length; i++) {
+				roofBlock[i].setIcon(bomb);
+				try {
+					Thread.sleep(40);
+					roofBlock[i].setVisible(false);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+
+		}).start();
 
 	}
 }

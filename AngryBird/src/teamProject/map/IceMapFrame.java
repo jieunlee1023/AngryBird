@@ -41,6 +41,7 @@ public class IceMapFrame extends Background {
 	public IceMapFrame(String fileName) {
 		super(fileName);
 		initData();
+
 		new Thread(() -> {
 			boolean flag = true;
 			while (flag) {
@@ -144,9 +145,9 @@ public class IceMapFrame extends Background {
 		enemyTop.setSize(60, 60);
 		enemyTop.setLocation(800, 170);
 		backgroundImageLabel.add(enemyTop);
-
+		
 	}
-
+	
 	public void crash(IceBlock[] iceBlock) {
 		for (int i = 0; i < iceBlock.length; i++) {
 			for (int j = 0; j < player.length; j++) {

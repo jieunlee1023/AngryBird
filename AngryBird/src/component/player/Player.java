@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import teamProject.map.Background;
-import teamProject.map.IceMapFrame;
+import teamProject.map.JungleMapFrame;
 
 public class Player extends JLabel {
 
@@ -16,6 +16,7 @@ public class Player extends JLabel {
 	private Background mContext;
 
 	// 움직임 상태
+
 	public boolean isMove = true;
 
 	public int getPlayerX() {
@@ -67,6 +68,7 @@ public class Player extends JLabel {
 	}
 
 	public void playerMove() {
+
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
