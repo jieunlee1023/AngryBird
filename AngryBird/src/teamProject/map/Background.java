@@ -230,10 +230,10 @@ public abstract class Background extends JFrame {
 
 							}
 
-							add(pointer[0]);
-							add(pointer[1]);
-							add(pointer[2]);
-							add(pointer[3]);
+							backgroundImageLabel.add(pointer[0]);
+							backgroundImageLabel.add(pointer[1]);
+							backgroundImageLabel.add(pointer[2]);
+							backgroundImageLabel.add(pointer[3]);
 
 						} catch (InterruptedException e1) {
 							// TODO Auto-generated catch block
