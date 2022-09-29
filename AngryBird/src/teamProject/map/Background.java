@@ -13,6 +13,7 @@ import component.player.Player;
 public abstract class Background extends JFrame {
 
 	String fileName;
+	Background mContext = this;
 	protected JLabel backgroundImageLabel;
 	protected JLabel holderLabel;
 
@@ -23,10 +24,20 @@ public abstract class Background extends JFrame {
 	private double releaseX;
 	private double releaseY;
 
-	private int state;
+	private int birdType;
 
-	private Player[] player;
-	private Pointer[] pointer;
+	public Player[] player;
+	public Pointer[] pointer;
+
+	
+	
+	public int getBirdType() {
+		return birdType;
+	}
+
+	public void setBirdType(int birdType) {
+		this.birdType = birdType;
+	}
 
 	public double getPressX() {
 		return pressX;
@@ -73,12 +84,12 @@ public abstract class Background extends JFrame {
 
 	protected void initDate() {
 		setSize(1000, 570);
-		state = 0;
+		birdType = 0;
 		// 플레이어 주소값 입력
 		player = new Player[3];
-		player[0] = new Player(new ImageIcon("images/redbird.png"), 140, 440, 0);
-		player[1] = new Player(new ImageIcon("images/blackbird.png"), 100, 440, 0);
-		player[2] = new Player(new ImageIcon("images/yellowbird.png"), 60, 440, 0);
+		player[0] = new Player(new ImageIcon("images/redbird.png"), 140, 440, this);
+		player[1] = new Player(new ImageIcon("images/blackbird.png"), 100, 440, this);
+		player[2] = new Player(new ImageIcon("images/yellowbird.png"), 60, 440, this);
 
 		pointer = new Pointer[4];
 		for (int i = 0; i < player.length; i++) {
@@ -135,6 +146,14 @@ public abstract class Background extends JFrame {
 		public void mousePressed(MouseEvent e) {
 			pressX = ((Number) e.getX()).doubleValue();
 			pressY = ((Number) e.getY()).doubleValue();
+			if (birdType == 0) {
+				player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+			} else if (birdType == 1) {
+				player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+			} else if (birdType == 2) {
+				player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+			}
+			
 		}
 
 		@Override
@@ -200,11 +219,11 @@ public abstract class Background extends JFrame {
 //						add(pointer[3]);
 
 						// 드래그 모션
-						if (state == 0) {
+						if (birdType == 0) {
 							player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-						} else if (state == 1) {
+						} else if (birdType == 1) {
 							player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-						} else if (state == 2) {
+						} else if (birdType == 2) {
 							player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
 						} else {
 
@@ -229,195 +248,10 @@ public abstract class Background extends JFrame {
 			releaseX = ((Number) e.getX()).doubleValue();
 			releaseY = ((Number) e.getY()).doubleValue();
 
-			playerMove();
+			player[birdType].playerMove();
 		}
 	}
 
-	public void playerMove() {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-
-				// x증가량 y증가량
-				double a = getPressX() - getReleaseX();
-				double b = getPressY() - getReleaseY();
-				// 빗변
-				int c = ((Number) Math.sqrt((a * a) + (b * b))).intValue();
-				int playerX = player[state].getX();
-				int playerY = player[state].getY();
-
-				System.out.println();
-				// 기울기
-				double slope = (b / a);
-
-				// 무브 세분화
-				// 1 수평 내려오는거 없음
-				if (slope > 0 && slope < 1) {
-					for (int i = 0; i < c; i++) {
-
-						playerX += 2;
-						player[state].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					for (int j = 0; j < c; j++) {
-
-						playerX += 2;
-						player[state].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					// 15도 완만
-				} else if (slope > -0.5 && slope <= 0) {
-
-					for (int i = 0; i < c; i++) {
-
-						playerX += 3;
-						playerY -= 1;
-						player[state].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					for (int j = 0; j < c; j++) {
-
-						playerX += 3;
-						playerY += 1;
-						player[state].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					// 30도
-				} else if (slope > -1 && slope <= -0.5) {
-					for (int i = 0; i < c; i++) {
-
-						playerX += 2;
-						playerY -= 1;
-						player[state].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					for (int j = 0; j < c; j++) {
-
-						playerX += 2;
-						playerY += 1;
-						player[state].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-
-					// 60 도
-				} else if (slope > -1.5 && slope <= -1) {
-					for (int i = 0; i < c; i++) {
-
-						playerX += 1;
-						playerY -= 2;
-						player[state].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					for (int j = 0; j < c; j++) {
-
-						playerX += 1;
-						playerY += 2;
-						player[state].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-
-					// 매우 가파름 80도 언저리
-				} else if (slope < -1.5) {
-					for (int i = 0; i < c; i++) {
-
-						playerX += 1;
-						playerY -= 3;
-						player[state].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					for (int j = 0; j < c; j++) {
-						playerX += 1;
-						playerY += 3;
-						player[state].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					// 수직
-				} else if (slope > 1) {
-
-					for (int i = 0; i < c; i++) {
-
-						playerY -= 2;
-						player[state].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-					for (int j = 0; j < c; j++) {
-
-						playerY += 2;
-						player[state].setLocation(playerX, playerY);
-
-						try {
-							Thread.sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-				// skill();
-				if (state < 2) {
-					state += 1;
-				}
-
-//				mContext.getBlock1().squareBlockArrayCrash();
-
-			}
-
-		}).start();
-
-	}
+	
 
 }
