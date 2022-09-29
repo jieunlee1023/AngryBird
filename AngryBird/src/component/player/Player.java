@@ -64,10 +64,6 @@ public class Player extends JLabel {
 		yellowSkill[0].setSize(60, 60);
 		yellowSkill[1].setSize(60, 60);
 
-		blackSkill[0].setLocation(playerX, playerY - 30);
-		blackSkill[1].setLocation(playerX + 30, playerY - 70);
-		blackSkill[2].setLocation(playerX - 40, playerY - 100);
-
 	}
 
 	public void playerMove() {
@@ -145,18 +141,24 @@ public class Player extends JLabel {
 	}
 
 	public void blackSkill() {
-
+		int playerX = mContext.player[1].getX();
+		int playerY = mContext.player[1].getY();
 		if (mContext.getBirdType() == 1 && isMove == false) {
-			for (int i = 0; i < 3; i++) {
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				mContext.backgroundImageLabel.add(blackSkill[i]);
-
+			System.out.println("블랙 스킬 ");
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+			e.printStackTrace();
 			}
+				blackSkill[0].setLocation(playerX, playerY - 30);
+				blackSkill[1].setLocation(playerX + 30, playerY - 70);
+				blackSkill[2].setLocation(playerX - 40, playerY - 100);
+				mContext.backgroundImageLabel.add(blackSkill[0]);
+				mContext.backgroundImageLabel.add(blackSkill[1]);
+				mContext.backgroundImageLabel.add(blackSkill[2]);
+
+			
 		}
 	}
 
@@ -195,10 +197,11 @@ public class Player extends JLabel {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				if (isMove == false) {
-
-					break;
-				}
+				blackSkill();
+//				if (isMove == false) {
+//
+//					break;
+//				}
 			}
 
 		}

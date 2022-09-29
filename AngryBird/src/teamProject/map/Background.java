@@ -31,7 +31,6 @@ public abstract class Background extends JFrame {
 
 	public Player[] player;
 	public Pointer[] pointer;
-	
 
 	public int getBirdType() {
 		return birdType;
@@ -98,7 +97,6 @@ public abstract class Background extends JFrame {
 		birdType = 0; // 0 레드 1블랙 2 옐로
 		birdState = 0; // 1살아있음 0죽음
 
-		
 		// 플레이어 주소값 입력
 		player = new Player[3];
 		player[0] = new Player(new ImageIcon("images/redbird.png"), 140, 440, this);
@@ -173,22 +171,23 @@ public abstract class Background extends JFrame {
 		@Override
 		public void mouseDragged(MouseEvent e) {
 
-			double a = getPressX() - e.getX();
-			double b = getPressY() - e.getY();
-			int c = ((Number) Math.sqrt((a * a) + (b * b))).intValue();
-			double slope = (b / a);
+			if (e.getX() <= 130 && e.getY() >= 380) {
+				double a = getPressX() - e.getX();
+				double b = getPressY() - e.getY();
+				int c = ((Number) Math.sqrt((a * a) + (b * b))).intValue();
+				double slope = (b / a);
 
-			int x = ((Number) getPressX()).intValue();
-			int y = ((Number) getPressY()).intValue() - 50;
+				int x = ((Number) getPressX()).intValue();
+				int y = ((Number) getPressY()).intValue() - 50;
 
-			new Thread(new Runnable() {
+				new Thread(new Runnable() {
 
-				@Override
-				public synchronized void run() {
+					@Override
+					public synchronized void run() {
 
-					try {
+						try {
 
-						Thread.sleep(100);
+							Thread.sleep(100);
 //						System.out.println("slope: " + slope);
 //						if (slope == -1) {
 //							System.out.println("-1");
@@ -232,14 +231,14 @@ public abstract class Background extends JFrame {
 //						add(pointer[2]);
 //						add(pointer[3]);
 
-						// 드래그 모션
-						if (birdType == 0) {
-							player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-						} else if (birdType == 1) {
-							player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-						} else if (birdType == 2) {
-							player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-						} else {
+							// 드래그 모션
+							if (birdType == 0) {
+								player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+							} else if (birdType == 1) {
+								player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+							} else if (birdType == 2) {
+								player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+							} else {
 
 //							if(pig[1].getState == 0 && pig[1].getState == 0){
 //							gameover
@@ -247,13 +246,14 @@ public abstract class Background extends JFrame {
 //							nextstage
 //						}
 
-						}
+							}
 
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
+						} catch (InterruptedException e1) {
+							e1.printStackTrace();
+						}
 					}
-				}
-			}).start();
+				}).start();
+			}
 		}
 
 		@Override
@@ -265,9 +265,5 @@ public abstract class Background extends JFrame {
 			player[birdType].playerMove();
 		}
 	}
-
-
-
-
 
 }

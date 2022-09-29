@@ -2,6 +2,7 @@ package teamProject.map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import component.Enemy;
 import component.IceBlock;
@@ -20,37 +21,43 @@ public class IceMapFrame extends Background {
 	protected IceBlock[] widthRectangleCenter = new IceBlock[3];
 	protected IceBlock[] heightLongTop = new IceBlock[2];
 	protected IceBlock[] widthLongTop = new IceBlock[1];
+	protected JLabel iceRoop;
 
 	protected Enemy enemyBottom;
-	protected Enemy enemyCenter;
 	protected Enemy enemyTop;
 
 	private ImageIcon iceBreakBlock;
 
 	boolean crashState;
 
-
 	public boolean isState() {
 		return crashState;
 	}
-
-
 
 	public void setState(boolean state) {
 		this.crashState = state;
 	}
 
-
-
 	public IceMapFrame(String fileName) {
 		super(fileName);
 		initData();
-		squareBlockArrayCrash();
+		new Thread(() -> {
+			boolean flag = true;
+			while (flag) {
+				crash(squareBlocks);
+				crash(heightLongBottom);
+				crash(widthLongBottom);
+				crash(heightLongCenter);
+				crash(widthLongCenter);
+				crash(widthRectangleCenter);
+				crash(heightLongTop);
+				crash(widthLongTop);
+			} // end of while
+			flag = false;
+		}).start();
 
 	}
 
-	
-	
 	protected void initData() {
 		setTitle("Ice Map");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,10 +88,10 @@ public class IceMapFrame extends Background {
 		widthLongTop[0] = new IceBlock(new ImageIcon(images[3]));
 
 		enemyBottom = new Enemy(new ImageIcon("images/pig.png"));
-		enemyCenter = new Enemy(new ImageIcon("images/pig.png"));
 		enemyTop = new Enemy(new ImageIcon("images/pig.png"));
 
 		iceBreakBlock = new ImageIcon("images/icebreak.png");
+		iceRoop = new JLabel(new ImageIcon("images/ice_roop.png"));
 
 		for (int i = 0; i < squareBlocks.length; i++) {
 			squareBlocks[i].setSize(50, 50);
@@ -126,44 +133,32 @@ public class IceMapFrame extends Background {
 		widthLongTop[0].setLocation(780, 135);
 		backgroundImageLabel.add(widthLongTop[0]);
 
+		iceRoop.setSize(135, 80);
+		iceRoop.setLocation(760, 60);
+		backgroundImageLabel.add(iceRoop);
+
 		enemyBottom.setSize(60, 60);
 		enemyBottom.setLocation(850, 430);
 		backgroundImageLabel.add(enemyBottom);
-
-		enemyCenter.setSize(60, 60);
-		enemyCenter.setLocation(740, 320);
-		backgroundImageLabel.add(enemyCenter);
 
 		enemyTop.setSize(60, 60);
 		enemyTop.setLocation(800, 170);
 		backgroundImageLabel.add(enemyTop);
 
 	}
-	
-	//Todo test code 지울예정 !!!!!
-	boolean flag = true;
-	public void squareBlockArrayCrash() {
-		
-		new Thread(() -> {
-			while (flag) {
-				for (int i = 0; i < squareBlocks.length; i++) {
-					for (int j = 0; j < player.length; j++) {
-						if (Math.abs(squareBlocks[i].getX() - player[j].getX()) < 50
-								&& Math.abs(squareBlocks[i].getY() - player[j].getY()) < 50) {
-							squareBlocks[i].setIcon(iceBreakBlock);
-							System.out.println("부딪힘");
-							crashState = true;
-							player[birdType].isMove = false;
-							flag = false;
-						}		
-					} // end of j-for
-				} // end of i-for
 
-			} 
-			// end of while
-		}).start();
+	public void crash(IceBlock[] iceBlock) {
+		for (int i = 0; i < iceBlock.length; i++) {
+			for (int j = 0; j < player.length; j++) {
+				if (Math.abs(iceBlock[i].getX() - player[j].getX()) < 50
+						&& Math.abs(iceBlock[i].getY() - player[j].getY()) < 50) {
+//					System.out.println("부딪힘");
+					iceBlock[i].setVisible(false);
+					player[j].isMove = false;
+				}
+			} // end of j-for
+		} // end of i-for
 
 	}
-// end of square~
 
 }
