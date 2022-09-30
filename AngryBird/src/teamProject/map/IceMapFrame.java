@@ -179,8 +179,9 @@ public class IceMapFrame extends Background {
 					e.printStackTrace();
 				}
 				enemyOut.setVisible(false);
+				
 			}
-		}
+		}//new BossMapFrame("images/boss/bg4.png");
 
 	}
 

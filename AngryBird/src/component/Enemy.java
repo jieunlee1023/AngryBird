@@ -1,5 +1,6 @@
 package component;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -29,6 +30,7 @@ public class Enemy extends JLabel {
 
 	public Enemy(ImageIcon pig) {
 		this.pig = pig;
+		setIcon(pig);
 		initData();
 		setInitLayout();
 	}

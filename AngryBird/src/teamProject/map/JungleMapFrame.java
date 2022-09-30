@@ -178,6 +178,7 @@ public class JungleMapFrame extends Background {
 								woodSquare[j].setIcon(bomb);
 								Thread.sleep(50);
 								woodSquare[j].setVisible(false);
+<<<<<<< HEAD
 								
 								// =0  --> 500
 								mContext.score += 500;
@@ -188,6 +189,9 @@ public class JungleMapFrame extends Background {
 								repaint();
 								//mContext.scoreLabel.repaint();
 
+=======
+							
+>>>>>>> 7439be01ec9523055f8e257f3cf5a83314be5734
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();

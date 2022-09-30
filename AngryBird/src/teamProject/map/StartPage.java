@@ -59,7 +59,7 @@ public class StartPage extends JLabel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		JButton targetButton = (JButton) e.getSource();
 		if (targetButton.equals(startButton)) {
-			new MapSelectPage(mContext);
+			new MapSelectPage();
 			mContext.setVisible(false);
 		}
 

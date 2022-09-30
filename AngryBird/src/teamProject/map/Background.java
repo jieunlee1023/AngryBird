@@ -1,24 +1,36 @@
 package teamProject.map;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import component.Pointer;
 import component.player.Player;
 
-public abstract class Background extends JFrame {
+public abstract class Background extends JFrame implements ActionListener {
 
 	String fileName;
 	Background mContext = this;
 	public JLabel backgroundImageLabel;
 	protected JLabel holderLabel;
+<<<<<<< HEAD
 	protected JLabel scoreLabel;
+=======
+	public JLabel clickHereLabel;
+	public JLabel clickHereLetterLabel;
+	public JButton goBackButton;
+>>>>>>> 7439be01ec9523055f8e257f3cf5a83314be5734
 
 	private MyMouseAdapter myAdapter;
+
+	final int RANGE_X = 130;
+	final int RANGE_Y = 380;
 
 	private double pressX;
 	private double pressY;
@@ -109,13 +121,15 @@ public abstract class Background extends JFrame {
 		player[2] = new Player(new ImageIcon("images/yellowbird.png"), 60, 440, this);
 
 		pointer = new Pointer[4];
-		for (int i = 0; i < player.length; i++) {
+		for (int i = 0; i < pointer.length; i++) {
 			pointer[i] = new Pointer(new ImageIcon("images/pointer.png"));
-			pointer[i].setSize(100, 100);
+			pointer[i].setSize(10, 10);
 		}
-
+		goBackButton = new JButton(new ImageIcon("images/goback.png"));
 		holderLabel = new JLabel(new ImageIcon("images/img.png"));
 		backgroundImageLabel = new JLabel(new ImageIcon(fileName));
+		clickHereLabel = new JLabel(new ImageIcon("images/clickhere.png"));
+		clickHereLetterLabel = new JLabel(new ImageIcon("images/clickhere2.png"));
 
 		score = 0;
 //		scoreLabel = new JLabel(Integer.toString(score));
@@ -146,6 +160,18 @@ public abstract class Background extends JFrame {
 		backgroundImageLabel.add(player[0]);
 		backgroundImageLabel.add(player[1]);
 		backgroundImageLabel.add(player[2]);
+		
+		goBackButton.setSize(60, 50);
+		goBackButton.setLocation(10, 10);
+		backgroundImageLabel.add(goBackButton);
+
+		// click here
+		clickHereLabel.setSize(45, 45);
+		clickHereLabel.setLocation(80, 320);
+		backgroundImageLabel.add(clickHereLabel);
+		clickHereLetterLabel.setSize(75, 50);
+		clickHereLetterLabel.setLocation(75, 270);
+		backgroundImageLabel.add(clickHereLetterLabel);
 
 		// 점수판
 		scoreLabel.setSize(150, 50);
@@ -163,20 +189,32 @@ public abstract class Background extends JFrame {
 	public void addEventListener() {
 		addMouseListener(myAdapter);
 		addMouseMotionListener(myAdapter);
+		goBackButton.addActionListener(this);
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		JButton targetButton = (JButton) e.getSource();
+		if (targetButton.equals(goBackButton)) {
+			new MapSelectPage();
+			mContext.setVisible(false);
+		}
+	}
+	
 	class MyMouseAdapter extends MouseAdapter {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
 			pressX = ((Number) e.getX()).doubleValue();
 			pressY = ((Number) e.getY()).doubleValue();
-			if (birdType == 0) {
-				player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-			} else if (birdType == 1) {
-				player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-			} else if (birdType == 2) {
-				player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
+				if (birdType == 0) {
+					player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+				} else if (birdType == 1) {
+					player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+				} else if (birdType == 2) {
+					player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+				}
 			}
 
 		}
@@ -184,7 +222,7 @@ public abstract class Background extends JFrame {
 		@Override
 		public void mouseDragged(MouseEvent e) {
 
-			if (e.getX() <= 130 && e.getY() >= 380) {
+			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
 				double a = getPressX() - e.getX();
 				double b = getPressY() - e.getY();
 				int c = ((Number) Math.sqrt((a * a) + (b * b))).intValue();
@@ -199,59 +237,62 @@ public abstract class Background extends JFrame {
 					public synchronized void run() {
 
 						try {
+							Thread.sleep(10);
+							if (slope == -1) {
+								System.out.println("-1");
+								pointer[0].setLocation(x + c / 4, y - 5);
+								pointer[1].setLocation(x + c / 2, y - 25);
+								pointer[2].setLocation(x + (c / 2) + (c / 4), y - 45);
+								pointer[3].setLocation(x + c, y - 65);
 
-							Thread.sleep(100);
-//						System.out.println("slope: " + slope);
-//						if (slope == -1) {
-//							System.out.println("-1");
-//							pointer[0].setLocation(x + c / 4, y - 5);
-//							pointer[1].setLocation(x + c / 2, y - 25);
-//							pointer[2].setLocation(x + (c / 2) + (c / 4), y - 45);
-//							pointer[3].setLocation(x + c, y - 65);
-//
-//						} else if (slope > -1 && slope <= 0.5) {
-//							System.out.println(" -1 초과 0.5 이");
-//							pointer[0].setLocation(x + c / 4, y - 5);
-//							pointer[1].setLocation(x + c / 2, y - 15);
-//							pointer[2].setLocation(x + c / 2 + c / 4, y - 25);
-//							pointer[3].setLocation(x + c, y - 35);
-//
-//						} else if (slope > 0.5 && slope <= 0) {
-//							System.out.println("05초과  0 이하  ");
-//							pointer[0].setLocation(x + c / 4, y - 0);
-//							pointer[1].setLocation(x + c / 2, y - 5);
-//							pointer[2].setLocation(x + c / c / 2 + c / 4, y - 10);
-//							pointer[3].setLocation(x + c, y - 15);
-//
-//						} else if (slope < -1 && slope >= 1.5) {
-//							System.out.println("-1초과  1.5 이하 ");
-//							pointer[0].setLocation(x + c / 4, y - 5);
-//							pointer[1].setLocation(x + c / 2, y - 40);
-//							pointer[2].setLocation(x + c / 2 + c / 4, y - 75);
-//							pointer[3].setLocation(x + c, y - 105);
-//
-//						} else if (slope < 1.5) {
-//							System.out.println("1.5 이하 ");
-//							pointer[0].setLocation(x + c / 4, y - 5);
-//							pointer[1].setLocation(x + c / 2, y - 50);
-//							pointer[2].setLocation(x + c / 2 + c / 4, y - 85);
-//							pointer[3].setLocation(x + c, y - 120);
-//
-//						}
-//
-//						add(pointer[0]);
-//						add(pointer[1]);
-//						add(pointer[2]);
-//						add(pointer[3]);
+							} else if (slope > -1 && slope <= 0.5) {
+								System.out.println(" -1 초과 0.5 이");
+								pointer[0].setLocation(x + c / 4, y - 5);
+								pointer[1].setLocation(x + c / 2, y - 15);
+								pointer[2].setLocation(x + c / 2 + c / 4, y - 25);
+								pointer[3].setLocation(x + c, y - 35);
 
-							// 드래그 모션
-							if (birdType == 0) {
-								player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-							} else if (birdType == 1) {
-								player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-							} else if (birdType == 2) {
-								player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-							} else {
+							} else if (slope > 0.5 && slope <= 0) {
+								System.out.println("05초과  0 이하  ");
+								pointer[0].setLocation(x + c / 4, y - 0);
+								pointer[1].setLocation(x + c / 2, y - 5);
+								pointer[2].setLocation(x + c / c / 2 + c / 4, y - 10);
+								pointer[3].setLocation(x + c, y - 15);
+
+							} else if (slope < -1 && slope >= 1.5) {
+								System.out.println("-1초과  1.5 이하 ");
+								pointer[0].setLocation(x + c / 4, y - 5);
+								pointer[1].setLocation(x + c / 2, y - 40);
+								pointer[2].setLocation(x + c / 2 + c / 4, y - 75);
+								pointer[3].setLocation(x + c, y - 105);
+
+							} else if (slope < 1.5) {
+								System.out.println("1.5 이하 ");
+								pointer[0].setLocation(x + c / 4, y - 5);
+								pointer[1].setLocation(x + c / 2, y - 50);
+								pointer[2].setLocation(x + c / 2 + c / 4, y - 85);
+								pointer[3].setLocation(x + c, y - 120);
+
+							}
+
+							backgroundImageLabel.add(pointer[0]);
+							backgroundImageLabel.add(pointer[1]);
+							backgroundImageLabel.add(pointer[2]);
+							backgroundImageLabel.add(pointer[3]);
+
+						} catch (InterruptedException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+						// 드래그 모션
+						if (birdType == 0) {
+							player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+						} else if (birdType == 1) {
+							player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+						} else if (birdType == 2) {
+							player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+						} else {
 
 //							if(pig[1].getState == 0 && pig[1].getState == 0){
 //							gameover
@@ -259,10 +300,6 @@ public abstract class Background extends JFrame {
 //							nextstage
 //						}
 
-							}
-
-						} catch (InterruptedException e1) {
-							e1.printStackTrace();
 						}
 					}
 				}).start();
@@ -271,11 +308,12 @@ public abstract class Background extends JFrame {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
+				releaseX = ((Number) e.getX()).doubleValue();
+				releaseY = ((Number) e.getY()).doubleValue();
 
-			releaseX = ((Number) e.getX()).doubleValue();
-			releaseY = ((Number) e.getY()).doubleValue();
-
-			player[birdType].playerMove();
+				player[birdType].playerMove();
+			}
 		}
 	}
 
