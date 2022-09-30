@@ -34,7 +34,7 @@ public class BossMapFrame extends Background {
 	protected StoneBlock circleBlockTwo;
 	protected StoneBlock headBlock;
 	protected StoneBlock headBlockTwo;
-
+	protected Enemy enemyOut;
 	protected JLabel map;
 
 	String fileName;
@@ -48,8 +48,8 @@ public class BossMapFrame extends Background {
 	public BossMapFrame(String fileName) {
 		super(fileName);
 		initData();
-		bossMove();
-		crashV();
+		//bossMove();
+		crash();
 		enemyCrash(enemy);
 		enemyCrash(enemyBoss[0]);
 		enemyCrash(enemyBoss[1]);
@@ -79,7 +79,7 @@ public class BossMapFrame extends Background {
 		circleBlockTwo = new StoneBlock(new ImageIcon("images/boss/stoneC.png"));
 		headBlock = new StoneBlock(new ImageIcon("images/boss/stoneHead.png"));
 		headBlockTwo = new StoneBlock(new ImageIcon("images/boss/stoneHead.png"));
-
+		enemyOut = new Enemy(new ImageIcon("images/bumd2.png"));
 		bomb = new ImageIcon("images/bumb1.png");
 
 		for (int i = 0; i < 3; i++) {
@@ -182,35 +182,10 @@ public class BossMapFrame extends Background {
 		headBlockTwo.setSize(50, 50);
 		headBlockTwo.setLocation(490, 375);
 		backgroundImageLabel.add(headBlockTwo);
-
-		// 맵
-
+		repaint();
 	}
 
-	public void crush() {
-		new Thread(() -> {
-			while (true) {
-				for (int i = 0; i < player.length; i++) {
-					for (int j = 0; j < horizonBlocks.length; j++) {
-						if (Math.abs(horizonBlocks[j].getX() - player[i].getX()) < 100
-								&& Math.abs(horizonBlocks[j].getY() - player[i].getY()) < 100) {
-							try {
-								horizonBlocks[j].setIcon(bomb);
-								Thread.sleep(50);
-								horizonBlocks[j].setVisible(false);
-
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-					}
-				}
-			}
-		}).start();
-	}
-
-	public void crashV() {
+	public void crash() {
 		new Thread(() -> {
 			while (true) {
 				for (int i = 0; i < player.length; i++) {
@@ -230,45 +205,45 @@ public class BossMapFrame extends Background {
 							&& Math.abs(horizonBlock.getY() - player[i].getY()) < 100) {
 						bomb(horizonBlock);
 					}
-					if (Math.abs(verticalBlock .getX() - player[i].getX()) < 100
-							&& Math.abs(verticalBlock .getY() - player[i].getY()) < 100) {
-						bomb(verticalBlock );
-					}	
-					if (Math.abs(verticalBlockTwo .getX() - player[i].getX()) < 100
-							&& Math.abs(verticalBlockTwo .getY() - player[i].getY()) < 100) {
-						bomb(verticalBlockTwo );
+					if (Math.abs(verticalBlock.getX() - player[i].getX()) < 100
+							&& Math.abs(verticalBlock.getY() - player[i].getY()) < 100) {
+						bomb(verticalBlock);
 					}
-					if (Math.abs(horizonBlockTwo .getX() - player[i].getX()) < 100
-							&& Math.abs(horizonBlockTwo .getY() - player[i].getY()) < 100) {
-						bomb(horizonBlockTwo );
+					if (Math.abs(verticalBlockTwo.getX() - player[i].getX()) < 100
+							&& Math.abs(verticalBlockTwo.getY() - player[i].getY()) < 100) {
+						bomb(verticalBlockTwo);
 					}
-					if (Math.abs(longBlock .getX() - player[i].getX()) < 100
-							&& Math.abs(longBlock .getY() - player[i].getY()) < 100) {
-						bomb(longBlock );
+					if (Math.abs(horizonBlockTwo.getX() - player[i].getX()) < 100
+							&& Math.abs(horizonBlockTwo.getY() - player[i].getY()) < 100) {
+						bomb(horizonBlockTwo);
 					}
-					if (Math.abs(triangleBlock .getX() - player[i].getX()) < 100
-							&& Math.abs(triangleBlock .getY() - player[i].getY()) < 100) {
-						bomb(triangleBlock );
+					if (Math.abs(longBlock.getX() - player[i].getX()) < 100
+							&& Math.abs(longBlock.getY() - player[i].getY()) < 100) {
+						bomb(longBlock);
 					}
-					if (Math.abs(triangleBlockTwo .getX() - player[i].getX()) < 100
-							&& Math.abs(triangleBlockTwo .getY() - player[i].getY()) < 100) {
-						bomb(triangleBlockTwo );
+					if (Math.abs(triangleBlock.getX() - player[i].getX()) < 100
+							&& Math.abs(triangleBlock.getY() - player[i].getY()) < 100) {
+						bomb(triangleBlock);
 					}
-					if (Math.abs(circleBlock .getX() - player[i].getX()) < 100
-							&& Math.abs(circleBlock .getY() - player[i].getY()) < 100) {
-						bomb(circleBlock );
+					if (Math.abs(triangleBlockTwo.getX() - player[i].getX()) < 100
+							&& Math.abs(triangleBlockTwo.getY() - player[i].getY()) < 100) {
+						bomb(triangleBlockTwo);
 					}
-					if (Math.abs(circleBlockTwo .getX() - player[i].getX()) < 100
-							&& Math.abs(circleBlockTwo .getY() - player[i].getY()) < 100) {
-						bomb(circleBlockTwo );
+					if (Math.abs(circleBlock.getX() - player[i].getX()) < 100
+							&& Math.abs(circleBlock.getY() - player[i].getY()) < 100) {
+						bomb(circleBlock);
 					}
-					if (Math.abs(headBlock .getX() - player[i].getX()) < 100
-							&& Math.abs(headBlock .getY() - player[i].getY()) < 100) {
-						bomb(headBlock );
+					if (Math.abs(circleBlockTwo.getX() - player[i].getX()) < 100
+							&& Math.abs(circleBlockTwo.getY() - player[i].getY()) < 100) {
+						bomb(circleBlockTwo);
 					}
-					if (Math.abs(headBlockTwo .getX() - player[i].getX()) < 100
-							&& Math.abs(headBlockTwo .getY() - player[i].getY()) < 100) {
-						bomb(headBlockTwo );
+					if (Math.abs(headBlock.getX() - player[i].getX()) < 100
+							&& Math.abs(headBlock.getY() - player[i].getY()) < 100) {
+						bomb(headBlock);
+					}
+					if (Math.abs(headBlockTwo.getX() - player[i].getX()) < 100
+							&& Math.abs(headBlockTwo.getY() - player[i].getY()) < 100) {
+						bomb(headBlockTwo);
 					}
 				}
 
@@ -288,53 +263,59 @@ public class BossMapFrame extends Background {
 		}
 	}
 
-	public void bossMove() {
-		new Thread(() -> {
-			while (true) {
-				if (state == 0) {
-					backgroundImageLabel.add(enemyBoss[1]);
-					state += 1;
-				} else if (state == 1) {
-					backgroundImageLabel.add(enemyBoss[2]);
-					state += 1;
-				} else if (state == 3) {
-					backgroundImageLabel.add(enemyBoss[0]);
-					state = 0;
-				}
-				try {
-					Thread.sleep(10);
+//	public void bossMove() {
+//		new Thread(() -> {
+//			while (true) {
+//				if (state == 0) {
+//					enemy.setIcon(new ImageIcon("images/boss/boss1.png"));
+//					state += 1;
+//
+//				} else if (state == 1) {
+//					enemy.setIcon(new ImageIcon("images/boss/boss2.png"));
+//					state += 1;
+//				} else if (state == 3) {
+//					enemy.setIcon(new ImageIcon("images/boss/boss3.png"));
+//					state = 0;
+//				}
+//				repaint();
+//				try {
+//					Thread.sleep(100);
+//
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//
+//			}
+//			
+//		}).start();
+//	}
 
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			}
-
-		}).start();
-	}
-	
 	public void enemyCrash(Enemy enemy) {
 
-		for (int i = 0; i < player.length; i++) {
-			if (Math.abs(enemy.getX() - player[i].getX()) < 50 && Math.abs(enemy.getY() - player[i].getY()) < 50) {
-				JLabel enemyOut = new JLabel(new ImageIcon("images/bumd2.png"));
-				enemyOut.setSize(60, 60);
-				enemyOut.setLocation(enemy.getX(), enemy.getY());
-				backgroundImageLabel.add(enemyOut);
-				enemy.setVisible(false);
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+		new Thread(() -> {
+			while (true) {
+				for (int i = 0; i < player.length; i++) {
+					if (Math.abs(enemy.getX() - player[i].getX()) < 50
+							&& Math.abs(enemy.getY() - player[i].getY()) < 50) {
+
+						enemyOut.setSize(60, 60);
+						enemyOut.setLocation(enemy.getX(), enemy.getY());
+						enemy.setIcon(new ImageIcon("images/bumd2.png"));
+						
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						enemy.setVisible(false);
+
+					}
 				}
-				enemyOut.setVisible(false);
-				
 			}
-		}
+		}).start();
 
 	}
-	
 
 	public static void main(String[] args) {
 		new BossMapFrame("images/boss/bg4.png");

@@ -20,6 +20,7 @@ public abstract class Background extends JFrame implements ActionListener {
 	Background mContext = this;
 	public JLabel backgroundImageLabel;
 	protected JLabel holderLabel;
+	protected JLabel floorLabel;
 	public JLabel clickHereLabel;
 	public JLabel clickHereLetterLabel;
 	public JButton goBackButton;
@@ -109,9 +110,9 @@ public abstract class Background extends JFrame implements ActionListener {
 
 		// 플레이어 주소값 입력
 		player = new Player[3];
-		player[0] = new Player(new ImageIcon("images/redbird.png"), 140, 440, this);
-		player[1] = new Player(new ImageIcon("images/blackbird.png"), 100, 440, this);
-		player[2] = new Player(new ImageIcon("images/yellowbird.png"), 60, 440, this);
+		player[0] = new Player(new ImageIcon("images/redbird.png"), 40, 410, this);
+		player[1] = new Player(new ImageIcon("images/blackbird.png"), 80, 420, this);
+		player[2] = new Player(new ImageIcon("images/yellowbird.png"), 0, 420, this);
 
 		pointer = new Pointer[4];
 		for (int i = 0; i < pointer.length; i++) {
@@ -123,7 +124,7 @@ public abstract class Background extends JFrame implements ActionListener {
 		backgroundImageLabel = new JLabel(new ImageIcon(fileName));
 		clickHereLabel = new JLabel(new ImageIcon("images/clickhere.png"));
 		clickHereLetterLabel = new JLabel(new ImageIcon("images/clickhere2.png"));
-
+		floorLabel = new JLabel(new ImageIcon("images/floor.png"));
 		myAdapter = new MyMouseAdapter();
 
 	}
@@ -166,6 +167,10 @@ public abstract class Background extends JFrame implements ActionListener {
 		holderLabel.setSize(60, 150);
 		holderLabel.setLocation(80, 340);
 		backgroundImageLabel.add(holderLabel);
+		
+		floorLabel.setSize(145, 70);
+		floorLabel.setLocation(0, 440);
+		backgroundImageLabel.add(floorLabel);
 
 	}
 
@@ -205,7 +210,7 @@ public abstract class Background extends JFrame implements ActionListener {
 		@Override
 		public void mouseDragged(MouseEvent e) {
 
-			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
+//			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
 				double a = getPressX() - e.getX();
 				double b = getPressY() - e.getY();
 				int c = ((Number) Math.sqrt((a * a) + (b * b))).intValue();
@@ -222,35 +227,35 @@ public abstract class Background extends JFrame implements ActionListener {
 						try {
 							Thread.sleep(10);
 							if (slope == -1) {
-								System.out.println("-1");
+//								System.out.println("-1");
 								pointer[0].setLocation(x + c / 4, y - 5);
 								pointer[1].setLocation(x + c / 2, y - 25);
 								pointer[2].setLocation(x + (c / 2) + (c / 4), y - 45);
 								pointer[3].setLocation(x + c, y - 65);
 
 							} else if (slope > -1 && slope <= 0.5) {
-								System.out.println(" -1 초과 0.5 이");
+//								System.out.println(" -1 초과 0.5 이");
 								pointer[0].setLocation(x + c / 4, y - 5);
 								pointer[1].setLocation(x + c / 2, y - 15);
 								pointer[2].setLocation(x + c / 2 + c / 4, y - 25);
 								pointer[3].setLocation(x + c, y - 35);
 
 							} else if (slope > 0.5 && slope <= 0) {
-								System.out.println("05초과  0 이하  ");
+//								System.out.println("05초과  0 이하  ");
 								pointer[0].setLocation(x + c / 4, y - 0);
 								pointer[1].setLocation(x + c / 2, y - 5);
 								pointer[2].setLocation(x + c / c / 2 + c / 4, y - 10);
 								pointer[3].setLocation(x + c, y - 15);
 
 							} else if (slope < -1 && slope >= 1.5) {
-								System.out.println("-1초과  1.5 이하 ");
+//								System.out.println("-1초과  1.5 이하 ");
 								pointer[0].setLocation(x + c / 4, y - 5);
 								pointer[1].setLocation(x + c / 2, y - 40);
 								pointer[2].setLocation(x + c / 2 + c / 4, y - 75);
 								pointer[3].setLocation(x + c, y - 105);
 
 							} else if (slope < 1.5) {
-								System.out.println("1.5 이하 ");
+//								System.out.println("1.5 이하 ");
 								pointer[0].setLocation(x + c / 4, y - 5);
 								pointer[1].setLocation(x + c / 2, y - 50);
 								pointer[2].setLocation(x + c / 2 + c / 4, y - 85);
@@ -286,7 +291,7 @@ public abstract class Background extends JFrame implements ActionListener {
 						}
 					}
 				}).start();
-			}
+//			}
 		}
 
 		@Override

@@ -167,7 +167,8 @@ public class IceMapFrame extends Background {
 	public void enemyCrash(Enemy enemy) {
 
 		for (int i = 0; i < player.length; i++) {
-			if (Math.abs(enemy.getX() - player[i].getX()) < 50 && Math.abs(enemy.getY() - player[i].getY()) < 50) {
+			if (Math.abs(enemy.getX() - player[i].getX()) < 50 
+					&& Math.abs(enemy.getY() - player[i].getY()) < 50) {
 				JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
 				enemyOut.setSize(60, 60);
 				enemyOut.setLocation(enemy.getX(), enemy.getY());
