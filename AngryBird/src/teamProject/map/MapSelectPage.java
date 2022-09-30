@@ -16,8 +16,6 @@ import teamProject.frame.MainFrame;
 
 public class MapSelectPage extends JFrame implements ActionListener {
 
-
-
 	JLabel background;
 	JButton button1;
 	JButton button2;
@@ -29,7 +27,7 @@ public class MapSelectPage extends JFrame implements ActionListener {
 	final int BUTTON_SIZE_Y = 150;
 
 	public MapSelectPage() {
-	
+
 		initData();
 		setInitLayout();
 		addEventListener();

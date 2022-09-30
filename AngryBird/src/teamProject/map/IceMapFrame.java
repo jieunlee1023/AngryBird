@@ -26,9 +26,9 @@ public class IceMapFrame extends Background {
 	protected Enemy enemyBottom;
 	protected Enemy enemyTop;
 
-	private ImageIcon iceBreakBlock;
-
 	boolean crashState;
+	int enemyOutState;
+	// 0일때 안부딪힘 1일때 한마리 부딪힘 2일때 두마리부딪힘(끝)
 
 	public boolean isState() {
 		return crashState;
@@ -36,6 +36,14 @@ public class IceMapFrame extends Background {
 
 	public void setState(boolean state) {
 		this.crashState = state;
+	}
+
+	public int getEnemyOutState() {
+		return enemyOutState;
+	}
+
+	public void setEnemyOutState(int enemyOutState) {
+		this.enemyOutState = enemyOutState;
 	}
 
 	public IceMapFrame(String fileName) {
@@ -54,18 +62,18 @@ public class IceMapFrame extends Background {
 				crash(heightLongTop);
 				crash(widthLongTop);
 				crash(iceRoop);
-				enemyCrash(enemyTop);
-				enemyCrash(enemyBottom);
 			} // end of while
 			flag = false;
 		}).start();
 
+		enemyCrash(enemyBottom);
+		enemyCrash(enemyTop);
 	}
 
 	protected void initData() {
 		setTitle("Ice Map");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		crashState = false;
+		enemyOutState = 0;
 
 		for (int i = 0; i < squareBlocks.length; i++) {
 			squareBlocks[i] = new IceBlock(new ImageIcon(images[0]));
@@ -94,8 +102,6 @@ public class IceMapFrame extends Background {
 
 		enemyBottom = new Enemy(new ImageIcon("images/pig.png"));
 		enemyTop = new Enemy(new ImageIcon("images/pig.png"));
-
-		iceBreakBlock = new ImageIcon("images/icebreak.png");
 
 		for (int i = 0; i < squareBlocks.length; i++) {
 			squareBlocks[i].setSize(50, 50);
@@ -148,10 +154,11 @@ public class IceMapFrame extends Background {
 		enemyTop.setSize(60, 60);
 		enemyTop.setLocation(800, 170);
 		backgroundImageLabel.add(enemyTop);
-		
+
 	}
-	
+
 	public void crash(IceBlock[] iceBlock) {
+		crashState = true;
 		for (int i = 0; i < iceBlock.length; i++) {
 			for (int j = 0; j < player.length; j++) {
 				if (Math.abs(iceBlock[i].getX() - player[j].getX()) < 50
@@ -166,22 +173,43 @@ public class IceMapFrame extends Background {
 
 	public void enemyCrash(Enemy enemy) {
 
-		for (int i = 0; i < player.length; i++) {
-			if (Math.abs(enemy.getX() - player[i].getX()) < 50 && Math.abs(enemy.getY() - player[i].getY()) < 50) {
-				JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
-				enemyOut.setSize(60, 60);
-				enemyOut.setLocation(enemy.getX(), enemy.getY());
-				backgroundImageLabel.add(enemyOut);
-				enemy.setVisible(false);
+		new Thread(() -> {
+			while (enemyOutState == 0) {
+				for (int i = 0; i < player.length; i++) {
+					if (Math.abs(enemy.getX() - player[i].getX()) < 50
+							&& Math.abs(enemy.getY() - player[i].getY()) < 50) {
+						JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
+						enemyOut.setSize(60, 60);
+						enemyOut.setLocation(enemy.getX(), enemy.getY());
+						backgroundImageLabel.add(enemyOut);
+						enemy.setVisible(false);
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						enemyOut.setVisible(false);
+						enemyOutState++;
+						System.out.println(enemyOutState);
+					}
+				}
+			}
+			if (enemyOutState == 2) {
+				JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
+				clear.setSize(1000, 570);
+				clear.setLocation(0, 0);
+				backgroundImageLabel.add(clear);
+
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				enemyOut.setVisible(false);
-				
+
+				new HolloweenMapFrame("images/bg3.png");
+				setVisible(false);
 			}
-		}//new BossMapFrame("images/boss/bg4.png");
+		}).start();
 
 	}
 

@@ -230,45 +230,45 @@ public class BossMapFrame extends Background {
 							&& Math.abs(horizonBlock.getY() - player[i].getY()) < 100) {
 						bomb(horizonBlock);
 					}
-					if (Math.abs(verticalBlock .getX() - player[i].getX()) < 100
-							&& Math.abs(verticalBlock .getY() - player[i].getY()) < 100) {
-						bomb(verticalBlock );
-					}	
-					if (Math.abs(verticalBlockTwo .getX() - player[i].getX()) < 100
-							&& Math.abs(verticalBlockTwo .getY() - player[i].getY()) < 100) {
-						bomb(verticalBlockTwo );
+					if (Math.abs(verticalBlock.getX() - player[i].getX()) < 100
+							&& Math.abs(verticalBlock.getY() - player[i].getY()) < 100) {
+						bomb(verticalBlock);
 					}
-					if (Math.abs(horizonBlockTwo .getX() - player[i].getX()) < 100
-							&& Math.abs(horizonBlockTwo .getY() - player[i].getY()) < 100) {
-						bomb(horizonBlockTwo );
+					if (Math.abs(verticalBlockTwo.getX() - player[i].getX()) < 100
+							&& Math.abs(verticalBlockTwo.getY() - player[i].getY()) < 100) {
+						bomb(verticalBlockTwo);
 					}
-					if (Math.abs(longBlock .getX() - player[i].getX()) < 100
-							&& Math.abs(longBlock .getY() - player[i].getY()) < 100) {
-						bomb(longBlock );
+					if (Math.abs(horizonBlockTwo.getX() - player[i].getX()) < 100
+							&& Math.abs(horizonBlockTwo.getY() - player[i].getY()) < 100) {
+						bomb(horizonBlockTwo);
 					}
-					if (Math.abs(triangleBlock .getX() - player[i].getX()) < 100
-							&& Math.abs(triangleBlock .getY() - player[i].getY()) < 100) {
-						bomb(triangleBlock );
+					if (Math.abs(longBlock.getX() - player[i].getX()) < 100
+							&& Math.abs(longBlock.getY() - player[i].getY()) < 100) {
+						bomb(longBlock);
 					}
-					if (Math.abs(triangleBlockTwo .getX() - player[i].getX()) < 100
-							&& Math.abs(triangleBlockTwo .getY() - player[i].getY()) < 100) {
-						bomb(triangleBlockTwo );
+					if (Math.abs(triangleBlock.getX() - player[i].getX()) < 100
+							&& Math.abs(triangleBlock.getY() - player[i].getY()) < 100) {
+						bomb(triangleBlock);
 					}
-					if (Math.abs(circleBlock .getX() - player[i].getX()) < 100
-							&& Math.abs(circleBlock .getY() - player[i].getY()) < 100) {
-						bomb(circleBlock );
+					if (Math.abs(triangleBlockTwo.getX() - player[i].getX()) < 100
+							&& Math.abs(triangleBlockTwo.getY() - player[i].getY()) < 100) {
+						bomb(triangleBlockTwo);
 					}
-					if (Math.abs(circleBlockTwo .getX() - player[i].getX()) < 100
-							&& Math.abs(circleBlockTwo .getY() - player[i].getY()) < 100) {
-						bomb(circleBlockTwo );
+					if (Math.abs(circleBlock.getX() - player[i].getX()) < 100
+							&& Math.abs(circleBlock.getY() - player[i].getY()) < 100) {
+						bomb(circleBlock);
 					}
-					if (Math.abs(headBlock .getX() - player[i].getX()) < 100
-							&& Math.abs(headBlock .getY() - player[i].getY()) < 100) {
-						bomb(headBlock );
+					if (Math.abs(circleBlockTwo.getX() - player[i].getX()) < 100
+							&& Math.abs(circleBlockTwo.getY() - player[i].getY()) < 100) {
+						bomb(circleBlockTwo);
 					}
-					if (Math.abs(headBlockTwo .getX() - player[i].getX()) < 100
-							&& Math.abs(headBlockTwo .getY() - player[i].getY()) < 100) {
-						bomb(headBlockTwo );
+					if (Math.abs(headBlock.getX() - player[i].getX()) < 100
+							&& Math.abs(headBlock.getY() - player[i].getY()) < 100) {
+						bomb(headBlock);
+					}
+					if (Math.abs(headBlockTwo.getX() - player[i].getX()) < 100
+							&& Math.abs(headBlockTwo.getY() - player[i].getY()) < 100) {
+						bomb(headBlockTwo);
 					}
 				}
 
@@ -313,7 +313,7 @@ public class BossMapFrame extends Background {
 
 		}).start();
 	}
-	
+
 	public void enemyCrash(Enemy enemy) {
 
 		for (int i = 0; i < player.length; i++) {
@@ -329,12 +329,11 @@ public class BossMapFrame extends Background {
 					e.printStackTrace();
 				}
 				enemyOut.setVisible(false);
-				
+
 			}
 		}
 
 	}
-	
 
 	public static void main(String[] args) {
 		new BossMapFrame("images/boss/bg4.png");

@@ -149,7 +149,7 @@ public abstract class Background extends JFrame implements ActionListener {
 		backgroundImageLabel.add(player[0]);
 		backgroundImageLabel.add(player[1]);
 		backgroundImageLabel.add(player[2]);
-		
+
 		goBackButton.setSize(60, 50);
 		goBackButton.setLocation(10, 10);
 		backgroundImageLabel.add(goBackButton);
@@ -183,7 +183,7 @@ public abstract class Background extends JFrame implements ActionListener {
 			mContext.setVisible(false);
 		}
 	}
-	
+
 	class MyMouseAdapter extends MouseAdapter {
 
 		@Override
@@ -205,7 +205,7 @@ public abstract class Background extends JFrame implements ActionListener {
 		@Override
 		public void mouseDragged(MouseEvent e) {
 
-			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
+//			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
 				double a = getPressX() - e.getX();
 				double b = getPressY() - e.getY();
 				int c = ((Number) Math.sqrt((a * a) + (b * b))).intValue();
@@ -222,40 +222,39 @@ public abstract class Background extends JFrame implements ActionListener {
 						try {
 							Thread.sleep(10);
 							if (slope == -1) {
-								System.out.println("-1");
+//								System.out.println("-1");
 								pointer[0].setLocation(x + c / 4, y - 5);
 								pointer[1].setLocation(x + c / 2, y - 25);
 								pointer[2].setLocation(x + (c / 2) + (c / 4), y - 45);
 								pointer[3].setLocation(x + c, y - 65);
 
 							} else if (slope > -1 && slope <= 0.5) {
-								System.out.println(" -1 초과 0.5 이");
+//								System.out.println(" -1 초과 0.5 이");
 								pointer[0].setLocation(x + c / 4, y - 5);
 								pointer[1].setLocation(x + c / 2, y - 15);
 								pointer[2].setLocation(x + c / 2 + c / 4, y - 25);
 								pointer[3].setLocation(x + c, y - 35);
 
 							} else if (slope > 0.5 && slope <= 0) {
-								System.out.println("05초과  0 이하  ");
+//								System.out.println("05초과  0 이하  ");
 								pointer[0].setLocation(x + c / 4, y - 0);
 								pointer[1].setLocation(x + c / 2, y - 5);
 								pointer[2].setLocation(x + c / c / 2 + c / 4, y - 10);
 								pointer[3].setLocation(x + c, y - 15);
 
 							} else if (slope < -1 && slope >= 1.5) {
-								System.out.println("-1초과  1.5 이하 ");
+//								System.out.println("-1초과  1.5 이하 ");
 								pointer[0].setLocation(x + c / 4, y - 5);
 								pointer[1].setLocation(x + c / 2, y - 40);
 								pointer[2].setLocation(x + c / 2 + c / 4, y - 75);
 								pointer[3].setLocation(x + c, y - 105);
 
 							} else if (slope < 1.5) {
-								System.out.println("1.5 이하 ");
+//								System.out.println("1.5 이하 ");
 								pointer[0].setLocation(x + c / 4, y - 5);
 								pointer[1].setLocation(x + c / 2, y - 50);
 								pointer[2].setLocation(x + c / 2 + c / 4, y - 85);
 								pointer[3].setLocation(x + c, y - 120);
-
 							}
 
 							backgroundImageLabel.add(pointer[0]);
@@ -287,7 +286,7 @@ public abstract class Background extends JFrame implements ActionListener {
 					}
 				}).start();
 			}
-		}
+//		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
