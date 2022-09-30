@@ -1,6 +1,9 @@
 package teamProject.map;
 
+import java.awt.Graphics;
+
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 import component.Enemy;
 import component.TreeBlock;
@@ -20,7 +23,9 @@ public class JungleMapFrame extends Background {
 	private TreeBlock[] WoodOblongBlock = new TreeBlock[5];
 	private TreeBlock[] longWoodOblongBlock = new TreeBlock[5];
 	private TreeBlock[] roofBlock = new TreeBlock[1];
+	
 
+	
 	private int WOODSQUARE_WIDTH = 50;
 	private int WOODSQUARE_HEIGHT = 50;
 
@@ -97,6 +102,7 @@ public class JungleMapFrame extends Background {
 		for (int i = 0; i < longWoodOblongBlock.length; i++) {
 			longWoodOblongBlock[i] = new TreeBlock(new ImageIcon(images[2]));
 		}
+		
 
 //------------------------------------------------------------------------------------------------
 		// 지붕
@@ -172,11 +178,22 @@ public class JungleMapFrame extends Background {
 								woodSquare[j].setIcon(bomb);
 								Thread.sleep(50);
 								woodSquare[j].setVisible(false);
+								
+								// =0  --> 500
+								mContext.score += 500;
+								mContext.scoreLabel.setText("SCORE : " + mContext.score);
+								woodSquare[j].setLocation(0 ,0);
+								woodSquare[j].removeAll();
+								
+								repaint();
+								//mContext.scoreLabel.repaint();
+
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
+						
 					}
 				}
 
@@ -189,8 +206,8 @@ public class JungleMapFrame extends Background {
 			while (true) {
 				for (int i = 0; i < player.length; i++) {
 					for (int j = 0; j < longWoodBlock.length; j++) {
-						if (Math.abs(longWoodBlock[j].getX() - player[i].getX()) < 100
-								&& Math.abs(longWoodBlock[j].getY() - player[i].getY()) < 100) {
+						if (Math.abs(longWoodBlock[j].getX() - player[i].getX()) < 50
+								&& Math.abs(longWoodBlock[j].getY() - player[i].getY()) < 50) {
 							allBomb();
 							
 
@@ -205,20 +222,31 @@ public class JungleMapFrame extends Background {
 	public void allBomb() {
 		new Thread(() -> {
 			for (int i = 0; i < woodBlock.length; i++) {
-				woodBlock[i].setIcon(bomb);
+
 				try {
-					Thread.sleep(40);
+					woodBlock[i].setIcon(bomb);
+					Thread.sleep(30);
 					woodBlock[i].setVisible(false);
+//					mContext.score += 7;
+//					mContext.scoreLabel.setText("SCORE : " + (mContext.score += 10 ));
+					woodBlock[i].setLocation(0 ,0);
+					woodBlock[i].removeAll();
+//					repaint();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 			for (int i = 0; i < longWoodOblongBlock.length; i++) {
-				longWoodOblongBlock[i].setIcon(bomb);
+					
 				try {
-					Thread.sleep(40);
+					longWoodOblongBlock[i].setIcon(bomb);
+					Thread.sleep(30);
 					longWoodOblongBlock[i].setVisible(false);
+//					mContext.scoreLabel.setText("SCORE : " + mContext.score);
+					longWoodOblongBlock[i].setLocation(0 ,0);
+					longWoodOblongBlock[i].removeAll();
+//					repaint();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -226,34 +254,48 @@ public class JungleMapFrame extends Background {
 
 			}
 			for (int i = 0; i < WoodOblongBlock.length; i++) {
-				WoodOblongBlock[i].setIcon(bomb);
 				try {
-					Thread.sleep(40);
+					WoodOblongBlock[i].setIcon(bomb);
+					Thread.sleep(30);
 					WoodOblongBlock[i].setVisible(false);
+//					mContext.score += 5;
+//					mContext.scoreLabel.setText("SCORE : " + (mContext.score + 500));
+					WoodOblongBlock[i].setLocation(0 ,0);
+					WoodOblongBlock[i].removeAll();
+//					repaint();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 			for (int i = 0; i < longWoodBlock.length; i++) {
-				longWoodBlock[i].setIcon(bomb);
 				try {
-					Thread.sleep(40);
+					longWoodBlock[i].setIcon(bomb);
+					Thread.sleep(30);
 					longWoodBlock[i].setVisible(false);
+//					mContext.score += 2;
+//					mContext.scoreLabel.setText("SCORE : " + (mContext.score + 200));
+					longWoodBlock[i].setLocation(0 ,0);
+					longWoodBlock[i].removeAll();
+//					repaint();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-					enemy.setLocation(750, 420);
+//				move();
 				
 			}
 			
 			for (int i = 0; i < roofBlock.length; i++) {
-				roofBlock[i].setIcon(bomb);
 				try {
-					Thread.sleep(40);
+					roofBlock[i].setIcon(bomb);
+					Thread.sleep(30);
 					roofBlock[i].setVisible(false);
+//					mContext.score += 10_000;
+//					mContext.scoreLabel.setText("SCORE : " + (mContext.score + 1000));
+					roofBlock[i].setLocation(0 ,0);
+					roofBlock[i].removeAll();
+//					repaint();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -264,4 +306,22 @@ public class JungleMapFrame extends Background {
 		}).start();
 
 	}
+//	/// 내일
+//	public void move() {
+//		new Thread(() -> {
+//			try {
+//				Thread.sleep(100);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			for(int j = 0; j < 185; j++) {
+//				enemy.setLocation(750, 245 + j);
+//				repaint();
+//			}
+////			enemy.setLocation(750, 420);			 // 235 -> 420		= 185
+//		}).start();
+//	}
+	
+	
 }

@@ -145,7 +145,7 @@ public class Player extends JLabel {
 	public void blackSkill() {
 		int playerX = mContext.player[1].getX();
 		int playerY = mContext.player[1].getY();
-		if (mContext.getBirdType() == 1 && isMove == false) {
+		if (mContext.getBirdType() == 1) {
 			System.out.println("블랙 스킬 ");
 			try {
 				Thread.sleep(5);

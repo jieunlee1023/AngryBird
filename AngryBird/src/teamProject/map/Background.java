@@ -7,7 +7,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import component.Enemy;
 import component.Pointer;
 import component.player.Player;
 
@@ -17,6 +16,7 @@ public abstract class Background extends JFrame {
 	Background mContext = this;
 	public JLabel backgroundImageLabel;
 	protected JLabel holderLabel;
+	protected JLabel scoreLabel;
 
 	private MyMouseAdapter myAdapter;
 
@@ -27,8 +27,12 @@ public abstract class Background extends JFrame {
 
 	protected int birdType;
 	protected int birdState;
+	JungleMapFrame frame;
 
 	boolean crashState;
+	String scoreText = "SCORE : ";
+	// 블록당 점수를 다르게 만들기 위함
+	static int score;
 
 	public Player[] player;
 	public Pointer[] pointer;
@@ -113,6 +117,10 @@ public abstract class Background extends JFrame {
 		holderLabel = new JLabel(new ImageIcon("images/img.png"));
 		backgroundImageLabel = new JLabel(new ImageIcon(fileName));
 
+		score = 0;
+//		scoreLabel = new JLabel(Integer.toString(score));
+		scoreLabel = new JLabel(scoreText + score/ 1000);
+
 		myAdapter = new MyMouseAdapter();
 
 	}
@@ -139,12 +147,16 @@ public abstract class Background extends JFrame {
 		backgroundImageLabel.add(player[1]);
 		backgroundImageLabel.add(player[2]);
 
+		// 점수판
+		scoreLabel.setSize(150, 50);
+		scoreLabel.setLocation(800, 20);
+		scoreLabel.setText(scoreText + score);
+		backgroundImageLabel.add(scoreLabel);
+
 		// 거치대
 		holderLabel.setSize(60, 150);
 		holderLabel.setLocation(80, 340);
 		backgroundImageLabel.add(holderLabel);
-
-		// 맵
 
 	}
 
