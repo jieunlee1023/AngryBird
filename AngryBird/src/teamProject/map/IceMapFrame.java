@@ -148,9 +148,9 @@ public class IceMapFrame extends Background {
 		enemyTop.setSize(60, 60);
 		enemyTop.setLocation(800, 170);
 		backgroundImageLabel.add(enemyTop);
-		
+
 	}
-	
+
 	public void crash(IceBlock[] iceBlock) {
 		for (int i = 0; i < iceBlock.length; i++) {
 			for (int j = 0; j < player.length; j++) {
@@ -167,8 +167,7 @@ public class IceMapFrame extends Background {
 	public void enemyCrash(Enemy enemy) {
 
 		for (int i = 0; i < player.length; i++) {
-			if (Math.abs(enemy.getX() - player[i].getX()) < 50 
-					&& Math.abs(enemy.getY() - player[i].getY()) < 50) {
+			if (Math.abs(enemy.getX() - player[i].getX()) < 50 && Math.abs(enemy.getY() - player[i].getY()) < 50) {
 				JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
 				enemyOut.setSize(60, 60);
 				enemyOut.setLocation(enemy.getX(), enemy.getY());
@@ -180,9 +179,9 @@ public class IceMapFrame extends Background {
 					e.printStackTrace();
 				}
 				enemyOut.setVisible(false);
-				
+
 			}
-		}//new BossMapFrame("images/boss/bg4.png");
+		} // new BossMapFrame("images/boss/bg4.png");
 
 	}
 

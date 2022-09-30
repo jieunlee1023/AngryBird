@@ -54,6 +54,14 @@ public abstract class Background extends JFrame implements ActionListener {
 		return birdType;
 	}
 
+	public static int getScore() {
+		return score;
+	}
+
+	public static void setScore(int score) {
+		Background.score = score;
+	}
+
 	public void setBirdType(int birdType) {
 		this.birdType = birdType;
 	}

@@ -62,6 +62,7 @@ public class JungleMapFrame extends Background {
 	public JungleMapFrame(String fileName) {
 		super(fileName);
 		initData();
+		endStage();
 //		
 	}
 
@@ -193,8 +194,10 @@ public class JungleMapFrame extends Background {
 								woodSquare[j].setVisible(false);
 
 								// =0 --> 500
+//								mContext.setScore() += 500;
 								mContext.score += 500;
-								mContext.scoreLabel.setText("SCORE : " + mContext.score);
+
+								mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
 								woodSquare[j].setLocation(0, 0);
 								woodSquare[j].removeAll();
 								repaint();
@@ -223,12 +226,19 @@ public class JungleMapFrame extends Background {
 						move();
 //						enemy.setIcon(shield);
 						realBomb.setVisible(false);
-
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 
 			}
+
 		}).start();
+
 	}
 
 	public void allBomb() {
@@ -237,7 +247,7 @@ public class JungleMapFrame extends Background {
 
 				try {
 					woodBlock[i].setIcon(bomb);
-					Thread.sleep(30);
+					Thread.sleep(90);
 					woodBlock[i].setVisible(false);
 //					mContext.score += 7;
 //					mContext.scoreLabel.setText("SCORE : " + (mContext.score += 10 ));
@@ -253,7 +263,7 @@ public class JungleMapFrame extends Background {
 
 				try {
 					longWoodOblongBlock[i].setIcon(bomb);
-					Thread.sleep(30);
+					Thread.sleep(90);
 					longWoodOblongBlock[i].setVisible(false);
 //					mContext.scoreLabel.setText("SCORE : " + mContext.score);
 					longWoodOblongBlock[i].setLocation(0, 0);
@@ -268,7 +278,7 @@ public class JungleMapFrame extends Background {
 			for (int i = 0; i < WoodOblongBlock.length; i++) {
 				try {
 					WoodOblongBlock[i].setIcon(bomb);
-					Thread.sleep(30);
+					Thread.sleep(90);
 					WoodOblongBlock[i].setVisible(false);
 //					mContext.score += 5;
 //					mContext.scoreLabel.setText("SCORE : " + (mContext.score + 500));
@@ -284,7 +294,7 @@ public class JungleMapFrame extends Background {
 				try {
 
 					longWoodBlock[i].setIcon(bomb);
-					Thread.sleep(30);
+					Thread.sleep(90);
 					longWoodBlock[i].setVisible(false);
 //					mContext.score += 2;
 //					mContext.scoreLabel.setText("SCORE : " + (mContext.score + 200));
@@ -302,7 +312,7 @@ public class JungleMapFrame extends Background {
 			for (int i = 0; i < roofBlock.length; i++) {
 				try {
 					roofBlock[i].setIcon(bomb);
-					Thread.sleep(30);
+					Thread.sleep(90);
 					roofBlock[i].setVisible(false);
 //					mContext.score += 10_000;
 					mContext.scoreLabel.setText("SCORE : " + (mContext.score + 100));
@@ -322,36 +332,33 @@ public class JungleMapFrame extends Background {
 
 	/// 내일
 	public void move() {
-		new Thread(() -> {
-			while (enemyOutState == 0) {
-				try {
-					Thread.sleep(650);
-					for (int j = 0; j < 178; j++) {
-						shieldPig.setIcon(lastTarget);
-						shieldPig.setLocation(750, 245 + j);
-						repaint();
-					}
 
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		try {
+			Thread.sleep(1950);
+			for (int j = 0; j < 178; j++) {
+//						shieldPig.setIcon(lastTarget);
+				// shieldPig.g
+				shieldPig.setLocation(750, 245 + j);
+				repaint();
 			}
 
-//			enemy.setLocation(750, 420);			 // 235 -> 420		= 185
-		}).start();
-
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+
+//			enemy.setLocation(750, 420);			 // 235 -> 420		= 185
 
 	public void endStage() {
 		new Thread(() -> {
 			while (enemyOutState == 0) {
 				for (int i = 0; i < player.length; i++) {
-					if (Math.abs(target.getX() - player[i].getX()) < 50
-							&& Math.abs(target.getY() - player[i].getY()) < 50) {
+					if (Math.abs(shieldPig.getX() - player[i].getX()) < 100
+							&& Math.abs(shieldPig.getY() - player[i].getY()) < 100) {
 						JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
 						enemyOut.setSize(60, 60);
-						enemyOut.setLocation(target.getX(), target.getY());
+						enemyOut.setLocation(shieldPig.getX(), shieldPig.getY());
 						backgroundImageLabel.add(enemyOut);
 						shieldPig.setVisible(false);
 						try {
