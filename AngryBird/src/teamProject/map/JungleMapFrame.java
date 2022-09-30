@@ -3,6 +3,7 @@ package teamProject.map;
 import java.awt.Graphics;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import component.Enemy;
@@ -23,9 +24,9 @@ public class JungleMapFrame extends Background {
 	private TreeBlock[] WoodOblongBlock = new TreeBlock[5];
 	private TreeBlock[] longWoodOblongBlock = new TreeBlock[5];
 	private TreeBlock[] roofBlock = new TreeBlock[1];
-	
 
-	
+	private int enemyOutState;
+
 	private int WOODSQUARE_WIDTH = 50;
 	private int WOODSQUARE_HEIGHT = 50;
 
@@ -43,37 +44,49 @@ public class JungleMapFrame extends Background {
 
 	TreeBlock treeBlock;
 
-	private ImageIcon pig;
 	private ImageIcon bomb;
+	private ImageIcon lastTarget;
 
-	Enemy enemy;
+	Enemy shieldPig;
+	Enemy realBomb;
+	Enemy target;
 
 	public Enemy getEnemy() {
-		return enemy;
+		return shieldPig;
 	}
 
 	public void setEnemy(Enemy enemy) {
-		this.enemy = enemy;
+		this.shieldPig = enemy;
 	}
 
 	public JungleMapFrame(String fileName) {
 		super(fileName);
 		initData();
-
+//		
 	}
 
 	private void initData() {
+		enemyOutState = 0;
 		setTitle("jungle Maps");
 		// pig
-		enemy = new Enemy(new ImageIcon("images/pig.png"));
-		backgroundImageLabel.add(enemy);
-		enemy.setSize(100, 100);
-		enemy.setLocation(750, 235);
+		shieldPig = new Enemy(new ImageIcon("images/shield.png"));
+		realBomb = new Enemy(new ImageIcon("images/bomb.png"));
+		target = new Enemy(new ImageIcon("images/bomb.png"));
+
+		backgroundImageLabel.add(target);
+		backgroundImageLabel.add(shieldPig);
+		shieldPig.setSize(100, 100);
+		shieldPig.setLocation(750, 235);
+
+		backgroundImageLabel.add(realBomb);
+		realBomb.setSize(45, 45);
+		realBomb.setLocation(615, 297);
 
 		// 터지는 모션
 		bomb = new ImageIcon("images/bumb1.png");
-		
-		//roof
+		lastTarget = new ImageIcon("images/pig.png");
+
+		// roof
 		for (int i = 0; i < roofBlock.length; i++) {
 			roofBlock[i] = new TreeBlock(new ImageIcon(images[5]));
 		}
@@ -102,7 +115,6 @@ public class JungleMapFrame extends Background {
 		for (int i = 0; i < longWoodOblongBlock.length; i++) {
 			longWoodOblongBlock[i] = new TreeBlock(new ImageIcon(images[2]));
 		}
-		
 
 //------------------------------------------------------------------------------------------------
 		// 지붕
@@ -165,6 +177,7 @@ public class JungleMapFrame extends Background {
 		}
 		crush();
 		allBlockArrayCrush();
+
 	}
 
 	public void crush() {
@@ -178,26 +191,21 @@ public class JungleMapFrame extends Background {
 								woodSquare[j].setIcon(bomb);
 								Thread.sleep(50);
 								woodSquare[j].setVisible(false);
-<<<<<<< HEAD
-								
-								// =0  --> 500
+
+								// =0 --> 500
 								mContext.score += 500;
 								mContext.scoreLabel.setText("SCORE : " + mContext.score);
-								woodSquare[j].setLocation(0 ,0);
+								woodSquare[j].setLocation(0, 0);
 								woodSquare[j].removeAll();
-								
 								repaint();
-								//mContext.scoreLabel.repaint();
+								// mContext.scoreLabel.repaint();
 
-=======
-							
->>>>>>> 7439be01ec9523055f8e257f3cf5a83314be5734
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
-						
+
 					}
 				}
 
@@ -209,13 +217,13 @@ public class JungleMapFrame extends Background {
 		new Thread(() -> {
 			while (true) {
 				for (int i = 0; i < player.length; i++) {
-					for (int j = 0; j < longWoodBlock.length; j++) {
-						if (Math.abs(longWoodBlock[j].getX() - player[i].getX()) < 50
-								&& Math.abs(longWoodBlock[j].getY() - player[i].getY()) < 50) {
-							allBomb();
-							
+					if (Math.abs(realBomb.getX() - player[i].getX()) < 50
+							&& Math.abs(realBomb.getY() - player[i].getY()) < 50) {
+						allBomb();
+						move();
+//						enemy.setIcon(shield);
+						realBomb.setVisible(false);
 
-						}
 					}
 				}
 
@@ -233,7 +241,7 @@ public class JungleMapFrame extends Background {
 					woodBlock[i].setVisible(false);
 //					mContext.score += 7;
 //					mContext.scoreLabel.setText("SCORE : " + (mContext.score += 10 ));
-					woodBlock[i].setLocation(0 ,0);
+					woodBlock[i].setLocation(0, 0);
 					woodBlock[i].removeAll();
 //					repaint();
 				} catch (InterruptedException e) {
@@ -242,13 +250,13 @@ public class JungleMapFrame extends Background {
 				}
 			}
 			for (int i = 0; i < longWoodOblongBlock.length; i++) {
-					
+
 				try {
 					longWoodOblongBlock[i].setIcon(bomb);
 					Thread.sleep(30);
 					longWoodOblongBlock[i].setVisible(false);
 //					mContext.scoreLabel.setText("SCORE : " + mContext.score);
-					longWoodOblongBlock[i].setLocation(0 ,0);
+					longWoodOblongBlock[i].setLocation(0, 0);
 					longWoodOblongBlock[i].removeAll();
 //					repaint();
 				} catch (InterruptedException e) {
@@ -264,7 +272,7 @@ public class JungleMapFrame extends Background {
 					WoodOblongBlock[i].setVisible(false);
 //					mContext.score += 5;
 //					mContext.scoreLabel.setText("SCORE : " + (mContext.score + 500));
-					WoodOblongBlock[i].setLocation(0 ,0);
+					WoodOblongBlock[i].setLocation(0, 0);
 					WoodOblongBlock[i].removeAll();
 //					repaint();
 				} catch (InterruptedException e) {
@@ -274,58 +282,106 @@ public class JungleMapFrame extends Background {
 			}
 			for (int i = 0; i < longWoodBlock.length; i++) {
 				try {
+
 					longWoodBlock[i].setIcon(bomb);
 					Thread.sleep(30);
 					longWoodBlock[i].setVisible(false);
 //					mContext.score += 2;
 //					mContext.scoreLabel.setText("SCORE : " + (mContext.score + 200));
-					longWoodBlock[i].setLocation(0 ,0);
+					longWoodBlock[i].setLocation(0, 0);
 					longWoodBlock[i].removeAll();
+
 //					repaint();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-//				move();
-				
+
 			}
-			
+
 			for (int i = 0; i < roofBlock.length; i++) {
 				try {
 					roofBlock[i].setIcon(bomb);
 					Thread.sleep(30);
 					roofBlock[i].setVisible(false);
 //					mContext.score += 10_000;
-//					mContext.scoreLabel.setText("SCORE : " + (mContext.score + 1000));
-					roofBlock[i].setLocation(0 ,0);
+					mContext.scoreLabel.setText("SCORE : " + (mContext.score + 100));
+					roofBlock[i].setLocation(0, 0);
 					roofBlock[i].removeAll();
 //					repaint();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 			}
 
 		}).start();
 
 	}
-//	/// 내일
-//	public void move() {
-//		new Thread(() -> {
-//			try {
-//				Thread.sleep(100);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			for(int j = 0; j < 185; j++) {
-//				enemy.setLocation(750, 245 + j);
-//				repaint();
-//			}
-////			enemy.setLocation(750, 420);			 // 235 -> 420		= 185
-//		}).start();
-//	}
-	
-	
+
+	/// 내일
+	public void move() {
+		new Thread(() -> {
+			while (enemyOutState == 0) {
+				try {
+					Thread.sleep(650);
+					for (int j = 0; j < 178; j++) {
+						shieldPig.setIcon(lastTarget);
+						shieldPig.setLocation(750, 245 + j);
+						repaint();
+					}
+
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+//			enemy.setLocation(750, 420);			 // 235 -> 420		= 185
+		}).start();
+
+	}
+
+	public void endStage() {
+		new Thread(() -> {
+			while (enemyOutState == 0) {
+				for (int i = 0; i < player.length; i++) {
+					if (Math.abs(target.getX() - player[i].getX()) < 50
+							&& Math.abs(target.getY() - player[i].getY()) < 50) {
+						JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
+						enemyOut.setSize(60, 60);
+						enemyOut.setLocation(target.getX(), target.getY());
+						backgroundImageLabel.add(enemyOut);
+						shieldPig.setVisible(false);
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						enemyOut.setVisible(false);
+						enemyOutState++;
+						System.out.println(enemyOutState);
+					}
+				}
+			}
+			if (enemyOutState == 1) {
+				JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
+				clear.setSize(1000, 570);
+				clear.setLocation(0, 0);
+				backgroundImageLabel.add(clear);
+
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+				new HolloweenMapFrame("images/bg3.png");
+				setVisible(false);
+			}
+
+		}).start();
+
+	}
 }

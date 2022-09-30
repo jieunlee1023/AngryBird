@@ -147,10 +147,6 @@ public class Player extends JLabel {
 		int playerX = mContext.player[1].getX();
 		int playerY = mContext.player[1].getY();
 		if (mContext.getBirdType() == 1) {
-<<<<<<< HEAD
-			System.out.println("블랙 스킬 ");
-=======
->>>>>>> 7439be01ec9523055f8e257f3cf5a83314be5734
 			try {
 				Thread.sleep(5);
 			} catch (InterruptedException e) {

@@ -19,13 +19,12 @@ public abstract class Background extends JFrame implements ActionListener {
 	Background mContext = this;
 	public JLabel backgroundImageLabel;
 	protected JLabel holderLabel;
-<<<<<<< HEAD
+
 	protected JLabel scoreLabel;
-=======
+
 	public JLabel clickHereLabel;
 	public JLabel clickHereLetterLabel;
 	public JButton goBackButton;
->>>>>>> 7439be01ec9523055f8e257f3cf5a83314be5734
 
 	private MyMouseAdapter myAdapter;
 
@@ -207,7 +206,7 @@ public abstract class Background extends JFrame implements ActionListener {
 		public void mousePressed(MouseEvent e) {
 			pressX = ((Number) e.getX()).doubleValue();
 			pressY = ((Number) e.getY()).doubleValue();
-			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
+//			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
 				if (birdType == 0) {
 					player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
 				} else if (birdType == 1) {
@@ -215,7 +214,7 @@ public abstract class Background extends JFrame implements ActionListener {
 				} else if (birdType == 2) {
 					player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
 				}
-			}
+//			}
 
 		}
 
