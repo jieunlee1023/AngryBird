@@ -251,42 +251,58 @@ public abstract class Background extends JFrame implements ActionListener {
 
 					try {
 						Thread.sleep(10);
-						if (slope == -1) {
-//								System.out.println("-1");
-							pointer[0].setLocation(x + c / 4, y - 5);
-							pointer[1].setLocation(x + c / 2, y - 25);
-							pointer[2].setLocation(x + (c / 2) + (c / 4), y - 45);
-							pointer[3].setLocation(x + c, y - 65);
+						
+					// 이게 진짜임 건들지 말것 건드리면 화냄 !!!!!!!!! 	
+					//수평  
+						if (slope > 0 && slope < 1) {
 
-						} else if (slope > -1 && slope <= 0.5) {
-//								System.out.println(" -1 초과 0.5 이");
-							pointer[0].setLocation(x + c / 4, y - 5);
-							pointer[1].setLocation(x + c / 2, y - 15);
-							pointer[2].setLocation(x + c / 2 + c / 4, y - 25);
-							pointer[3].setLocation(x + c, y - 35);
+							pointer[0].setLocation(x + c / 4, y );
+							pointer[1].setLocation(x + c / 2, y );
+							pointer[2].setLocation(x + c / 2 + c / 4, y );
+							pointer[3].setLocation(x + c, y );
 
-						} else if (slope > 0.5 && slope <= 0) {
-//								System.out.println("05초과  0 이하  ");
-							pointer[0].setLocation(x + c / 4, y - 0);
-							pointer[1].setLocation(x + c / 2, y - 5);
-							pointer[2].setLocation(x + c / c / 2 + c / 4, y - 10);
-							pointer[3].setLocation(x + c, y - 15);
+							// 15도 완만
+						} else if (slope > -0.5 && slope <= 0) {
 
-						} else if (slope < -1 && slope >= 1.5) {
-//								System.out.println("-1초과  1.5 이하 ");
 							pointer[0].setLocation(x + c / 4, y - 5);
-							pointer[1].setLocation(x + c / 2, y - 40);
-							pointer[2].setLocation(x + c / 2 + c / 4, y - 75);
-							pointer[3].setLocation(x + c, y - 105);
+							pointer[1].setLocation(x + c / 2, y - 20);
+							pointer[2].setLocation(x + c / 2 + c / 4, y - 35);
+							pointer[3].setLocation(x + c, y - 50);
 
-						} else if (slope < 1.5) {
-//								System.out.println("1.5 이하 ");
+							// 30도
+						} else if (slope > -1 && slope <= -0.5) {
+
 							pointer[0].setLocation(x + c / 4, y - 5);
-							pointer[1].setLocation(x + c / 2, y - 50);
-							pointer[2].setLocation(x + c / 2 + c / 4, y - 85);
-							pointer[3].setLocation(x + c, y - 120);
+							pointer[1].setLocation(x + c / 2, y - 30);
+							pointer[2].setLocation(x + c / 2 + c / 4, y - 55);
+							pointer[3].setLocation(x + c, y - 70);
+
+							// 60 도
+						} else if (slope > -1.5 && slope <= -1) {
+							pointer[0].setLocation(x + 5, y - c / 4);
+							pointer[1].setLocation(x + 30, y - c / 2);
+							pointer[2].setLocation(x + 55, y - (c / 2 + c / 4));
+							pointer[3].setLocation(x + 70, y - c);
+
+							// 매우 가파름 80도 언저리
+						} else if (slope < -1.5) {
+							pointer[0].setLocation(x + 5, y - c / 4);
+							pointer[1].setLocation(x + 20, y - c / 2);
+							pointer[2].setLocation(x + 35, y - (c / 2 + c / 4));
+							pointer[3].setLocation(x + 50, y - c);
+
+							// 수직
+						} else if (slope > 1) {
+
+							pointer[0].setLocation(x , y - c / 4);
+							pointer[1].setLocation(x, y - c / 2);
+							pointer[2].setLocation(x , y - c / 2 + c / 4);
+							pointer[3].setLocation(x, y - c);
 
 						}
+						
+						
+						
 
 						backgroundImageLabel.add(pointer[0]);
 						backgroundImageLabel.add(pointer[1]);
@@ -329,6 +345,15 @@ public abstract class Background extends JFrame implements ActionListener {
 
 				player[birdType].playerMove();
 			}
+		}
+	}
+	
+	public void pointerMove(int x, int y, int c, int a, int b ) {
+		for(int i = 0; i < 10; i ++) {
+			pointer[0].setLocation(x + c / 4, y - 5);
+			pointer[1].setLocation(x + c / 2, y - 50);
+			pointer[2].setLocation(x + c / 2 + c / 4, y - 85);
+			pointer[3].setLocation(x + c, y - 120);
 		}
 	}
 

@@ -164,6 +164,10 @@ public class IceMapFrame extends Background {
 				if (Math.abs(iceBlock[i].getX() - player[j].getX()) < 50
 						&& Math.abs(iceBlock[i].getY() - player[j].getY()) < 50) {
 //					System.out.println("부딪힘");
+					// 블록 맞으면 +200 점  
+					mContext.score += 200;
+					mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
+					iceBlock[i].setLocation(0, 0);
 					iceBlock[i].setVisible(false);
 					player[j].isMove = false;
 				}
@@ -182,6 +186,9 @@ public class IceMapFrame extends Background {
 						enemyOut.setSize(60, 60);
 						enemyOut.setLocation(enemy.getX(), enemy.getY());
 						backgroundImageLabel.add(enemyOut);
+						// 에너미 맞으면 +500 점  
+						mContext.score += 500;
+						mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
 						enemy.setVisible(false);
 						try {
 							Thread.sleep(1000);
@@ -205,9 +212,13 @@ public class IceMapFrame extends Background {
 							&& Math.abs(enemy.getY() - player[i].getY()) < 50) {
 						JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
 						enemyOut.setSize(60, 60);
-						enemyOut.setLocation(enemy.getX(), enemy.getY());
+						enemyOut.setLocation(enemy.getX(), enemy.getY());	
 						backgroundImageLabel.add(enemyOut);
+						// 에너미 맞으면 +500 점  
+						mContext.score += 500;
+						mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
 						enemy.setVisible(false);
+						
 						try {
 							Thread.sleep(500);
 						} catch (InterruptedException e) {

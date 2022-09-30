@@ -256,7 +256,10 @@ public class BossMapFrame extends Background {
 			block.setIcon(bomb);
 			Thread.sleep(50);
 			block.setVisible(false);
-
+			// 블록   맞으면 +200 점  
+			block.setLocation(0, 0);
+			mContext.score += 200;
+			mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -301,8 +304,11 @@ public class BossMapFrame extends Background {
 
 						enemyOut.setSize(60, 60);
 						enemyOut.setLocation(enemy.getX(), enemy.getY());
+						
 						enemy.setIcon(new ImageIcon("images/bumd2.png"));
-
+						// 에너미 맞으면 +500 점  
+						mContext.score += 500;
+						mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
 						try {
 							Thread.sleep(1000);
 						} catch (InterruptedException e) {
@@ -318,5 +324,7 @@ public class BossMapFrame extends Background {
 		}).start();
 
 	}
-
+	public static void main(String[] args) {
+		new BossMapFrame("images/boss/bg4");
+	}
 }
