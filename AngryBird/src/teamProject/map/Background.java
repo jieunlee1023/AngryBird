@@ -21,6 +21,7 @@ public abstract class Background extends JFrame implements ActionListener {
 	protected JLabel holderLabel;
 	protected JLabel floorLabel;
 	protected JLabel scoreLabel;
+
 	public JLabel clickHereLabel;
 	public JLabel clickHereLetterLabel;
 	public JButton goBackButton;
@@ -49,6 +50,14 @@ public abstract class Background extends JFrame implements ActionListener {
 
 	public int getBirdType() {
 		return birdType;
+	}
+
+	public static int getScore() {
+		return score;
+	}
+
+	public static void setScore(int score) {
+		Background.score = score;
 	}
 
 	public void setBirdType(int birdType) {
@@ -128,6 +137,7 @@ public abstract class Background extends JFrame implements ActionListener {
 		backgroundImageLabel = new JLabel(new ImageIcon(fileName));
 		clickHereLabel = new JLabel(new ImageIcon("images/clickhere.png"));
 		clickHereLetterLabel = new JLabel(new ImageIcon("images/clickhere2.png"));
+
 		floorLabel = new JLabel(new ImageIcon("images/floor.png"));
 
 		score = 0;
@@ -210,15 +220,15 @@ public abstract class Background extends JFrame implements ActionListener {
 		public void mousePressed(MouseEvent e) {
 			pressX = ((Number) e.getX()).doubleValue();
 			pressY = ((Number) e.getY()).doubleValue();
-			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
-				if (birdType == 0) {
-					player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-				} else if (birdType == 1) {
-					player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-				} else if (birdType == 2) {
-					player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-				}
+//			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
+			if (birdType == 0) {
+				player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+			} else if (birdType == 1) {
+				player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+			} else if (birdType == 2) {
+				player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
 			}
+//			}
 
 		}
 
@@ -275,6 +285,7 @@ public abstract class Background extends JFrame implements ActionListener {
 							pointer[1].setLocation(x + c / 2, y - 50);
 							pointer[2].setLocation(x + c / 2 + c / 4, y - 85);
 							pointer[3].setLocation(x + c, y - 120);
+
 						}
 
 						backgroundImageLabel.add(pointer[0]);
@@ -305,6 +316,7 @@ public abstract class Background extends JFrame implements ActionListener {
 					}
 				}
 			}).start();
+//			}
 		}
 //		}
 //			}

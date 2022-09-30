@@ -220,6 +220,22 @@ public class IceMapFrame extends Background {
 				}
 			}
 		}).start();
+		for (int i = 0; i < player.length; i++) {
+			if (Math.abs(enemy.getX() - player[i].getX()) < 50 && Math.abs(enemy.getY() - player[i].getY()) < 50) {
+				JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
+				enemyOut.setSize(60, 60);
+				enemyOut.setLocation(enemy.getX(), enemy.getY());
+				backgroundImageLabel.add(enemyOut);
+				enemy.setVisible(false);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				enemyOut.setVisible(false);
+
+			}
+		} // new BossMapFrame("images/boss/bg4.png");
 
 	}
 }

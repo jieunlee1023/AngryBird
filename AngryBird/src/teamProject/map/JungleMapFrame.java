@@ -3,6 +3,7 @@ package teamProject.map;
 import java.awt.Graphics;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import component.Enemy;
@@ -10,8 +11,6 @@ import component.TreeBlock;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 public class JungleMapFrame extends Background {
 
 	String[] images = { "images/woodBlock_downRec.png", "images/woodBlock_upRec.png", "images/woodBlock_thinUpRec.png",
@@ -23,6 +22,8 @@ public class JungleMapFrame extends Background {
 	private TreeBlock[] WoodOblongBlock = new TreeBlock[5];
 	private TreeBlock[] longWoodOblongBlock = new TreeBlock[5];
 	private TreeBlock[] roofBlock = new TreeBlock[1];
+
+	private int enemyOutState;
 
 	private int WOODSQUARE_WIDTH = 50;
 	private int WOODSQUARE_HEIGHT = 50;
@@ -41,35 +42,48 @@ public class JungleMapFrame extends Background {
 
 	TreeBlock treeBlock;
 
-	private ImageIcon pig;
 	private ImageIcon bomb;
+	private ImageIcon lastTarget;
 
-	Enemy enemy;
+	Enemy shieldPig;
+	Enemy realBomb;
+	Enemy target;
 
 	public Enemy getEnemy() {
-		return enemy;
+		return shieldPig;
 	}
 
 	public void setEnemy(Enemy enemy) {
-		this.enemy = enemy;
+		this.shieldPig = enemy;
 	}
 
 	public JungleMapFrame(String fileName) {
 		super(fileName);
 		initData();
-
+		endStage();
+//		
 	}
 
 	private void initData() {
+		enemyOutState = 0;
 		setTitle("jungle Maps");
 		// pig
-		enemy = new Enemy(new ImageIcon("images/pig.png"));
-		backgroundImageLabel.add(enemy);
-		enemy.setSize(100, 100);
-		enemy.setLocation(750, 235);
+		shieldPig = new Enemy(new ImageIcon("images/shield.png"));
+		realBomb = new Enemy(new ImageIcon("images/bomb.png"));
+		target = new Enemy(new ImageIcon("images/bomb.png"));
+
+		backgroundImageLabel.add(target);
+		backgroundImageLabel.add(shieldPig);
+		shieldPig.setSize(100, 100);
+		shieldPig.setLocation(750, 235);
+
+		backgroundImageLabel.add(realBomb);
+		realBomb.setSize(45, 45);
+		realBomb.setLocation(615, 297);
 
 		// 터지는 모션
 		bomb = new ImageIcon("images/bumb1.png");
+		lastTarget = new ImageIcon("images/pig.png");
 
 		// roof
 		for (int i = 0; i < roofBlock.length; i++) {
@@ -162,6 +176,7 @@ public class JungleMapFrame extends Background {
 		}
 		crush();
 		allBlockArrayCrush();
+
 	}
 
 	public void crush() {
@@ -182,6 +197,13 @@ public class JungleMapFrame extends Background {
 								woodSquare[j].setLocation(0, 0);
 								woodSquare[j].removeAll();
 
+								// =0 --> 500
+//								mContext.setScore() += 500;
+								mContext.score += 500;
+
+								mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
+								woodSquare[j].setLocation(0, 0);
+								woodSquare[j].removeAll();
 								repaint();
 								// mContext.scoreLabel.repaint();
 
@@ -206,12 +228,25 @@ public class JungleMapFrame extends Background {
 								&& Math.abs(longWoodBlock[j].getY() - player[i].getY()) < 50) {
 							allBomb();
 
+							if (Math.abs(realBomb.getX() - player[i].getX()) < 50
+									&& Math.abs(realBomb.getY() - player[i].getY()) < 50) {
+								allBomb();
+								move();
+//						enemy.setIcon(shield);
+								realBomb.setVisible(false);
+								try {
+									Thread.sleep(100);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
 						}
+
 					}
 				}
-
 			}
 		}).start();
+
 	}
 
 	public void allBomb() {
@@ -220,7 +255,7 @@ public class JungleMapFrame extends Background {
 
 				try {
 					woodBlock[i].setIcon(bomb);
-					Thread.sleep(30);
+					Thread.sleep(90);
 					woodBlock[i].setVisible(false);
 //					mContext.score += 7;
 //					mContext.scoreLabel.setText("SCORE : " + (mContext.score += 10 ));
@@ -236,7 +271,7 @@ public class JungleMapFrame extends Background {
 
 				try {
 					longWoodOblongBlock[i].setIcon(bomb);
-					Thread.sleep(30);
+					Thread.sleep(90);
 					longWoodOblongBlock[i].setVisible(false);
 //					mContext.scoreLabel.setText("SCORE : " + mContext.score);
 					longWoodOblongBlock[i].setLocation(0, 0);
@@ -251,7 +286,7 @@ public class JungleMapFrame extends Background {
 			for (int i = 0; i < WoodOblongBlock.length; i++) {
 				try {
 					WoodOblongBlock[i].setIcon(bomb);
-					Thread.sleep(30);
+					Thread.sleep(90);
 					WoodOblongBlock[i].setVisible(false);
 //					mContext.score += 5;
 //					mContext.scoreLabel.setText("SCORE : " + (mContext.score + 500));
@@ -265,13 +300,15 @@ public class JungleMapFrame extends Background {
 			}
 			for (int i = 0; i < longWoodBlock.length; i++) {
 				try {
+
 					longWoodBlock[i].setIcon(bomb);
-					Thread.sleep(30);
+					Thread.sleep(90);
 					longWoodBlock[i].setVisible(false);
 //					mContext.score += 2;
 //					mContext.scoreLabel.setText("SCORE : " + (mContext.score + 200));
 					longWoodBlock[i].setLocation(0, 0);
 					longWoodBlock[i].removeAll();
+
 //					repaint();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -284,10 +321,11 @@ public class JungleMapFrame extends Background {
 			for (int i = 0; i < roofBlock.length; i++) {
 				try {
 					roofBlock[i].setIcon(bomb);
-					Thread.sleep(30);
+					Thread.sleep(90);
 					roofBlock[i].setVisible(false);
 //					mContext.score += 10_000;
 //					mContext.scoreLabel.setText("SCORE : " + (mContext.score + 1000));
+					mContext.scoreLabel.setText("SCORE : " + (mContext.score + 100));
 					roofBlock[i].setLocation(0, 0);
 					roofBlock[i].removeAll();
 //					repaint();
@@ -301,21 +339,66 @@ public class JungleMapFrame extends Background {
 		}).start();
 
 	}
-//	/// 내일
-//	public void move() {
-//		new Thread(() -> {
-//			try {
-//				Thread.sleep(100);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			for(int j = 0; j < 185; j++) {
-//				enemy.setLocation(750, 245 + j);
-//				repaint();
-//			}
-////			enemy.setLocation(750, 420);			 // 235 -> 420		= 185
-//		}).start();
-//	}
 
+	/// 내일
+	public void move() {
+
+		try {
+			Thread.sleep(1950);
+			for (int j = 0; j < 178; j++) {
+//						shieldPig.setIcon(lastTarget);
+				// shieldPig.g
+				shieldPig.setLocation(750, 245 + j);
+				repaint();
+			}
+
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+//			enemy.setLocation(750, 420);			 // 235 -> 420		= 185
+
+	public void endStage() {
+		new Thread(() -> {
+			while (enemyOutState == 0) {
+				for (int i = 0; i < player.length; i++) {
+					if (Math.abs(shieldPig.getX() - player[i].getX()) < 100
+							&& Math.abs(shieldPig.getY() - player[i].getY()) < 100) {
+						JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
+						enemyOut.setSize(60, 60);
+						enemyOut.setLocation(shieldPig.getX(), shieldPig.getY());
+						backgroundImageLabel.add(enemyOut);
+						shieldPig.setVisible(false);
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						enemyOut.setVisible(false);
+						enemyOutState++;
+						System.out.println(enemyOutState);
+					}
+				}
+			}
+			if (enemyOutState == 1) {
+				JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
+				clear.setSize(1000, 570);
+				clear.setLocation(0, 0);
+				backgroundImageLabel.add(clear);
+
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+				new IceMapFrame("images/bg2.png");
+				setVisible(false);
+			}
+
+		}).start();
+
+	}
 }
