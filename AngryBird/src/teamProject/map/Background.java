@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import component.Enemy;
 import component.Pointer;
 import component.player.Player;
 
@@ -20,10 +19,17 @@ public abstract class Background extends JFrame implements ActionListener {
 	Background mContext = this;
 	public JLabel backgroundImageLabel;
 	protected JLabel holderLabel;
+<<<<<<< HEAD
 	protected JLabel floorLabel;
+=======
+<<<<<<< HEAD
+	protected JLabel scoreLabel;
+=======
+>>>>>>> 4ad3e526616cfbe84e7cedf4d25e5bbefe7161e6
 	public JLabel clickHereLabel;
 	public JLabel clickHereLetterLabel;
 	public JButton goBackButton;
+>>>>>>> 7439be01ec9523055f8e257f3cf5a83314be5734
 
 	private MyMouseAdapter myAdapter;
 
@@ -37,8 +43,12 @@ public abstract class Background extends JFrame implements ActionListener {
 
 	protected int birdType;
 	protected int birdState;
+	JungleMapFrame frame;
 
 	boolean crashState;
+	String scoreText = "SCORE : ";
+	// 블록당 점수를 다르게 만들기 위함
+	static int score;
 
 	public Player[] player;
 	public Pointer[] pointer;
@@ -124,7 +134,15 @@ public abstract class Background extends JFrame implements ActionListener {
 		backgroundImageLabel = new JLabel(new ImageIcon(fileName));
 		clickHereLabel = new JLabel(new ImageIcon("images/clickhere.png"));
 		clickHereLetterLabel = new JLabel(new ImageIcon("images/clickhere2.png"));
+<<<<<<< HEAD
 		floorLabel = new JLabel(new ImageIcon("images/floor.png"));
+=======
+
+		score = 0;
+//		scoreLabel = new JLabel(Integer.toString(score));
+		scoreLabel = new JLabel(scoreText + score/ 1000);
+
+>>>>>>> 4ad3e526616cfbe84e7cedf4d25e5bbefe7161e6
 		myAdapter = new MyMouseAdapter();
 
 	}
@@ -162,6 +180,12 @@ public abstract class Background extends JFrame implements ActionListener {
 		clickHereLetterLabel.setSize(75, 50);
 		clickHereLetterLabel.setLocation(75, 270);
 		backgroundImageLabel.add(clickHereLetterLabel);
+
+		// 점수판
+		scoreLabel.setSize(150, 50);
+		scoreLabel.setLocation(800, 20);
+		scoreLabel.setText(scoreText + score);
+		backgroundImageLabel.add(scoreLabel);
 
 		// 거치대
 		holderLabel.setSize(60, 150);
