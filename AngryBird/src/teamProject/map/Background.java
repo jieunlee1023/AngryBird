@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import component.Enemy;
 import component.Pointer;
 import component.player.Player;
 
@@ -20,6 +19,8 @@ public abstract class Background extends JFrame implements ActionListener {
 	Background mContext = this;
 	public JLabel backgroundImageLabel;
 	protected JLabel holderLabel;
+	protected JLabel floorLabel;
+	protected JLabel scoreLabel;
 	public JLabel clickHereLabel;
 	public JLabel clickHereLetterLabel;
 	public JButton goBackButton;
@@ -36,8 +37,12 @@ public abstract class Background extends JFrame implements ActionListener {
 
 	protected int birdType;
 	protected int birdState;
+	JungleMapFrame frame;
 
 	boolean crashState;
+	String scoreText = "SCORE : ";
+	// 블록당 점수를 다르게 만들기 위함
+	static int score;
 
 	public Player[] player;
 	public Pointer[] pointer;
@@ -109,9 +114,9 @@ public abstract class Background extends JFrame implements ActionListener {
 
 		// 플레이어 주소값 입력
 		player = new Player[3];
-		player[0] = new Player(new ImageIcon("images/redbird.png"), 140, 440, this);
-		player[1] = new Player(new ImageIcon("images/blackbird.png"), 100, 440, this);
-		player[2] = new Player(new ImageIcon("images/yellowbird.png"), 60, 440, this);
+		player[0] = new Player(new ImageIcon("images/redbird.png"), 40, 410, this);
+		player[1] = new Player(new ImageIcon("images/blackbird.png"), 80, 420, this);
+		player[2] = new Player(new ImageIcon("images/yellowbird.png"), 0, 420, this);
 
 		pointer = new Pointer[4];
 		for (int i = 0; i < pointer.length; i++) {
@@ -123,6 +128,11 @@ public abstract class Background extends JFrame implements ActionListener {
 		backgroundImageLabel = new JLabel(new ImageIcon(fileName));
 		clickHereLabel = new JLabel(new ImageIcon("images/clickhere.png"));
 		clickHereLetterLabel = new JLabel(new ImageIcon("images/clickhere2.png"));
+		floorLabel = new JLabel(new ImageIcon("images/floor.png"));
+
+		score = 0;
+//		scoreLabel = new JLabel(Integer.toString(score));
+		scoreLabel = new JLabel(scoreText + score / 1000);
 
 		myAdapter = new MyMouseAdapter();
 
@@ -162,10 +172,20 @@ public abstract class Background extends JFrame implements ActionListener {
 		clickHereLetterLabel.setLocation(75, 270);
 		backgroundImageLabel.add(clickHereLetterLabel);
 
+		// 점수판
+		scoreLabel.setSize(150, 50);
+		scoreLabel.setLocation(800, 20);
+		scoreLabel.setText(scoreText + score);
+		backgroundImageLabel.add(scoreLabel);
+
 		// 거치대
 		holderLabel.setSize(60, 150);
 		holderLabel.setLocation(80, 340);
 		backgroundImageLabel.add(holderLabel);
+
+		floorLabel.setSize(145, 70);
+		floorLabel.setLocation(0, 440);
+		backgroundImageLabel.add(floorLabel);
 
 	}
 
@@ -206,75 +226,75 @@ public abstract class Background extends JFrame implements ActionListener {
 		public void mouseDragged(MouseEvent e) {
 
 //			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
-				double a = getPressX() - e.getX();
-				double b = getPressY() - e.getY();
-				int c = ((Number) Math.sqrt((a * a) + (b * b))).intValue();
-				double slope = (b / a);
+			double a = getPressX() - e.getX();
+			double b = getPressY() - e.getY();
+			int c = ((Number) Math.sqrt((a * a) + (b * b))).intValue();
+			double slope = (b / a);
 
-				int x = ((Number) getPressX()).intValue();
-				int y = ((Number) getPressY()).intValue() - 50;
+			int x = ((Number) getPressX()).intValue();
+			int y = ((Number) getPressY()).intValue() - 50;
 
-				new Thread(new Runnable() {
+			new Thread(new Runnable() {
 
-					@Override
-					public synchronized void run() {
+				@Override
+				public synchronized void run() {
 
-						try {
-							Thread.sleep(10);
-							if (slope == -1) {
+					try {
+						Thread.sleep(10);
+						if (slope == -1) {
 //								System.out.println("-1");
-								pointer[0].setLocation(x + c / 4, y - 5);
-								pointer[1].setLocation(x + c / 2, y - 25);
-								pointer[2].setLocation(x + (c / 2) + (c / 4), y - 45);
-								pointer[3].setLocation(x + c, y - 65);
+							pointer[0].setLocation(x + c / 4, y - 5);
+							pointer[1].setLocation(x + c / 2, y - 25);
+							pointer[2].setLocation(x + (c / 2) + (c / 4), y - 45);
+							pointer[3].setLocation(x + c, y - 65);
 
-							} else if (slope > -1 && slope <= 0.5) {
+						} else if (slope > -1 && slope <= 0.5) {
 //								System.out.println(" -1 초과 0.5 이");
-								pointer[0].setLocation(x + c / 4, y - 5);
-								pointer[1].setLocation(x + c / 2, y - 15);
-								pointer[2].setLocation(x + c / 2 + c / 4, y - 25);
-								pointer[3].setLocation(x + c, y - 35);
+							pointer[0].setLocation(x + c / 4, y - 5);
+							pointer[1].setLocation(x + c / 2, y - 15);
+							pointer[2].setLocation(x + c / 2 + c / 4, y - 25);
+							pointer[3].setLocation(x + c, y - 35);
 
-							} else if (slope > 0.5 && slope <= 0) {
+						} else if (slope > 0.5 && slope <= 0) {
 //								System.out.println("05초과  0 이하  ");
-								pointer[0].setLocation(x + c / 4, y - 0);
-								pointer[1].setLocation(x + c / 2, y - 5);
-								pointer[2].setLocation(x + c / c / 2 + c / 4, y - 10);
-								pointer[3].setLocation(x + c, y - 15);
+							pointer[0].setLocation(x + c / 4, y - 0);
+							pointer[1].setLocation(x + c / 2, y - 5);
+							pointer[2].setLocation(x + c / c / 2 + c / 4, y - 10);
+							pointer[3].setLocation(x + c, y - 15);
 
-							} else if (slope < -1 && slope >= 1.5) {
+						} else if (slope < -1 && slope >= 1.5) {
 //								System.out.println("-1초과  1.5 이하 ");
-								pointer[0].setLocation(x + c / 4, y - 5);
-								pointer[1].setLocation(x + c / 2, y - 40);
-								pointer[2].setLocation(x + c / 2 + c / 4, y - 75);
-								pointer[3].setLocation(x + c, y - 105);
+							pointer[0].setLocation(x + c / 4, y - 5);
+							pointer[1].setLocation(x + c / 2, y - 40);
+							pointer[2].setLocation(x + c / 2 + c / 4, y - 75);
+							pointer[3].setLocation(x + c, y - 105);
 
-							} else if (slope < 1.5) {
+						} else if (slope < 1.5) {
 //								System.out.println("1.5 이하 ");
-								pointer[0].setLocation(x + c / 4, y - 5);
-								pointer[1].setLocation(x + c / 2, y - 50);
-								pointer[2].setLocation(x + c / 2 + c / 4, y - 85);
-								pointer[3].setLocation(x + c, y - 120);
-							}
-
-							backgroundImageLabel.add(pointer[0]);
-							backgroundImageLabel.add(pointer[1]);
-							backgroundImageLabel.add(pointer[2]);
-							backgroundImageLabel.add(pointer[3]);
-
-						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+							pointer[0].setLocation(x + c / 4, y - 5);
+							pointer[1].setLocation(x + c / 2, y - 50);
+							pointer[2].setLocation(x + c / 2 + c / 4, y - 85);
+							pointer[3].setLocation(x + c, y - 120);
 						}
 
-						// 드래그 모션
-						if (birdType == 0) {
-							player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-						} else if (birdType == 1) {
-							player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-						} else if (birdType == 2) {
-							player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-						} else {
+						backgroundImageLabel.add(pointer[0]);
+						backgroundImageLabel.add(pointer[1]);
+						backgroundImageLabel.add(pointer[2]);
+						backgroundImageLabel.add(pointer[3]);
+
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+					// 드래그 모션
+					if (birdType == 0) {
+						player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+					} else if (birdType == 1) {
+						player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+					} else if (birdType == 2) {
+						player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+					} else {
 
 //							if(pig[1].getState == 0 && pig[1].getState == 0){
 //							gameover
@@ -282,11 +302,12 @@ public abstract class Background extends JFrame implements ActionListener {
 //							nextstage
 //						}
 
-						}
 					}
-				}).start();
-			}
+				}
+			}).start();
+		}
 //		}
+//			}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {

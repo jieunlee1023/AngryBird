@@ -4,6 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import teamProject.map.Background;
+
 import teamProject.map.JungleMapFrame;
 
 public class Player extends JLabel {
@@ -18,6 +19,15 @@ public class Player extends JLabel {
 	// 움직임 상태
 
 	public boolean isMove = true;
+	public boolean isStop = false;
+
+	public void setIsMove(boolean isMove) {
+		this.isMove = isMove;
+	}
+
+	public void setIsStop(boolean isStop) {
+		this.isStop = isStop;
+	}
 
 	public int getPlayerX() {
 		return playerX;
@@ -47,6 +57,7 @@ public class Player extends JLabel {
 		this.playerY = playerY;
 
 		initDate();
+//		initBackgroundService();
 	}
 
 	private void initDate() {
@@ -78,8 +89,9 @@ public class Player extends JLabel {
 				double b = mContext.getPressY() - mContext.getReleaseY();
 				// 빗변
 				int c = ((Number) Math.sqrt((a * a) + (b * b))).intValue();
+				int playerX = mContext.player[mContext.getBirdType()].getX();
+				int playerY = mContext.player[mContext.getBirdType()].getY();
 
-				System.out.println();
 				// 기울기
 				double slope = (b / a);
 
@@ -88,45 +100,55 @@ public class Player extends JLabel {
 				if (slope > 0 && slope < 1) {
 
 					fly(0, c, true, 2, 0);
-					fly(0, c, true, 2, 0);
+
+					fly(0, c + 50, true, 2, 0);
+
 					// 15도 완만
 				} else if (slope > -0.5 && slope <= 0) {
 
 					fly(0, c, true, 3, 1);
-					fly(0, c, false, 3, 1);
+
+					fly(0, c + 50, false, 3, 1);
+
 					// 30도
 				} else if (slope > -1 && slope <= -0.5) {
 
 					fly(0, c, true, 2, 1);
-					fly(0, c, false, 2, 1);
+
+					fly(0, c + 50, false, 2, 1);
 
 					// 60 도
 				} else if (slope > -1.5 && slope <= -1) {
 					fly(0, c, true, 1, 2);
-					fly(0, c, false, 1, 2);
+
+					fly(0, c + 50, false, 1, 2);
 
 					// 매우 가파름 80도 언저리
 				} else if (slope < -1.5) {
 					fly(0, c, true, 1, 3);
-					fly(0, c, false, 1, 3);
+
+					fly(0, c + 50, false, 1, 3);
 
 					// 수직
 				} else if (slope > 1) {
 
 					fly(0, c, true, 0, 2);
-					fly(0, c, false, 0, 2);
+
+					fly(0, c + 50, false, 0, 2);
+
 				}
-				
+
 				// 상태값 변경
 				mContext.setBirdState(0);
 				if (mContext.getBirdType() == 0) {
+
 					mContext.setBirdType(1);
 				} else if (mContext.getBirdType() == 1) {
 					mContext.setBirdType(2);
 				} else if (mContext.getBirdType() == 2) {
 					mContext.setBirdType(2);
 				}
-				
+
 			}
 		}).start();
 
@@ -147,20 +169,20 @@ public class Player extends JLabel {
 		int playerX = mContext.player[1].getX();
 		int playerY = mContext.player[1].getY();
 		if (mContext.getBirdType() == 1) {
+			System.out.println("블랙 스킬 ");
 			try {
 				Thread.sleep(5);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
-			e.printStackTrace();
+				e.printStackTrace();
 			}
-				blackSkill[0].setLocation(playerX, playerY - 30);
-				blackSkill[1].setLocation(playerX + 30, playerY - 70);
-				blackSkill[2].setLocation(playerX - 40, playerY - 100);
-				mContext.backgroundImageLabel.add(blackSkill[0]);			
-				mContext.backgroundImageLabel.add(blackSkill[1]);			
-				mContext.backgroundImageLabel.add(blackSkill[2]);
+			blackSkill[0].setLocation(playerX, playerY - 30);
+			blackSkill[1].setLocation(playerX + 30, playerY - 70);
+			blackSkill[2].setLocation(playerX - 40, playerY - 100);
+			mContext.backgroundImageLabel.add(blackSkill[0]);
+			mContext.backgroundImageLabel.add(blackSkill[1]);
+			mContext.backgroundImageLabel.add(blackSkill[2]);
 
-			
 		}
 	}
 
@@ -174,40 +196,35 @@ public class Player extends JLabel {
 	private void fly(int start, int end, boolean type, int moveX, int moveY) {
 		int playerX = mContext.player[mContext.getBirdType()].getX();
 		int playerY = mContext.player[mContext.getBirdType()].getY();
-
 		for (int j = start; j < end; j++) {
-
 			if (type) {
 				playerX += moveX;
 				playerY -= moveY;
 				mContext.player[mContext.getBirdType()].setLocation(playerX, playerY);
 				try {
-					Thread.sleep(1);
+					Thread.sleep(5);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			} else {
-				playerX += moveX;
-				playerY += moveY;
-				mContext.player[mContext.getBirdType()].setLocation(playerX, playerY);
-				yellowSkill[0].setLocation(playerX + 50, playerY + 50);
-				yellowSkill[1].setLocation(playerX + 100, playerY - 100);
-				yellowSkill();
+				if (playerY < 440) {
+					playerX += moveX;
+					playerY += moveY;
+					mContext.player[mContext.getBirdType()].setLocation(playerX, playerY);
+					yellowSkill[0].setLocation(playerX + 50, playerY + 50);
+					yellowSkill[1].setLocation(playerX + 50, playerY - 50);
+					yellowSkill();
+					try {
+						Thread.sleep(5);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 
-				try {
-					Thread.sleep(1);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+					blackSkill();
 				}
-				
-//				if (isMove == false) {
-//
-//					break;
-//				}
-				blackSkill();
 			}
-
+			yellowSkill[0].setLocation(playerX + 50, playerY);
+			yellowSkill[1].setLocation(playerX + 50, playerY);
 		}
 	}
-
 }

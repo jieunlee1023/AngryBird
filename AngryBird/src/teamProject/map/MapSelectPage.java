@@ -8,12 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import lombok.Getter;
-import lombok.Setter;
-import teamProject.frame.MainFrame;
-
-@Setter
-
 public class MapSelectPage extends JFrame implements ActionListener {
 
 	JLabel background;
@@ -27,11 +21,9 @@ public class MapSelectPage extends JFrame implements ActionListener {
 	final int BUTTON_SIZE_Y = 150;
 
 	public MapSelectPage() {
-
 		initData();
 		setInitLayout();
 		addEventListener();
-
 	}
 
 	private void initData() {

@@ -36,7 +36,6 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		startPage = new StartPage(mContext);
-	
 
 //		pointer = new Pointer(mContext);
 //		myAdapter = new MyMouseAdapter();

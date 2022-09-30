@@ -200,17 +200,26 @@ public class IceMapFrame extends Background {
 				clear.setLocation(0, 0);
 				backgroundImageLabel.add(clear);
 
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				for (int i = 0; i < player.length; i++) {
+					if (Math.abs(enemy.getX() - player[i].getX()) < 50
+							&& Math.abs(enemy.getY() - player[i].getY()) < 50) {
+						JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
+						enemyOut.setSize(60, 60);
+						enemyOut.setLocation(enemy.getX(), enemy.getY());
+						backgroundImageLabel.add(enemyOut);
+						enemy.setVisible(false);
+						try {
+							Thread.sleep(500);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 
-				new HolloweenMapFrame("images/bg3.png");
-				setVisible(false);
+						new HolloweenMapFrame("images/bg3.png");
+						setVisible(false);
+					}
+				}
 			}
 		}).start();
 
 	}
-
 }

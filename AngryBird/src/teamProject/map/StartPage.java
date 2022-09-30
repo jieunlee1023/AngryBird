@@ -12,8 +12,6 @@ import lombok.Getter;
 import lombok.Setter;
 import teamProject.frame.MainFrame;
 
-@Getter
-@Setter
 public class StartPage extends JLabel implements ActionListener {
 
 	MainFrame mContext;

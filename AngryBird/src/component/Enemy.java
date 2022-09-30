@@ -1,5 +1,8 @@
 package component;
 
+import java.awt.Component;
+import java.awt.Graphics;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -11,7 +14,7 @@ public class Enemy extends JLabel {
 	private ImageIcon pig;
 	private ImageIcon savedPig;
 	Player player;
-
+	
 	public ImageIcon getPig() {
 		return pig;
 	}
@@ -30,18 +33,6 @@ public class Enemy extends JLabel {
 
 	public Enemy(ImageIcon pig) {
 		this.pig = pig;
-		setIcon(pig);
-		initData();
-		setInitLayout();
-	}
-
-	// 초기 데이터
-	private void initData() {
-		setVisible(true);
-		
-	}
-
-	private void setInitLayout() {
 		setIcon(pig);
 	}
 

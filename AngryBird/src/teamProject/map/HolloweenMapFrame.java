@@ -137,9 +137,14 @@ public class HolloweenMapFrame extends Background {
 			backgroundImageLabel.add(stoneH[i]);
 		}
 		for (int i = 0; i < triangleL.length; i++) {
-			triangleL[i].setSize(20, 50);
-			triangleL[i].setLocation(810 + i * 60, 100);
+			triangleL[i].setSize(50, 50);
+			triangleL[i].setLocation(720 + i * 120, 100-i*50);
 			backgroundImageLabel.add(triangleL[i]);
+		}
+		for (int i = 0; i < triangleR.length; i++) {
+			triangleR[i].setSize(50, 50);
+			triangleR[i].setLocation(60 + i * 120, 100-i*50);
+			backgroundImageLabel.add(triangleR[i]);
 		}
 	}
 
