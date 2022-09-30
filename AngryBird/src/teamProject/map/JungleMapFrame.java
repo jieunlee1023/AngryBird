@@ -172,6 +172,7 @@ public class JungleMapFrame extends Background {
 								woodSquare[j].setIcon(bomb);
 								Thread.sleep(50);
 								woodSquare[j].setVisible(false);
+							
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
