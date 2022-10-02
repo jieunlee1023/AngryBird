@@ -144,6 +144,7 @@ public class IceMapFrame extends Background {
 		enemyTop.setSize(60, 60);
 		enemyTop.setLocation(800, 170);
 		backgroundImageLabel.add(enemyTop);
+		repaint();
 
 	}
 
@@ -205,6 +206,10 @@ public class IceMapFrame extends Background {
 			clear.setSize(1000, 570);
 			clear.setLocation(0, 0);
 			add(clear);
+			mContext.scoreTotal.setSize(420, 570);
+			scoreTotal.setLocation(350, 100);
+			scoreTotal.setText(scoreAll + score);
+			clear.add(mContext.scoreTotal);
 			repaint();
 
 			try {

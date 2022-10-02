@@ -232,7 +232,7 @@ public class HolloweenMapFrame extends Background {
 						}
 						enemyOut.setVisible(false);
 						enemyOutState++;
-						
+
 					}
 				}
 			}
@@ -249,6 +249,10 @@ public class HolloweenMapFrame extends Background {
 		clear.setSize(1000, 570);
 		clear.setLocation(0, 0);
 		add(clear);
+		mContext.scoreTotal.setSize(420, 570);
+		scoreTotal.setLocation(350, 100);
+		scoreTotal.setText(scoreAll + score);
+		clear.add(mContext.scoreTotal);
 		repaint();
 
 		try {

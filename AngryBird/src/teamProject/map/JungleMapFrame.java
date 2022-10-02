@@ -382,7 +382,7 @@ public class JungleMapFrame extends Background {
 						}
 						enemyOut.setVisible(false);
 						enemyOutState++;
-						
+
 					}
 				}
 			}
@@ -398,10 +398,16 @@ public class JungleMapFrame extends Background {
 	public void nextStage() {
 
 		JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
+
 		backgroundImageLabel.setVisible(false);
+
 		clear.setSize(1000, 570);
 		clear.setLocation(0, 0);
 		add(clear);
+		mContext.scoreTotal.setSize(420, 570);
+		scoreTotal.setLocation(350, 100);
+		scoreTotal.setText(scoreAll + score);
+		clear.add(mContext.scoreTotal);
 		repaint();
 
 		try {
