@@ -308,7 +308,7 @@ public abstract class Background extends JFrame implements ActionListener {
 						backgroundImageLabel.add(pointer[3]);
 
 					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
+						
 						e1.printStackTrace();
 					}
 
@@ -321,19 +321,11 @@ public abstract class Background extends JFrame implements ActionListener {
 						player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
 					} else {
 
-//							if(pig[1].getState == 0 && pig[1].getState == 0){
-//							gameover
-//						}else {
-//							nextstage
-//						}
-
 					}
 				}
 			}).start();
-//			}
 		}
-//		}
-//			}
+
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
@@ -341,7 +333,13 @@ public abstract class Background extends JFrame implements ActionListener {
 				releaseX = ((Number) e.getX()).doubleValue();
 				releaseY = ((Number) e.getY()).doubleValue();
 
-				player[birdType].playerMove();
+				if (birdType < 3) {
+					player[birdType].playerMove();
+					
+				}else {
+				new GameOverFrame();
+				setVisible(false);
+				}
 			}
 		}
 	}

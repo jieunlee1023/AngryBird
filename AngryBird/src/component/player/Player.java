@@ -146,7 +146,7 @@ public class Player extends JLabel {
 				} else if (mContext.getBirdType() == 1) {
 					mContext.setBirdType(2);
 				} else if (mContext.getBirdType() == 2) {
-					mContext.setBirdType(2);
+					mContext.setBirdType(3);
 				}
 
 			}
