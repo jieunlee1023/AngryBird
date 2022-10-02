@@ -168,7 +168,7 @@ public class IceMapFrame extends Background {
 	public void enemyCrash(Enemy enemy) {
 
 		new Thread(() -> {
-			while (enemyOutState == 0) {
+			while (enemyOutState == 0 ){
 				for (int i = 0; i < player.length; i++) {
 					if (Math.abs(enemy.getX() - player[i].getX()) < 50
 							&& Math.abs(enemy.getY() - player[i].getY()) < 50) {
@@ -187,31 +187,12 @@ public class IceMapFrame extends Background {
 						}
 						enemyOut.setVisible(false);
 						enemyOutState++;
-						System.out.println(enemyOutState);
+						
 					}
 				}
 			}
 			if (enemyOutState == 2) {
-				for (int i = 0; i < player.length; i++) {
-					if (Math.abs(enemy.getX() - player[i].getX()) < 50
-							&& Math.abs(enemy.getY() - player[i].getY()) < 50) {
-						JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
-						enemyOut.setSize(60, 60);
-						enemyOut.setLocation(enemy.getX(), enemy.getY());
-						backgroundImageLabel.add(enemyOut);
-						// 에너미 맞으면 +500 점
-						mContext.score += 500;
-						mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
-						enemy.setVisible(false);
-
-						try {
-							Thread.sleep(500);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						nextStage();
-					}
-				}
+				nextStage();
 			}
 		}).start();
 
@@ -219,7 +200,6 @@ public class IceMapFrame extends Background {
 
 	public void nextStage() {
 
-		if (enemyOutState == 2) {
 			JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
 			backgroundImageLabel.setVisible(false);
 			clear.setSize(1000, 570);
@@ -238,4 +218,4 @@ public class IceMapFrame extends Background {
 		}
 	}
 
-}
+

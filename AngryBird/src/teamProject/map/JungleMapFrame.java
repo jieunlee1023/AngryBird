@@ -382,21 +382,12 @@ public class JungleMapFrame extends Background {
 						}
 						enemyOut.setVisible(false);
 						enemyOutState++;
-						System.out.println(enemyOutState);
+						
 					}
 				}
 			}
 			if (enemyOutState == 1) {
-				JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
-				clear.setSize(1000, 570);
-				clear.setLocation(0, 0);
-				backgroundImageLabel.add(clear);
 
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 				nextStage();
 			}
 
@@ -406,22 +397,20 @@ public class JungleMapFrame extends Background {
 
 	public void nextStage() {
 
-		if (enemyOutState == 1) {
-			JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
-			backgroundImageLabel.setVisible(false);
-			clear.setSize(1000, 570);
-			clear.setLocation(0, 0);
-			add(clear);
-			repaint();
+		JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
+		backgroundImageLabel.setVisible(false);
+		clear.setSize(1000, 570);
+		clear.setLocation(0, 0);
+		add(clear);
+		repaint();
 
-			try {
-				Thread.sleep(1200);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
-			new IceMapFrame("images/bg2.png");
-			setVisible(false);
+		try {
+			Thread.sleep(1200);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
+
+		new IceMapFrame("images/bg2.png");
+		setVisible(false);
 	}
 }

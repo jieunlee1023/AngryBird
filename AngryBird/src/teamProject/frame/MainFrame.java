@@ -37,23 +37,6 @@ public class MainFrame extends JFrame {
 
 		startPage = new StartPage(mContext);
 
-//		pointer = new Pointer(mContext);
-//		myAdapter = new MyMouseAdapter();
-//		pointer = new Pointer(this);
-
-//		block1 = new Block1(mContext);
-//		block2 = new Block2(mContext);
-//		pig = new Pig(mContext);
-
-//		pointer1 = new JLabel(new ImageIcon("images/pointer.png"));
-//		pointer1.setSize(10, 10);
-//		pointer2 = new JLabel(new ImageIcon("images/pointer.png"));
-//		pointer2.setSize(10, 10);
-//		pointer3 = new JLabel(new ImageIcon("images/pointer.png"));
-//		pointer3.setSize(10, 10);
-//		pointer4 = new JLabel(new ImageIcon("images/pointer.png"));
-//		pointer4.setSize(10, 10);
-
 	}
 
 	private void setInitLayout() {

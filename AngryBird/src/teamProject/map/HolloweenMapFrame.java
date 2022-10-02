@@ -232,55 +232,32 @@ public class HolloweenMapFrame extends Background {
 						}
 						enemyOut.setVisible(false);
 						enemyOutState++;
-						System.out.println(enemyOutState);
+						
 					}
 				}
 			}
 			if (enemyOutState == 3) {
-				for (int i = 0; i < player.length; i++) {
-					if (Math.abs(enemy.getX() - player[i].getX()) < 50
-							&& Math.abs(enemy.getY() - player[i].getY()) < 50) {
-						JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
-						enemyOut.setSize(60, 60);
-						enemyOut.setLocation(enemy.getX(), enemy.getY());
-						backgroundImageLabel.add(enemyOut);
-						// 에너미 맞으면 +500 점
-						mContext.score += 500;
-						mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
-						enemy.setVisible(false);
-
-						try {
-							Thread.sleep(500);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						nextStage();
-					}
-				}
+				nextStage();
 			}
 		}).start();
-
 	}
 
 	public void nextStage() {
 
-		if (enemyOutState == 3) {
-			JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
-			backgroundImageLabel.setVisible(false);
-			clear.setSize(1000, 570);
-			clear.setLocation(0, 0);
-			add(clear);
-			repaint();
+		JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
+		backgroundImageLabel.setVisible(false);
+		clear.setSize(1000, 570);
+		clear.setLocation(0, 0);
+		add(clear);
+		repaint();
 
-			try {
-				Thread.sleep(1200);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
-			new BossMapFrame("images/boss/bg4.png");
-			setVisible(false);
+		try {
+			Thread.sleep(1200);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-	}
 
+		new BossMapFrame("images/boss/bg4.png");
+		setVisible(false);
+	}
 }

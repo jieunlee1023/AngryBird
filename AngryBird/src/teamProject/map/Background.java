@@ -104,9 +104,6 @@ public abstract class Background extends JFrame implements ActionListener {
 		this.releaseY = releaseY;
 	}
 
-	public Background() {
-		// TODO Auto-generated constructor stub
-	}
 
 	public Background(String fileName) {
 		this.fileName = fileName;
@@ -142,7 +139,6 @@ public abstract class Background extends JFrame implements ActionListener {
 		floorLabel = new JLabel(new ImageIcon("images/floor.png"));
 
 		score = 0;
-//		scoreLabel = new JLabel(Integer.toString(score));
 		scoreLabel = new JLabel(scoreText + score / 1000);
 
 		myAdapter = new MyMouseAdapter();
@@ -221,7 +217,7 @@ public abstract class Background extends JFrame implements ActionListener {
 		public void mousePressed(MouseEvent e) {
 			pressX = ((Number) e.getX()).doubleValue();
 			pressY = ((Number) e.getY()).doubleValue();
-//			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
+			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
 			if (birdType == 0) {
 				player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
 			} else if (birdType == 1) {
@@ -229,14 +225,14 @@ public abstract class Background extends JFrame implements ActionListener {
 			} else if (birdType == 2) {
 				player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
 			}
-//			}
+			}
 
 		}
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
 
-//			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
+			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
 			double a = getPressX() - e.getX();
 			double b = getPressY() - e.getY();
 			int c = ((Number) Math.sqrt((a * a) + (b * b))).intValue();
@@ -320,12 +316,12 @@ public abstract class Background extends JFrame implements ActionListener {
 					} else if (birdType == 2) {
 						player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
 					} else {
-
+					
 					}
 				}
 			}).start();
 		}
-
+		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
