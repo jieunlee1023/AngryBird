@@ -32,7 +32,7 @@ public class MainFrame extends JFrame {
 	private void initData() {
 		setTitle("Angry Bird");
 		setSize(1000, 570);
-		setResizable(true);
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		startPage = new StartPage(mContext);

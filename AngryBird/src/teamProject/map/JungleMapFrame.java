@@ -3,6 +3,7 @@ package teamProject.map;
 import java.awt.Graphics;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -65,8 +66,11 @@ public class JungleMapFrame extends Background {
 	}
 
 	private void initData() {
-		enemyOutState = 0;
 		setTitle("jungle Maps");
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		enemyOutState = 0;
 		// pig
 		shieldPig = new Enemy(new ImageIcon("images/shield.png"));
 		realBomb = new Enemy(new ImageIcon("images/bomb.png"));
@@ -393,12 +397,31 @@ public class JungleMapFrame extends Background {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-
-				new IceMapFrame("images/bg2.png");
-				setVisible(false);
+				nextStage();
 			}
 
 		}).start();
 
+	}
+
+	public void nextStage() {
+
+		if (enemyOutState == 1) {
+			JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
+			backgroundImageLabel.setVisible(false);
+			clear.setSize(1000, 570);
+			clear.setLocation(0, 0);
+			add(clear);
+			repaint();
+
+			try {
+				Thread.sleep(1200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			new IceMapFrame("images/bg2.png");
+			setVisible(false);
+		}
 	}
 }

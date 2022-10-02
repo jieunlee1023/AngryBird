@@ -26,18 +26,47 @@ public class HolloweenMapFrame extends Background {
 	protected HalloweenBlocks[] stoneH = new HalloweenBlocks[2];
 	protected HalloweenBlocks[] triangleL = new HalloweenBlocks[2];
 	protected HalloweenBlocks[] triangleR = new HalloweenBlocks[2];
+
 	protected HalloweenBlocks floor;
 	protected HalloweenBlocks pumpkin;
 	protected HalloweenBlocks pumpkinBlack;
 
+	protected Enemy enemyBottom;
+	protected Enemy enemyCenter;
+	protected Enemy enemyTop;
+
+	int enemyOutState;
+
 	public HolloweenMapFrame(String fileName) {
 		super(fileName);
 		initData();
+
+		new Thread(() -> {
+			boolean flag = true;
+			while (flag) {
+				crash(leftSquares);
+				crash(rightSquares);
+				crash(lamp);
+				crash(horizon);
+				crash(vertical);
+				crash(stoneH);
+				crash(triangleL);
+				crash(triangleR);
+			} // end of while
+			flag = false;
+		}).start();
+
+		enemyCrash(enemyBottom);
+		enemyCrash(enemyCenter);
+		enemyCrash(enemyTop);
+
 	}
 
 	private void initData() {
 		setTitle("holloweenMap");
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		enemyOutState = 0;
 
 		for (int i = 0; i < 8; i++) {
 			leftSquares[i] = new HalloweenBlocks(new ImageIcon(images[0]));
@@ -67,6 +96,10 @@ public class HolloweenMapFrame extends Background {
 		floor = new HalloweenBlocks(new ImageIcon(images[7]));
 		pumpkin = new HalloweenBlocks(new ImageIcon(images[8]));
 		pumpkinBlack = new HalloweenBlocks(new ImageIcon(images[9]));
+
+		enemyBottom = new Enemy(new ImageIcon("images/halloween/enemy1.png"));
+		enemyCenter = new Enemy(new ImageIcon("images/halloween/enemy2.png"));
+		enemyTop = new Enemy(new ImageIcon("images/halloween/enemy1.png"));
 
 		for (int i = 0; i < leftSquares.length; i = i + 1) {
 			leftSquares[i].setSize(40, 40);
@@ -138,14 +171,115 @@ public class HolloweenMapFrame extends Background {
 		}
 		for (int i = 0; i < triangleL.length; i++) {
 			triangleL[i].setSize(50, 50);
-			triangleL[i].setLocation(720 + i * 120, 100-i*50);
+			triangleL[i].setLocation(720 + i * 120, 100 - i * 50);
 			backgroundImageLabel.add(triangleL[i]);
 		}
 		for (int i = 0; i < triangleR.length; i++) {
 			triangleR[i].setSize(50, 50);
-			triangleR[i].setLocation(60 + i * 120, 100-i*50);
+			triangleR[i].setLocation(680 + i * 130, 100 - i * 50);
 			backgroundImageLabel.add(triangleR[i]);
 		}
+
+		enemyTop.setSize(60, 60);
+		enemyTop.setLocation(695, 70);
+		backgroundImageLabel.add(enemyTop);
+
+		enemyCenter.setSize(60, 60);
+		enemyCenter.setLocation(690, 330);
+		backgroundImageLabel.add(enemyCenter);
+
+		enemyBottom.setSize(60, 60);
+		enemyBottom.setLocation(820, 440);
+		backgroundImageLabel.add(enemyBottom);
 	}
 
+	public void crash(HalloweenBlocks[] halloweenBlocks) {
+		crashState = true;
+		for (int i = 0; i < halloweenBlocks.length; i++) {
+			for (int j = 0; j < player.length; j++) {
+				if (Math.abs(halloweenBlocks[i].getX() - player[j].getX()) < 50
+						&& Math.abs(halloweenBlocks[i].getY() - player[j].getY()) < 50) {
+					// 블록 맞으면 +200 점
+					mContext.score += 200;
+					mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
+					halloweenBlocks[i].setLocation(0, 0);
+					halloweenBlocks[i].setVisible(false);
+					player[j].isMove = false;
+				}
+			} // end of j-for
+		} // end of i-for
+	}
+
+	public void enemyCrash(Enemy enemy) {
+
+		new Thread(() -> {
+			while (enemyOutState == 0) {
+				for (int i = 0; i < player.length; i++) {
+					if (Math.abs(enemy.getX() - player[i].getX()) < 50
+							&& Math.abs(enemy.getY() - player[i].getY()) < 50) {
+						JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
+						enemyOut.setSize(60, 60);
+						enemyOut.setLocation(enemy.getX(), enemy.getY());
+						backgroundImageLabel.add(enemyOut);
+						// 에너미 맞으면 +500 점
+						mContext.score += 500;
+						mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
+						enemy.setVisible(false);
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						enemyOut.setVisible(false);
+						enemyOutState++;
+						System.out.println(enemyOutState);
+					}
+				}
+			}
+			if (enemyOutState == 3) {
+				for (int i = 0; i < player.length; i++) {
+					if (Math.abs(enemy.getX() - player[i].getX()) < 50
+							&& Math.abs(enemy.getY() - player[i].getY()) < 50) {
+						JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
+						enemyOut.setSize(60, 60);
+						enemyOut.setLocation(enemy.getX(), enemy.getY());
+						backgroundImageLabel.add(enemyOut);
+						// 에너미 맞으면 +500 점
+						mContext.score += 500;
+						mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
+						enemy.setVisible(false);
+
+						try {
+							Thread.sleep(500);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						nextStage();
+					}
+				}
+			}
+		}).start();
+
+	}
+
+	public void nextStage() {
+
+		if (enemyOutState == 3) {
+			JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
+			backgroundImageLabel.setVisible(false);
+			clear.setSize(1000, 570);
+			clear.setLocation(0, 0);
+			add(clear);
+			repaint();
+
+			try {
+				Thread.sleep(1200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			new BossMapFrame("images/boss/bg4.png");
+			setVisible(false);
+		}
+	}
 }
