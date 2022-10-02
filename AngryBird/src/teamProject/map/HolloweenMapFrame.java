@@ -282,4 +282,5 @@ public class HolloweenMapFrame extends Background {
 			setVisible(false);
 		}
 	}
+
 }

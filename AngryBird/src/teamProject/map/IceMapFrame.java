@@ -54,6 +54,9 @@ public class IceMapFrame extends Background {
 
 		enemyCrash(enemyBottom);
 		enemyCrash(enemyTop);
+
+		gameOver();
+
 	}
 
 	protected void initData() {
@@ -209,7 +212,6 @@ public class IceMapFrame extends Background {
 							e.printStackTrace();
 						}
 						nextStage();
-
 					}
 				}
 			}
@@ -236,5 +238,18 @@ public class IceMapFrame extends Background {
 			new HolloweenMapFrame("images/bg3.png");
 			setVisible(false);
 		}
+	}
+
+	public void gameOver() {
+
+		new Thread(() -> {
+			while (true) {
+				System.out.println("타입:" + mContext.getBirdType());
+				System.out.println("상태:" + mContext.getBirdState());
+				if (mContext.getBirdType() == 2 && mContext.getBirdState() == 0) {
+					System.out.println("게임오버");
+				}
+			}
+		}).start();
 	}
 }

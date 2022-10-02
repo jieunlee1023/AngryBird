@@ -169,19 +169,19 @@ public class Player extends JLabel {
 		int playerX = mContext.player[1].getX();
 		int playerY = mContext.player[1].getY();
 		if (mContext.getBirdType() == 1) {
-			if(mContext.player[1].getY() >= 400) {
-			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			blackSkill[0].setLocation(playerX, playerY - 30);
-			blackSkill[1].setLocation(playerX + 30, playerY - 70);
-			blackSkill[2].setLocation(playerX - 40, playerY - 100);
-			mContext.backgroundImageLabel.add(blackSkill[0]);
-			mContext.backgroundImageLabel.add(blackSkill[1]);
-			mContext.backgroundImageLabel.add(blackSkill[2]);
+			if (mContext.player[1].getY() >= 400) {
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				blackSkill[0].setLocation(playerX, playerY - 30);
+				blackSkill[1].setLocation(playerX + 30, playerY - 70);
+				blackSkill[2].setLocation(playerX - 40, playerY - 100);
+				mContext.backgroundImageLabel.add(blackSkill[0]);
+				mContext.backgroundImageLabel.add(blackSkill[1]);
+				mContext.backgroundImageLabel.add(blackSkill[2]);
 			}
 		}
 	}
