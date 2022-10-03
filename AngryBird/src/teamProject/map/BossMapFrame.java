@@ -313,6 +313,10 @@ public class BossMapFrame extends Background {
 		missionClear.setSize(1000, 570);
 		missionClear.setLocation(0, 0);
 		add(missionClear);
+		mContext.scoreTotal.setSize(420, 570);
+		scoreTotal.setLocation(350, 100);
+		scoreTotal.setText(scoreAll + score);
+		missionClear.add(mContext.scoreTotal);
 		repaint();
 
 		try {
