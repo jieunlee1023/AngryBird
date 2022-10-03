@@ -181,7 +181,7 @@ public class HolloweenMapFrame extends Background {
 		}
 
 		enemyTop.setSize(60, 60);
-		enemyTop.setLocation(695, 70);
+		enemyTop.setLocation(690, 210);
 		backgroundImageLabel.add(enemyTop);
 
 		enemyCenter.setSize(60, 60);
@@ -191,7 +191,7 @@ public class HolloweenMapFrame extends Background {
 		enemyBottom.setSize(60, 60);
 		enemyBottom.setLocation(820, 440);
 		backgroundImageLabel.add(enemyBottom);
-	}
+		repaint();	}
 
 	public void crash(HalloweenBlocks[] halloweenBlocks) {
 		crashState = true;
