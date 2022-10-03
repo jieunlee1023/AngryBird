@@ -235,10 +235,10 @@ public class JungleMapFrame extends Background {
 
 							if (Math.abs(realBomb.getX() - player[i].getX()) < 50
 									&& Math.abs(realBomb.getY() - player[i].getY()) < 50) {
+								realBomb.setVisible(false);
 								allBomb();
 								move();
 //						enemy.setIcon(shield);
-								realBomb.setVisible(false);
 								try {
 									Thread.sleep(100);
 								} catch (InterruptedException e) {
@@ -369,8 +369,8 @@ public class JungleMapFrame extends Background {
 		new Thread(() -> {
 			while (enemyOutState == 0) {
 				for (int i = 0; i < player.length; i++) {
-					if (Math.abs(shieldPig.getX() - player[i].getX()) < 100
-							&& Math.abs(shieldPig.getY() - player[i].getY()) < 100) {
+					if (Math.abs(shieldPig.getX() - player[i].getX()) < 50
+							&& Math.abs(shieldPig.getY() - player[i].getY()) < 50) {
 						JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
 						enemyOut.setSize(60, 60);
 						enemyOut.setLocation(shieldPig.getX(), shieldPig.getY());

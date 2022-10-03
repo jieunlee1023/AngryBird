@@ -191,7 +191,7 @@ public class HolloweenMapFrame extends Background {
 		enemyBottom.setSize(60, 60);
 		enemyBottom.setLocation(820, 440);
 		backgroundImageLabel.add(enemyBottom);
-	}
+		repaint();	}
 
 	public void crash(HalloweenBlocks[] halloweenBlocks) {
 		crashState = true;
