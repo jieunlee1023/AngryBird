@@ -11,6 +11,7 @@ import component.Enemy;
 import component.TreeBlock;
 import lombok.Getter;
 import lombok.Setter;
+import teamProject.frame.BGM;
 
 public class JungleMapFrame extends Background {
 

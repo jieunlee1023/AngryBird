@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import teamProject.frame.BGM;
+
 public class MapSelectPage extends JFrame implements ActionListener {
 
 	JLabel background;
@@ -22,11 +24,13 @@ public class MapSelectPage extends JFrame implements ActionListener {
 
 	public MapSelectPage() {
 		initData();
+
 		setInitLayout();
 		addEventListener();
 	}
 
 	private void initData() {
+		new BGM();
 		setTitle("Map Choice");
 		setSize(1000, 570);
 		background = new JLabel(new ImageIcon("images/select_bg.png"));
@@ -70,6 +74,7 @@ public class MapSelectPage extends JFrame implements ActionListener {
 		JButton targetButton = (JButton) e.getSource();
 		if (targetButton.equals(button1)) {
 			new JungleMapFrame("images/bg1.png");
+
 			setVisible(false);
 
 		} else if (targetButton.equals(button2)) {

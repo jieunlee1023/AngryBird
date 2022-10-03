@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 
 import component.Pointer;
 import component.player.Player;
+import teamProject.frame.BGM;
 
 public abstract class Background extends JFrame implements ActionListener {
 
@@ -227,13 +228,13 @@ public abstract class Background extends JFrame implements ActionListener {
 			pressX = ((Number) e.getX()).doubleValue();
 			pressY = ((Number) e.getY()).doubleValue();
 			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
-			if (birdType == 0) {
-				player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-			} else if (birdType == 1) {
-				player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-			} else if (birdType == 2) {
-				player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-			}
+				if (birdType == 0) {
+					player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+				} else if (birdType == 1) {
+					player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+				} else if (birdType == 2) {
+					player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+				}
 			}
 
 		}

@@ -181,7 +181,7 @@ public class HolloweenMapFrame extends Background {
 		}
 
 		enemyTop.setSize(60, 60);
-		enemyTop.setLocation(695, 70);
+		enemyTop.setLocation(690, 210);
 		backgroundImageLabel.add(enemyTop);
 
 		enemyCenter.setSize(60, 60);

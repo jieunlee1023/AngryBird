@@ -6,7 +6,9 @@ import javax.swing.JLabel;
 
 import component.Enemy;
 import component.IceBlock;
+import component.ObstacleBird;
 import lombok.Value;
+import teamProject.frame.BGM;
 
 public class IceMapFrame extends Background {
 
@@ -58,6 +60,7 @@ public class IceMapFrame extends Background {
 	}
 
 	protected void initData() {
+		new BGM();
 		setTitle("Ice Map");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -144,6 +147,7 @@ public class IceMapFrame extends Background {
 		enemyTop.setSize(60, 60);
 		enemyTop.setLocation(800, 170);
 		backgroundImageLabel.add(enemyTop);
+
 		repaint();
 
 	}
@@ -169,7 +173,7 @@ public class IceMapFrame extends Background {
 	public void enemyCrash(Enemy enemy) {
 
 		new Thread(() -> {
-			while (enemyOutState == 0 ){
+			while (enemyOutState == 0) {
 				for (int i = 0; i < player.length; i++) {
 					if (Math.abs(enemy.getX() - player[i].getX()) < 50
 							&& Math.abs(enemy.getY() - player[i].getY()) < 50) {
@@ -188,7 +192,7 @@ public class IceMapFrame extends Background {
 						}
 						enemyOut.setVisible(false);
 						enemyOutState++;
-						
+
 					}
 				}
 			}
@@ -201,26 +205,24 @@ public class IceMapFrame extends Background {
 
 	public void nextStage() {
 
-			JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
-			backgroundImageLabel.setVisible(false);
-			clear.setSize(1000, 570);
-			clear.setLocation(0, 0);
-			add(clear);
-			mContext.scoreTotal.setSize(420, 570);
-			scoreTotal.setLocation(350, 100);
-			scoreTotal.setText(scoreAll + score);
-			clear.add(mContext.scoreTotal);
-			repaint();
+		JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
+		backgroundImageLabel.setVisible(false);
+		clear.setSize(1000, 570);
+		clear.setLocation(0, 0);
+		add(clear);
+		mContext.scoreTotal.setSize(420, 570);
+		scoreTotal.setLocation(350, 100);
+		scoreTotal.setText(scoreAll + score);
+		clear.add(mContext.scoreTotal);
+		repaint();
 
-			try {
-				Thread.sleep(1200);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
-			new HolloweenMapFrame("images/bg3.png");
-			setVisible(false);
+		try {
+			Thread.sleep(1200);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
+
+		new HolloweenMapFrame("images/bg3.png");
+		setVisible(false);
 	}
-
-
+}

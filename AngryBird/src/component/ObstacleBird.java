@@ -4,11 +4,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import teamProject.frame.MainFrame;
+import teamProject.map.Background;
 
 public class ObstacleBird extends JLabel {
 
-	private MainFrame mContext;
-
+	private Background mContext;
 	private JLabel[] obstacleBird = new JLabel[2];
 
 	// 위치
@@ -19,7 +19,7 @@ public class ObstacleBird extends JLabel {
 	private boolean up;
 	private boolean down;
 
-	public ObstacleBird(MainFrame mContext) {
+	public ObstacleBird(Background mContext) {
 		this.mContext = mContext;
 		initData();
 		setInitLayout();
@@ -49,7 +49,7 @@ public class ObstacleBird extends JLabel {
 
 			@Override
 			public void run() {
-				for (int i = 0; i < mContext.getHeight(); i++) {
+				for (int i = 0; i < 570; i++) {
 					obstacleBirdY++;
 					setLocation(obstacleBirdX, obstacleBirdY);
 					try {
@@ -70,7 +70,7 @@ public class ObstacleBird extends JLabel {
 
 			@Override
 			public void run() {
-				for (int i = 0; i < mContext.getHeight(); i++) {
+				for (int i = 0; i < 570; i++) {
 					obstacleBirdY--;
 					setLocation(obstacleBirdX, obstacleBirdY);
 					try {
