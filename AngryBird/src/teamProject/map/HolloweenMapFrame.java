@@ -32,7 +32,7 @@ public class HolloweenMapFrame extends Background {
 	protected Enemy enemyCenter;
 	protected Enemy enemyTop;
 
-	int enemyOutState;
+	int enemyOutState; 
 
 	BGM bgm;
 
