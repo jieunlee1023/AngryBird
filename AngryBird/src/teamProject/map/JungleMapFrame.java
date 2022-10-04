@@ -369,12 +369,6 @@ public class JungleMapFrame extends Background {
 					}
 				}
 				if (enemyOutState == 1) {
-
-					JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
-					clear.setSize(clearWidth, clearHeight);
-					clear.setLocation(0, 0);
-					backgroundImageLabel.add(clear);
-
 					nextStage();
 				}
 			}

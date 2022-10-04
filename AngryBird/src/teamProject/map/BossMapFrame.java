@@ -42,7 +42,6 @@ public class BossMapFrame extends Background {
 	public BossMapFrame(String fileName) {
 		super(fileName);
 		initData();
-		// bossMove();
 		crash();
 		enemyCrash(enemy);
 		enemyCrash(enemyBoss[0]);
