@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 
 import lombok.Getter;
 import lombok.Setter;
+import teamProject.frame.BGM;
 import teamProject.frame.MainFrame;
 
 public class StartPage extends JLabel implements ActionListener {
@@ -24,7 +25,6 @@ public class StartPage extends JLabel implements ActionListener {
 		initData();
 		setInitLayout();
 		addEventListener();
-
 	}
 
 	private void initData() {

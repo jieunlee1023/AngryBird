@@ -1,11 +1,10 @@
 package teamProject.frame;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
-import component.IceBlock;
-import component.TreeBlock;
-import component.Pointer;
 import component.player.Player;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,37 +31,34 @@ public class MainFrame extends JFrame {
 	private void initData() {
 		setTitle("Angry Bird");
 		setSize(1000, 570);
-		setResizable(true);
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		startPage = new StartPage(mContext);
-
-//		pointer = new Pointer(mContext);
-//		myAdapter = new MyMouseAdapter();
-//		pointer = new Pointer(this);
-
-//		block1 = new Block1(mContext);
-//		block2 = new Block2(mContext);
-//		pig = new Pig(mContext);
-
-//		pointer1 = new JLabel(new ImageIcon("images/pointer.png"));
-//		pointer1.setSize(10, 10);
-//		pointer2 = new JLabel(new ImageIcon("images/pointer.png"));
-//		pointer2.setSize(10, 10);
-//		pointer3 = new JLabel(new ImageIcon("images/pointer.png"));
-//		pointer3.setSize(10, 10);
-//		pointer4 = new JLabel(new ImageIcon("images/pointer.png"));
-//		pointer4.setSize(10, 10);
-
 	}
 
 	private void setInitLayout() {
 		setVisible(true);
 		setLayout(null);
 		setLocationRelativeTo(null);
-
 		add(startPage);
 
+	}
+
+	public static synchronized void playSound(final String url) {
+		new Thread(new Runnable() {
+			public void run() {
+				try {
+					Clip clip = AudioSystem.getClip();
+					AudioInputStream inputStream = AudioSystem
+							.getAudioInputStream(MainFrame.class.getResourceAsStream("bgm/angryBGM.wav" + url));
+					clip.open(inputStream);
+					clip.start();
+				} catch (Exception e) {
+					System.err.println(e.getMessage());
+				}
+			}
+		}).start();
 	}
 
 	public static void main(String[] args) {

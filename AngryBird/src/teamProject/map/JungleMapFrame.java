@@ -1,10 +1,12 @@
 package teamProject.map;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import component.Enemy;
 import component.TreeBlock;
+import teamProject.frame.BGM;
 
 public class JungleMapFrame extends Background {
 
@@ -43,7 +45,7 @@ public class JungleMapFrame extends Background {
 
 	private int roofBlockWidth = 300;
 	private int roofBlockHeight = 180;
-	
+
 	private int clearWidth = 1000;
 	private int clearHeight = 570;
 
@@ -54,6 +56,8 @@ public class JungleMapFrame extends Background {
 	Enemy shieldPig;
 	Enemy realBomb;
 	Enemy target;
+
+	BGM bgh;
 
 	public Enemy getEnemy() {
 		return shieldPig;
@@ -67,12 +71,16 @@ public class JungleMapFrame extends Background {
 		super(fileName);
 		initData();
 		endStage();
-//		
 	}
 
 	private void initData() {
-		enemyOutState = 0;
+		bgh = new BGM();
+
 		setTitle("jungle Maps");
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		enemyOutState = 0;
 		// pig
 		shieldPig = new Enemy(new ImageIcon("images/shield.png"));
 		realBomb = new Enemy(new ImageIcon("images/bomb.png"));
@@ -231,6 +239,7 @@ public class JungleMapFrame extends Background {
 
 							if (Math.abs(realBomb.getX() - player[i].getX()) < 50
 									&& Math.abs(realBomb.getY() - player[i].getY()) < 50) {
+								realBomb.setVisible(false);
 								allBomb();
 								move();
 								realBomb.setVisible(false);
@@ -252,7 +261,6 @@ public class JungleMapFrame extends Background {
 	public void allBomb() {
 		new Thread(() -> {
 			for (int i = 0; i < woodBlock.length; i++) {
-
 				try {
 					woodBlock[i].setIcon(bomb);
 					Thread.sleep(90);
@@ -337,41 +345,67 @@ public class JungleMapFrame extends Background {
 		new Thread(() -> {
 			while (enemyOutState == 0) {
 				for (int i = 0; i < player.length; i++) {
+
 					if (Math.abs(shieldPig.getX() - player[i].getX()) < 40
 							&& Math.abs(shieldPig.getY() - player[i].getY()) < 40) {
-						JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
-						enemyOut.setSize(60, 60);
-						enemyOut.setLocation(shieldPig.getX(), shieldPig.getY());
-						backgroundImageLabel.add(enemyOut);
-						shieldPig.setVisible(false);
-						try {
-							Thread.sleep(1000);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
+
+						if (Math.abs(shieldPig.getX() - player[i].getX()) < 50
+								&& Math.abs(shieldPig.getY() - player[i].getY()) < 50) {
+
+							JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
+							enemyOut.setSize(60, 60);
+							enemyOut.setLocation(shieldPig.getX(), shieldPig.getY());
+							backgroundImageLabel.add(enemyOut);
+							shieldPig.setVisible(false);
+							try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							enemyOut.setVisible(false);
+							enemyOutState++;
+
 						}
-						enemyOut.setVisible(false);
-						enemyOutState++;
-						System.out.println(enemyOutState);
 					}
 				}
-			}
-			if (enemyOutState == 1) {
-				JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
-				clear.setSize(clearWidth, clearHeight);
-				clear.setLocation(0, 0);
-				backgroundImageLabel.add(clear);
+				if (enemyOutState == 1) {
 
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+					JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
+					clear.setSize(clearWidth, clearHeight);
+					clear.setLocation(0, 0);
+					backgroundImageLabel.add(clear);
+
+					nextStage();
 				}
-
-				new IceMapFrame("images/bg2.png");
-				setVisible(false);
 			}
 
 		}).start();
 
+	}
+
+	public void nextStage() {
+
+		JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
+
+		backgroundImageLabel.setVisible(false);
+
+		clear.setSize(1000, 570);
+		clear.setLocation(0, 0);
+		add(clear);
+		mContext.scoreTotal.setSize(420, 570);
+		scoreTotal.setLocation(350, 100);
+		scoreTotal.setText(scoreAll + score);
+		clear.add(mContext.scoreTotal);
+		repaint();
+
+		try {
+			Thread.sleep(1200);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		new IceMapFrame("images/bg2.png");
+		setVisible(false);
+		bgh.stop();
 	}
 }

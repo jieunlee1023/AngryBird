@@ -6,6 +6,9 @@ import javax.swing.JLabel;
 
 import component.Enemy;
 import component.IceBlock;
+import component.ObstacleBird;
+import lombok.Value;
+import teamProject.frame.BGM;
 
 public class IceMapFrame extends Background {
 
@@ -30,24 +33,11 @@ public class IceMapFrame extends Background {
 	int enemyOutState;
 	// 0일때 안부딪힘 1일때 한마리 부딪힘 2일때 두마리부딪힘(끝)
 
-	public boolean isState() {
-		return crashState;
-	}
-
-	public void setState(boolean state) {
-		this.crashState = state;
-	}
-
-	public int getEnemyOutState() {
-		return enemyOutState;
-	}
-
-	public void setEnemyOutState(int enemyOutState) {
-		this.enemyOutState = enemyOutState;
-	}
+	BGM bgm = new BGM();
 
 	public IceMapFrame(String fileName) {
 		super(fileName);
+
 		initData();
 
 		new Thread(() -> {
@@ -68,10 +58,15 @@ public class IceMapFrame extends Background {
 
 		enemyCrash(enemyBottom);
 		enemyCrash(enemyTop);
+
 	}
 
 	protected void initData() {
+		new BGM();
 		setTitle("Ice Map");
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		crashState = false;
 		enemyOutState = 0;
 
@@ -155,6 +150,8 @@ public class IceMapFrame extends Background {
 		enemyTop.setLocation(800, 170);
 		backgroundImageLabel.add(enemyTop);
 
+		repaint();
+
 	}
 
 	public void crash(IceBlock[] iceBlock) {
@@ -164,6 +161,10 @@ public class IceMapFrame extends Background {
 				if (Math.abs(iceBlock[i].getX() - player[j].getX()) < 50
 						&& Math.abs(iceBlock[i].getY() - player[j].getY()) < 50) {
 //					System.out.println("부딪힘");
+					// 블록 맞으면 +200 점
+					mContext.score += 200;
+					mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
+					iceBlock[i].setLocation(0, 0);
 					iceBlock[i].setVisible(false);
 					player[j].isMove = false;
 				}
@@ -182,6 +183,9 @@ public class IceMapFrame extends Background {
 						enemyOut.setSize(60, 60);
 						enemyOut.setLocation(enemy.getX(), enemy.getY());
 						backgroundImageLabel.add(enemyOut);
+						// 에너미 맞으면 +500 점
+						mContext.score += 500;
+						mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
 						enemy.setVisible(false);
 						try {
 							Thread.sleep(1000);
@@ -190,7 +194,7 @@ public class IceMapFrame extends Background {
 						}
 						enemyOut.setVisible(false);
 						enemyOutState++;
-						System.out.println(enemyOutState);
+
 					}
 				}
 			}
@@ -218,24 +222,33 @@ public class IceMapFrame extends Background {
 						setVisible(false);
 					}
 				}
+				nextStage();
 			}
 		}).start();
-		for (int i = 0; i < player.length; i++) {
-			if (Math.abs(enemy.getX() - player[i].getX()) < 50 && Math.abs(enemy.getY() - player[i].getY()) < 50) {
-				JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
-				enemyOut.setSize(60, 60);
-				enemyOut.setLocation(enemy.getX(), enemy.getY());
-				backgroundImageLabel.add(enemyOut);
-				enemy.setVisible(false);
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				enemyOut.setVisible(false);
 
-			}
-		} // new BossMapFrame("images/boss/bg4.png");
+	}
 
+	public void nextStage() {
+
+		JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
+		backgroundImageLabel.setVisible(false);
+		clear.setSize(1000, 570);
+		clear.setLocation(0, 0);
+		add(clear);
+		mContext.scoreTotal.setSize(420, 570);
+		scoreTotal.setLocation(350, 100);
+		scoreTotal.setText(scoreAll + score);
+		clear.add(mContext.scoreTotal);
+		repaint();
+
+		try {
+			Thread.sleep(1200);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		new HolloweenMapFrame("images/bg3.png");
+		setVisible(false);
+		bgm.stop();
 	}
 }

@@ -1,5 +1,7 @@
 package teamProject.map;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,6 +14,7 @@ import javax.swing.JLabel;
 
 import component.Pointer;
 import component.player.Player;
+import teamProject.frame.BGM;
 
 public abstract class Background extends JFrame implements ActionListener {
 
@@ -21,6 +24,7 @@ public abstract class Background extends JFrame implements ActionListener {
 	protected JLabel holderLabel;
 	protected JLabel floorLabel;
 	protected JLabel scoreLabel;
+	protected JLabel scoreTotal;
 
 	public JLabel clickHereLabel;
 	public JLabel clickHereLetterLabel;
@@ -42,6 +46,7 @@ public abstract class Background extends JFrame implements ActionListener {
 
 	boolean crashState;
 	String scoreText = "SCORE : ";
+	String scoreAll = "TOTAL : ";
 	// 블록당 점수를 다르게 만들기 위함
 	static int score;
 
@@ -104,10 +109,6 @@ public abstract class Background extends JFrame implements ActionListener {
 		this.releaseY = releaseY;
 	}
 
-	public Background() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public Background(String fileName) {
 		this.fileName = fileName;
 		initDate();
@@ -118,6 +119,7 @@ public abstract class Background extends JFrame implements ActionListener {
 
 	protected void initDate() {
 		setSize(1000, 570);
+		setResizable(false);
 		birdType = 0; // 0 레드 1블랙 2 옐로
 		birdState = 0; // 1살아있음 0죽음
 
@@ -141,8 +143,13 @@ public abstract class Background extends JFrame implements ActionListener {
 		floorLabel = new JLabel(new ImageIcon("images/floor.png"));
 
 		score = 0;
-//		scoreLabel = new JLabel(Integer.toString(score));
 		scoreLabel = new JLabel(scoreText + score / 1000);
+		scoreLabel.setFont(new Font("@CookieRun", Font.BOLD, 18));
+		scoreLabel.setForeground(Color.WHITE);
+
+		scoreTotal = new JLabel(scoreAll + score / 1000);
+		scoreTotal.setFont(new Font("@CookieRun", Font.BOLD, 45));
+		scoreTotal.setForeground(Color.BLUE);
 
 		myAdapter = new MyMouseAdapter();
 
@@ -220,106 +227,111 @@ public abstract class Background extends JFrame implements ActionListener {
 		public void mousePressed(MouseEvent e) {
 			pressX = ((Number) e.getX()).doubleValue();
 			pressY = ((Number) e.getY()).doubleValue();
-//			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
-			if (birdType == 0) {
-				player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-			} else if (birdType == 1) {
-				player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-			} else if (birdType == 2) {
-				player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
+				if (birdType == 0) {
+					player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+				} else if (birdType == 1) {
+					player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+				} else if (birdType == 2) {
+					player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+				}
 			}
-//			}
 
 		}
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
 
-//			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
-			double a = getPressX() - e.getX();
-			double b = getPressY() - e.getY();
-			int c = ((Number) Math.sqrt((a * a) + (b * b))).intValue();
-			double slope = (b / a);
+			if (e.getX() <= RANGE_X && e.getY() >= RANGE_Y) {
+				double a = getPressX() - e.getX();
+				double b = getPressY() - e.getY();
+				int c = ((Number) Math.sqrt((a * a) + (b * b))).intValue();
+				double slope = (b / a);
 
-			int x = ((Number) getPressX()).intValue();
-			int y = ((Number) getPressY()).intValue() - 50;
+				int x = ((Number) getPressX()).intValue();
+				int y = ((Number) getPressY()).intValue() - 50;
 
-			new Thread(new Runnable() {
+				new Thread(new Runnable() {
 
-				@Override
-				public synchronized void run() {
+					@Override
+					public synchronized void run() {
 
-					try {
-						Thread.sleep(10);
-						if (slope == -1) {
-//								System.out.println("-1");
-							pointer[0].setLocation(x + c / 4, y - 5);
-							pointer[1].setLocation(x + c / 2, y - 25);
-							pointer[2].setLocation(x + (c / 2) + (c / 4), y - 45);
-							pointer[3].setLocation(x + c, y - 65);
+						try {
+							Thread.sleep(10);
 
-						} else if (slope > -1 && slope <= 0.5) {
-//								System.out.println(" -1 초과 0.5 이");
-							pointer[0].setLocation(x + c / 4, y - 5);
-							pointer[1].setLocation(x + c / 2, y - 15);
-							pointer[2].setLocation(x + c / 2 + c / 4, y - 25);
-							pointer[3].setLocation(x + c, y - 35);
+							// 이게 진짜임 건들지 말것 건드리면 화냄 !!!!!!!!!
+							// 수평
+							if (slope > 0 && slope < 1) {
 
-						} else if (slope > 0.5 && slope <= 0) {
-//								System.out.println("05초과  0 이하  ");
-							pointer[0].setLocation(x + c / 4, y - 0);
-							pointer[1].setLocation(x + c / 2, y - 5);
-							pointer[2].setLocation(x + c / c / 2 + c / 4, y - 10);
-							pointer[3].setLocation(x + c, y - 15);
+								pointer[0].setLocation(x + c / 4, y);
+								pointer[1].setLocation(x + c / 2, y);
+								pointer[2].setLocation(x + c / 2 + c / 4, y);
+								pointer[3].setLocation(x + c, y);
 
-						} else if (slope < -1 && slope >= 1.5) {
-//								System.out.println("-1초과  1.5 이하 ");
-							pointer[0].setLocation(x + c / 4, y - 5);
-							pointer[1].setLocation(x + c / 2, y - 40);
-							pointer[2].setLocation(x + c / 2 + c / 4, y - 75);
-							pointer[3].setLocation(x + c, y - 105);
+								// 15도 완만
+							} else if (slope > -0.5 && slope <= 0) {
 
-						} else if (slope < 1.5) {
-//								System.out.println("1.5 이하 ");
-							pointer[0].setLocation(x + c / 4, y - 5);
-							pointer[1].setLocation(x + c / 2, y - 50);
-							pointer[2].setLocation(x + c / 2 + c / 4, y - 85);
-							pointer[3].setLocation(x + c, y - 120);
+								pointer[0].setLocation(x + c / 4, y - 5);
+								pointer[1].setLocation(x + c / 2, y - 20);
+								pointer[2].setLocation(x + c / 2 + c / 4, y - 35);
+								pointer[3].setLocation(x + c, y - 50);
 
+								// 30도
+							} else if (slope > -1 && slope <= -0.5) {
+
+								pointer[0].setLocation(x + c / 4, y - 5);
+								pointer[1].setLocation(x + c / 2, y - 30);
+								pointer[2].setLocation(x + c / 2 + c / 4, y - 55);
+								pointer[3].setLocation(x + c, y - 70);
+
+								// 60 도
+							} else if (slope > -1.5 && slope <= -1) {
+								pointer[0].setLocation(x + 5, y - c / 4);
+								pointer[1].setLocation(x + 30, y - c / 2);
+								pointer[2].setLocation(x + 55, y - (c / 2 + c / 4));
+								pointer[3].setLocation(x + 70, y - c);
+
+								// 매우 가파름 80도 언저리
+							} else if (slope < -1.5) {
+								pointer[0].setLocation(x + 5, y - c / 4);
+								pointer[1].setLocation(x + 20, y - c / 2);
+								pointer[2].setLocation(x + 35, y - (c / 2 + c / 4));
+								pointer[3].setLocation(x + 50, y - c);
+
+								// 수직
+							} else if (slope > 1) {
+
+								pointer[0].setLocation(x, y - c / 4);
+								pointer[1].setLocation(x, y - c / 2);
+								pointer[2].setLocation(x, y - c / 2 + c / 4);
+								pointer[3].setLocation(x, y - c);
+
+							}
+
+							backgroundImageLabel.add(pointer[0]);
+							backgroundImageLabel.add(pointer[1]);
+							backgroundImageLabel.add(pointer[2]);
+							backgroundImageLabel.add(pointer[3]);
+
+						} catch (InterruptedException e1) {
+
+							e1.printStackTrace();
 						}
 
-						backgroundImageLabel.add(pointer[0]);
-						backgroundImageLabel.add(pointer[1]);
-						backgroundImageLabel.add(pointer[2]);
-						backgroundImageLabel.add(pointer[3]);
+						// 드래그 모션
+						if (birdType == 0) {
+							player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+						} else if (birdType == 1) {
+							player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+						} else if (birdType == 2) {
+							player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
+						} else {
 
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						}
 					}
-
-					// 드래그 모션
-					if (birdType == 0) {
-						player[0].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-					} else if (birdType == 1) {
-						player[1].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-					} else if (birdType == 2) {
-						player[2].setLocation(e.getX() - 80 / 2, e.getY() - 65);
-					} else {
-
-//							if(pig[1].getState == 0 && pig[1].getState == 0){
-//							gameover
-//						}else {
-//							nextstage
-//						}
-
-					}
-				}
-			}).start();
-//			}
+				}).start();
+			}
 		}
-//		}
-//			}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
@@ -327,8 +339,23 @@ public abstract class Background extends JFrame implements ActionListener {
 				releaseX = ((Number) e.getX()).doubleValue();
 				releaseY = ((Number) e.getY()).doubleValue();
 
-				player[birdType].playerMove();
+				if (birdType < 3) {
+					player[birdType].playerMove();
+
+				} else {
+					new GameOverFrame();
+					setVisible(false);
+				}
 			}
+		}
+	}
+
+	public void pointerMove(int x, int y, int c, int a, int b) {
+		for (int i = 0; i < 10; i++) {
+			pointer[0].setLocation(x + c / 4, y - 5);
+			pointer[1].setLocation(x + c / 2, y - 50);
+			pointer[2].setLocation(x + c / 2 + c / 4, y - 85);
+			pointer[3].setLocation(x + c, y - 120);
 		}
 	}
 

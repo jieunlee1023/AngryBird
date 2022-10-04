@@ -64,15 +64,15 @@ public class Player extends JLabel {
 
 		setIcon(imageicon);
 
-		blackSkill[0] = new JLabel(new ImageIcon("images/bang1.png"));
+		blackSkill[0] = new JLabel(new ImageIcon("images/bumb1.png"));
 		blackSkill[1] = new JLabel(new ImageIcon("images/bang2.png"));
-		blackSkill[2] = new JLabel(new ImageIcon("images/bang3.png"));
+		blackSkill[2] = new JLabel(new ImageIcon("images/bang1.png"));
 		yellowSkill[0] = new JLabel(new ImageIcon("images/yellowbird.png"));
 		yellowSkill[1] = new JLabel(new ImageIcon("images/yellowbird.png"));
 
-		blackSkill[0].setSize(50, 50);
-		blackSkill[1].setSize(75, 70);
-		blackSkill[2].setSize(115, 100);
+		blackSkill[0].setSize(80, 80);
+		blackSkill[1].setSize(50, 50);
+		blackSkill[2].setSize(120, 120);
 		yellowSkill[0].setSize(60, 60);
 		yellowSkill[1].setSize(60, 60);
 
@@ -101,40 +101,40 @@ public class Player extends JLabel {
 
 					fly(0, c, true, 2, 0);
 
-					fly(0, c + 50, true, 2, 0);
+					fly(0, c + 100, true, 2, 0);
 
 					// 15도 완만
 				} else if (slope > -0.5 && slope <= 0) {
 
 					fly(0, c, true, 3, 1);
 
-					fly(0, c + 50, false, 3, 1);
+					fly(0, c + 100, false, 3, 1);
 
 					// 30도
 				} else if (slope > -1 && slope <= -0.5) {
 
 					fly(0, c, true, 2, 1);
 
-					fly(0, c + 50, false, 2, 1);
+					fly(0, c + 100, false, 2, 1);
 
 					// 60 도
 				} else if (slope > -1.5 && slope <= -1) {
 					fly(0, c, true, 1, 2);
 
-					fly(0, c + 50, false, 1, 2);
+					fly(0, c + 100, false, 1, 2);
 
 					// 매우 가파름 80도 언저리
 				} else if (slope < -1.5) {
 					fly(0, c, true, 1, 3);
 
-					fly(0, c + 50, false, 1, 3);
+					fly(0, c + 100, false, 1, 3);
 
 					// 수직
 				} else if (slope > 1) {
 
 					fly(0, c, true, 0, 2);
 
-					fly(0, c + 50, false, 0, 2);
+					fly(0, c + 100, false, 0, 2);
 
 				}
 
@@ -146,7 +146,7 @@ public class Player extends JLabel {
 				} else if (mContext.getBirdType() == 1) {
 					mContext.setBirdType(2);
 				} else if (mContext.getBirdType() == 2) {
-					mContext.setBirdType(2);
+					mContext.setBirdType(3);
 				}
 
 			}
@@ -169,19 +169,20 @@ public class Player extends JLabel {
 		int playerX = mContext.player[1].getX();
 		int playerY = mContext.player[1].getY();
 		if (mContext.getBirdType() == 1) {
-			try {
-				Thread.sleep(5);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (mContext.player[1].getY() >= 400) {
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				blackSkill[0].setLocation(playerX, playerY - 30);
+				blackSkill[1].setLocation(playerX + 30, playerY - 70);
+				blackSkill[2].setLocation(playerX - 40, playerY - 100);
+				mContext.backgroundImageLabel.add(blackSkill[0]);
+				mContext.backgroundImageLabel.add(blackSkill[1]);
+				mContext.backgroundImageLabel.add(blackSkill[2]);
 			}
-			blackSkill[0].setLocation(playerX, playerY - 30);
-			blackSkill[1].setLocation(playerX + 30, playerY - 70);
-			blackSkill[2].setLocation(playerX - 40, playerY - 100);
-			mContext.backgroundImageLabel.add(blackSkill[0]);
-			mContext.backgroundImageLabel.add(blackSkill[1]);
-			mContext.backgroundImageLabel.add(blackSkill[2]);
-
 		}
 	}
 

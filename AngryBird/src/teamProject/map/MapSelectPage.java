@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import teamProject.frame.BGM;
+
 public class MapSelectPage extends JFrame implements ActionListener {
 
 	JLabel background;
@@ -20,13 +22,17 @@ public class MapSelectPage extends JFrame implements ActionListener {
 	final int BUTTON_SIZE_X = 40;
 	final int BUTTON_SIZE_Y = 150;
 
+	BGM bgm;
+
 	public MapSelectPage() {
 		initData();
+
 		setInitLayout();
 		addEventListener();
 	}
 
 	private void initData() {
+		bgm = new BGM();
 		setTitle("Map Choice");
 		setSize(1000, 570);
 		background = new JLabel(new ImageIcon("images/select_bg.png"));
@@ -70,15 +76,19 @@ public class MapSelectPage extends JFrame implements ActionListener {
 		JButton targetButton = (JButton) e.getSource();
 		if (targetButton.equals(button1)) {
 			new JungleMapFrame("images/bg1.png");
+
 			setVisible(false);
+			bgm.stop();
 
 		} else if (targetButton.equals(button2)) {
 			new IceMapFrame("images/bg2.png");
 			setVisible(false);
+			bgm.stop();
 
 		} else if (targetButton.equals(button3)) {
 //			new HolloweenMapFrame("images/bg3.png");
 			setVisible(false);
+			bgm.stop();
 
 		}
 

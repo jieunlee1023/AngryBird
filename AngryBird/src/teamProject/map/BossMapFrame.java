@@ -1,14 +1,12 @@
 package teamProject.map;
 
-import java.awt.Window;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import component.Enemy;
-import component.IceBlock;
 import component.StoneBlock;
+import teamProject.frame.BGM;
 
 public class BossMapFrame extends Background {
 
@@ -43,7 +41,10 @@ public class BossMapFrame extends Background {
 	protected Enemy enemy;
 	protected Enemy[] enemyBoss = new Enemy[3];
 
+	BGM bgm;
+
 	public int state = 0;
+	int enemyOutState = 0;
 
 	public BossMapFrame(String fileName) {
 		super(fileName);
@@ -57,6 +58,7 @@ public class BossMapFrame extends Background {
 	}
 
 	protected void initData() {
+		bgm = new BGM();
 		setSize(1000, 570);
 		setTitle("boss Map");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,6 +86,15 @@ public class BossMapFrame extends Background {
 
 		for (int i = 0; i < 3; i++) {
 			enemyBoss[i] = new Enemy(new ImageIcon(images[i]));
+			enemyBoss[i].setSize(100, 100);
+			enemyBoss[i].setLocation(800, 400);
+			backgroundImageLabel.add(enemyBoss[i]);
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		enemy = new Enemy(new ImageIcon("images/pig.png"));
 
@@ -91,11 +102,6 @@ public class BossMapFrame extends Background {
 		enemy.setSize(60, 60);
 		enemy.setLocation(690, 440);
 		backgroundImageLabel.add(enemy);
-
-		for (int i = 0; i < 3; i++) {
-			enemyBoss[i].setSize(100, 100);
-			enemyBoss[i].setLocation(800, 400);
-		}
 
 		// 큰집
 		verticalBlocks[0].setSize(30, 60);
@@ -256,67 +262,69 @@ public class BossMapFrame extends Background {
 			block.setIcon(bomb);
 			Thread.sleep(50);
 			block.setVisible(false);
-
+			// 블록 맞으면 +200 점
+			block.setLocation(0, 0);
+			mContext.score += 200;
+			mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-//	public void bossMove() {
-//		new Thread(() -> {
-//			while (true) {
-//				if (state == 0) {
-//					enemy.setIcon(new ImageIcon("images/boss/boss1.png"));
-//					state += 1;
-//
-//				} else if (state == 1) {
-//					enemy.setIcon(new ImageIcon("images/boss/boss2.png"));
-//					state += 1;
-//				} else if (state == 3) {
-//					enemy.setIcon(new ImageIcon("images/boss/boss3.png"));
-//					state = 0;
-//				}
-//				repaint();
-//				try {
-//					Thread.sleep(100);
-//
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//
-//			}
-//			
-//		}).start();
-//	}
-
 	public void enemyCrash(Enemy enemy) {
 
 		new Thread(() -> {
-			while (true) {
+			while (enemyOutState == 0) {
 				for (int i = 0; i < player.length; i++) {
 					if (Math.abs(enemy.getX() - player[i].getX()) < 50
 							&& Math.abs(enemy.getY() - player[i].getY()) < 50) {
-
+						JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
 						enemyOut.setSize(60, 60);
 						enemyOut.setLocation(enemy.getX(), enemy.getY());
-						enemy.setIcon(new ImageIcon("images/bumd2.png"));
-
+						backgroundImageLabel.add(enemyOut);
+						// 에너미 맞으면 +500 점
+						mContext.score += 500;
+						mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
+						enemy.setVisible(false);
 						try {
 							Thread.sleep(1000);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
-						enemy.setVisible(false);
+						enemyOut.setVisible(false);
+						enemyOutState++;
 
 					}
 				}
-				enemyOut.setVisible(false);
+			}
+			if (enemyOutState == 2) {
+
+				gameEnd();
 
 			}
 		}).start();
 
 	}
 
+	// 게임 종료 화면
+	public void gameEnd() {
+
+		JLabel missionClear = new JLabel(new ImageIcon("images/Mclear.png"));
+		backgroundImageLabel.setVisible(false);
+		missionClear.setSize(1000, 570);
+		missionClear.setLocation(0, 0);
+		add(missionClear);
+		mContext.scoreTotal.setSize(420, 570);
+		scoreTotal.setLocation(350, 100);
+		scoreTotal.setText(scoreAll + score);
+		missionClear.add(mContext.scoreTotal);
+		repaint();
+
+		try {
+			Thread.sleep(1200);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		bgm.stop();
+	}
 }
