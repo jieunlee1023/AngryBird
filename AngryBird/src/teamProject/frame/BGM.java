@@ -25,4 +25,8 @@ public class BGM {
 
 	}
 
+	public void stop() {
+		clip.stop();
+	}
+
 }

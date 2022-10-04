@@ -1,14 +1,12 @@
 package teamProject.map;
 
-import java.awt.Window;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import component.Enemy;
-import component.IceBlock;
 import component.StoneBlock;
+import teamProject.frame.BGM;
 
 public class BossMapFrame extends Background {
 
@@ -43,6 +41,8 @@ public class BossMapFrame extends Background {
 	protected Enemy enemy;
 	protected Enemy[] enemyBoss = new Enemy[3];
 
+	BGM bgm;
+
 	public int state = 0;
 	int enemyOutState = 0;
 
@@ -58,6 +58,7 @@ public class BossMapFrame extends Background {
 	}
 
 	protected void initData() {
+		bgm = new BGM();
 		setSize(1000, 570);
 		setTitle("boss Map");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -292,7 +293,7 @@ public class BossMapFrame extends Background {
 						}
 						enemyOut.setVisible(false);
 						enemyOutState++;
-						
+
 					}
 				}
 			}
@@ -305,7 +306,7 @@ public class BossMapFrame extends Background {
 
 	}
 
-	//게임 종료 화면  
+	// 게임 종료 화면
 	public void gameEnd() {
 
 		JLabel missionClear = new JLabel(new ImageIcon("images/Mclear.png"));
@@ -324,5 +325,6 @@ public class BossMapFrame extends Background {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		bgm.stop();
 	}
 }

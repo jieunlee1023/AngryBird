@@ -51,6 +51,8 @@ public class JungleMapFrame extends Background {
 	Enemy realBomb;
 	Enemy target;
 
+	BGM bgh;
+
 	public Enemy getEnemy() {
 		return shieldPig;
 	}
@@ -67,6 +69,8 @@ public class JungleMapFrame extends Background {
 	}
 
 	private void initData() {
+		bgh = new BGM();
+
 		setTitle("jungle Maps");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -419,5 +423,6 @@ public class JungleMapFrame extends Background {
 
 		new IceMapFrame("images/bg2.png");
 		setVisible(false);
+		bgh.stop();
 	}
 }

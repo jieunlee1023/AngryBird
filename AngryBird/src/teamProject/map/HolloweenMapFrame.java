@@ -1,15 +1,12 @@
 package teamProject.map;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import component.Enemy;
 import component.HalloweenBlocks;
-import component.IceBlock;
-import component.StoneBlock;
-import teamProject.frame.MainFrame;
+import teamProject.frame.BGM;
 
 public class HolloweenMapFrame extends Background {
 
@@ -37,6 +34,8 @@ public class HolloweenMapFrame extends Background {
 
 	int enemyOutState;
 
+	BGM bgm;
+
 	public HolloweenMapFrame(String fileName) {
 		super(fileName);
 		initData();
@@ -63,6 +62,7 @@ public class HolloweenMapFrame extends Background {
 	}
 
 	private void initData() {
+		bgm = new BGM();
 		setTitle("holloweenMap");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -191,7 +191,8 @@ public class HolloweenMapFrame extends Background {
 		enemyBottom.setSize(60, 60);
 		enemyBottom.setLocation(820, 440);
 		backgroundImageLabel.add(enemyBottom);
-		repaint();	}
+		repaint();
+	}
 
 	public void crash(HalloweenBlocks[] halloweenBlocks) {
 		crashState = true;
@@ -263,5 +264,6 @@ public class HolloweenMapFrame extends Background {
 
 		new BossMapFrame("images/boss/bg4.png");
 		setVisible(false);
+		bgm.stop();
 	}
 }

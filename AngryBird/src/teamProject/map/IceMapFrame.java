@@ -33,6 +33,8 @@ public class IceMapFrame extends Background {
 	int enemyOutState;
 	// 0일때 안부딪힘 1일때 한마리 부딪힘 2일때 두마리부딪힘(끝)
 
+	BGM bgm = new BGM();
+
 	public IceMapFrame(String fileName) {
 		super(fileName);
 
@@ -224,5 +226,6 @@ public class IceMapFrame extends Background {
 
 		new HolloweenMapFrame("images/bg3.png");
 		setVisible(false);
+		bgm.stop();
 	}
 }
