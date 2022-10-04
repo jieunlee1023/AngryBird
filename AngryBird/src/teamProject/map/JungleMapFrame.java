@@ -390,6 +390,7 @@ public class JungleMapFrame extends Background {
 		backgroundImageLabel.setVisible(false);
 
 		clear.setSize(clearWidth, clearHeight);
+		clear.setSize(FRAME_W, FRAME_H);
 		clear.setLocation(0, 0);
 		add(clear);
 		mContext.scoreTotal.setSize(420, 570);

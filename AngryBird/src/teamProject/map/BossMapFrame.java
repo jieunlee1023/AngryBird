@@ -10,13 +10,6 @@ import teamProject.frame.BGM;
 
 public class BossMapFrame extends Background {
 
-	/*
-	 * tnt 40* 35 c 63 60 h 85 35 h2 160 25 h3 50 26 v 40 80 v2 30 60 t 50 50 head
-	 * 51 51
-	 * 
-	 * boss 100 100
-	 * 
-	 */
 	String[] images = { "images/boss/boss1.png", "images/boss/boss2.png", "images/boss/boss3.png" };
 
 	protected StoneBlock[] verticalBlocks = new StoneBlock[10];
@@ -92,7 +85,6 @@ public class BossMapFrame extends Background {
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

@@ -42,7 +42,7 @@ public abstract class Background extends JFrame implements ActionListener {
 
 	protected int birdType;
 	protected int birdState;
-	JungleMapFrame frame;
+	protected JungleMapFrame frame;
 
 	boolean crashState;
 	String scoreText = "SCORE : ";
@@ -52,6 +52,9 @@ public abstract class Background extends JFrame implements ActionListener {
 
 	public Player[] player;
 	public Pointer[] pointer;
+
+	protected final int FRAME_W;
+	protected final int FRAME_H;
 
 	public int getBirdType() {
 		return birdType;
@@ -111,6 +114,8 @@ public abstract class Background extends JFrame implements ActionListener {
 
 	public Background(String fileName) {
 		this.fileName = fileName;
+		this.FRAME_W = 1000;
+		this.FRAME_H = 570;
 		initDate();
 		setInitLayout();
 		addEventListener();
@@ -161,7 +166,7 @@ public abstract class Background extends JFrame implements ActionListener {
 		setLayout(null);
 		setLocationRelativeTo(null);
 
-		backgroundImageLabel.setSize(1000, 570);
+		backgroundImageLabel.setSize(FRAME_W, FRAME_H);
 		backgroundImageLabel.setLocation(0, 0);
 		add(backgroundImageLabel);
 

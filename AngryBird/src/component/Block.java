@@ -12,12 +12,4 @@ public abstract class Block extends JLabel {
 		setIcon(image);
 	}
 
-	public ImageIcon getImage() {
-		return image;
-	}
-
-	public void setImage(ImageIcon image) {
-		this.image = image;
-	}
-
 }
