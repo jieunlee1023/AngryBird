@@ -1,15 +1,10 @@
 package teamProject.map;
 
-import java.awt.Graphics;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import component.Enemy;
 import component.TreeBlock;
-import lombok.Getter;
-import lombok.Setter;
 
 public class JungleMapFrame extends Background {
 
@@ -40,10 +35,21 @@ public class JungleMapFrame extends Background {
 	private int OBLONGWOODBLOCK_L_WIDTH = 15;
 	private int OBLONGWOODBLOCK_L_HEIGHT = 100;
 
+	private int shieldPigWidth = 100;
+	private int shieldPigHeight = 100;
+
+	private int realBombWidth = 100;
+	private int realBombHeight = 100;
+
+	private int roofBlockWidth = 300;
+	private int roofBlockHeight = 180;
+	
+	private int clearWidth = 1000;
+	private int clearHeight = 570;
+
 	TreeBlock treeBlock;
 
 	private ImageIcon bomb;
-	private ImageIcon lastTarget;
 
 	Enemy shieldPig;
 	Enemy realBomb;
@@ -74,16 +80,15 @@ public class JungleMapFrame extends Background {
 
 		backgroundImageLabel.add(target);
 		backgroundImageLabel.add(shieldPig);
-		shieldPig.setSize(100, 100);
+		shieldPig.setSize(shieldPigWidth, shieldPigHeight);
 		shieldPig.setLocation(750, 235);
 
 		backgroundImageLabel.add(realBomb);
-		realBomb.setSize(45, 45);
-		realBomb.setLocation(615, 297);
+		realBomb.setSize(realBombWidth, realBombHeight);
+		realBomb.setLocation(615, 270);
 
 		// 터지는 모션
 		bomb = new ImageIcon("images/bumb1.png");
-		lastTarget = new ImageIcon("images/pig.png");
 
 		// roof
 		for (int i = 0; i < roofBlock.length; i++) {
@@ -118,7 +123,7 @@ public class JungleMapFrame extends Background {
 //------------------------------------------------------------------------------------------------
 		// 지붕
 		for (int i = 0; i < roofBlock.length; i++) {
-			roofBlock[i].setSize(300, 180);
+			roofBlock[i].setSize(roofBlockWidth, roofBlockHeight);
 			roofBlock[i].setLocation(625, 65);
 			backgroundImageLabel.add(roofBlock[i]);
 		}
@@ -191,21 +196,17 @@ public class JungleMapFrame extends Background {
 								Thread.sleep(50);
 								woodSquare[j].setVisible(false);
 
-								// =0 --> 500
 								mContext.score += 500;
 								mContext.scoreLabel.setText("SCORE : " + mContext.score);
 								woodSquare[j].setLocation(0, 0);
 								woodSquare[j].removeAll();
 
-								// =0 --> 500
-//								mContext.setScore() += 500;
 								mContext.score += 500;
 
 								mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
 								woodSquare[j].setLocation(0, 0);
 								woodSquare[j].removeAll();
 								repaint();
-								// mContext.scoreLabel.repaint();
 
 							} catch (InterruptedException e) {
 								e.printStackTrace();
@@ -232,7 +233,6 @@ public class JungleMapFrame extends Background {
 									&& Math.abs(realBomb.getY() - player[i].getY()) < 50) {
 								allBomb();
 								move();
-//						enemy.setIcon(shield);
 								realBomb.setVisible(false);
 								try {
 									Thread.sleep(100);
@@ -257,13 +257,9 @@ public class JungleMapFrame extends Background {
 					woodBlock[i].setIcon(bomb);
 					Thread.sleep(90);
 					woodBlock[i].setVisible(false);
-//					mContext.score += 7;
-//					mContext.scoreLabel.setText("SCORE : " + (mContext.score += 10 ));
 					woodBlock[i].setLocation(0, 0);
 					woodBlock[i].removeAll();
-//					repaint();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -273,12 +269,9 @@ public class JungleMapFrame extends Background {
 					longWoodOblongBlock[i].setIcon(bomb);
 					Thread.sleep(90);
 					longWoodOblongBlock[i].setVisible(false);
-//					mContext.scoreLabel.setText("SCORE : " + mContext.score);
 					longWoodOblongBlock[i].setLocation(0, 0);
 					longWoodOblongBlock[i].removeAll();
-//					repaint();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -288,13 +281,9 @@ public class JungleMapFrame extends Background {
 					WoodOblongBlock[i].setIcon(bomb);
 					Thread.sleep(90);
 					WoodOblongBlock[i].setVisible(false);
-//					mContext.score += 5;
-//					mContext.scoreLabel.setText("SCORE : " + (mContext.score + 500));
 					WoodOblongBlock[i].setLocation(0, 0);
 					WoodOblongBlock[i].removeAll();
-//					repaint();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -304,17 +293,11 @@ public class JungleMapFrame extends Background {
 					longWoodBlock[i].setIcon(bomb);
 					Thread.sleep(90);
 					longWoodBlock[i].setVisible(false);
-//					mContext.score += 2;
-//					mContext.scoreLabel.setText("SCORE : " + (mContext.score + 200));
 					longWoodBlock[i].setLocation(0, 0);
 					longWoodBlock[i].removeAll();
-
-//					repaint();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-//				move();
 
 			}
 
@@ -323,14 +306,10 @@ public class JungleMapFrame extends Background {
 					roofBlock[i].setIcon(bomb);
 					Thread.sleep(90);
 					roofBlock[i].setVisible(false);
-//					mContext.score += 10_000;
-//					mContext.scoreLabel.setText("SCORE : " + (mContext.score + 1000));
 					mContext.scoreLabel.setText("SCORE : " + (mContext.score + 100));
 					roofBlock[i].setLocation(0, 0);
 					roofBlock[i].removeAll();
-//					repaint();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -340,32 +319,26 @@ public class JungleMapFrame extends Background {
 
 	}
 
-	/// 내일
 	public void move() {
 
 		try {
 			Thread.sleep(1950);
 			for (int j = 0; j < 178; j++) {
-//						shieldPig.setIcon(lastTarget);
-				// shieldPig.g
 				shieldPig.setLocation(750, 245 + j);
 				repaint();
 			}
 
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
-//			enemy.setLocation(750, 420);			 // 235 -> 420		= 185
 
 	public void endStage() {
 		new Thread(() -> {
 			while (enemyOutState == 0) {
 				for (int i = 0; i < player.length; i++) {
-					if (Math.abs(shieldPig.getX() - player[i].getX()) < 100
-							&& Math.abs(shieldPig.getY() - player[i].getY()) < 100) {
+					if (Math.abs(shieldPig.getX() - player[i].getX()) < 40
+							&& Math.abs(shieldPig.getY() - player[i].getY()) < 40) {
 						JLabel enemyOut = new JLabel(new ImageIcon("images/bang.png"));
 						enemyOut.setSize(60, 60);
 						enemyOut.setLocation(shieldPig.getX(), shieldPig.getY());
@@ -384,7 +357,7 @@ public class JungleMapFrame extends Background {
 			}
 			if (enemyOutState == 1) {
 				JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
-				clear.setSize(1000, 570);
+				clear.setSize(clearWidth, clearHeight);
 				clear.setLocation(0, 0);
 				backgroundImageLabel.add(clear);
 

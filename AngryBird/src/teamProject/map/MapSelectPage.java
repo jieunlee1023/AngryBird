@@ -77,7 +77,7 @@ public class MapSelectPage extends JFrame implements ActionListener {
 			setVisible(false);
 
 		} else if (targetButton.equals(button3)) {
-			new HolloweenMapFrame("images/bg3.png");
+//			new HolloweenMapFrame("images/bg3.png");
 			setVisible(false);
 
 		}

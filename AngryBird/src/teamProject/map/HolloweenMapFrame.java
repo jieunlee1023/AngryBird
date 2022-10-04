@@ -1,15 +1,9 @@
 package teamProject.map;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
-import component.Enemy;
 import component.HalloweenBlocks;
-import component.IceBlock;
-import component.StoneBlock;
-import teamProject.frame.MainFrame;
 
 public class HolloweenMapFrame extends Background {
 

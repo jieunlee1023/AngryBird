@@ -214,7 +214,7 @@ public class IceMapFrame extends Background {
 							e.printStackTrace();
 						}
 
-						new HolloweenMapFrame("images/bg3.png");
+//						new HolloweenMapFrame("images/bg3.png");
 						setVisible(false);
 					}
 				}
