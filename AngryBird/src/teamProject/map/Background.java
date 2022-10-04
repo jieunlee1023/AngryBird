@@ -350,13 +350,4 @@ public abstract class Background extends JFrame implements ActionListener {
 		}
 	}
 
-	public void pointerMove(int x, int y, int c, int a, int b) {
-		for (int i = 0; i < 10; i++) {
-			pointer[0].setLocation(x + c / 4, y - 5);
-			pointer[1].setLocation(x + c / 2, y - 50);
-			pointer[2].setLocation(x + c / 2 + c / 4, y - 85);
-			pointer[3].setLocation(x + c, y - 120);
-		}
-	}
-
 }
