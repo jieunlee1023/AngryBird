@@ -6,8 +6,6 @@ import javax.swing.JLabel;
 
 import component.Enemy;
 import component.IceBlock;
-import component.ObstacleBird;
-import lombok.Value;
 import teamProject.frame.BGM;
 
 public class IceMapFrame extends Background {
@@ -31,7 +29,6 @@ public class IceMapFrame extends Background {
 
 	boolean crashState;
 	int enemyOutState;
-	// 0일때 안부딪힘 1일때 한마리 부딪힘 2일때 두마리부딪힘(끝)
 
 	BGM bgm = new BGM();
 
@@ -72,7 +69,6 @@ public class IceMapFrame extends Background {
 
 		for (int i = 0; i < squareBlocks.length; i++) {
 			squareBlocks[i] = new IceBlock(new ImageIcon(images[0]));
-
 		}
 		for (int i = 0; i < 3; i++) {
 			heightLongBottom[i] = new IceBlock(new ImageIcon(images[4]));
@@ -160,7 +156,7 @@ public class IceMapFrame extends Background {
 			for (int j = 0; j < player.length; j++) {
 				if (Math.abs(iceBlock[i].getX() - player[j].getX()) < 50
 						&& Math.abs(iceBlock[i].getY() - player[j].getY()) < 50) {
-//					System.out.println("부딪힘");
+
 					// 블록 맞으면 +200 점
 					mContext.score += 200;
 					mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
@@ -168,8 +164,8 @@ public class IceMapFrame extends Background {
 					iceBlock[i].setVisible(false);
 					player[j].isMove = false;
 				}
-			} // end of j-for
-		} // end of i-for
+			}
+		}
 	}
 
 	public void enemyCrash(Enemy enemy) {
@@ -183,6 +179,7 @@ public class IceMapFrame extends Background {
 						enemyOut.setSize(60, 60);
 						enemyOut.setLocation(enemy.getX(), enemy.getY());
 						backgroundImageLabel.add(enemyOut);
+
 						// 에너미 맞으면 +500 점
 						mContext.score += 500;
 						mContext.scoreLabel.setText("SCORE : " + mContext.getScore());
@@ -209,7 +206,7 @@ public class IceMapFrame extends Background {
 
 		JLabel clear = new JLabel(new ImageIcon("images/clear.png"));
 		backgroundImageLabel.setVisible(false);
-		clear.setSize(1000, 570);
+		clear.setSize(FRAME_W, FRAME_H);
 		clear.setLocation(0, 0);
 		add(clear);
 		mContext.scoreTotal.setSize(420, 570);

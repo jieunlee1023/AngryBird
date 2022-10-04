@@ -13,13 +13,12 @@ public class GameOverFrame extends JFrame implements ActionListener {
 	JLabel background;
 	JButton button1;
 
-
 	final int BUTTONWIDTH = 250;
 	final int BUTTONHEIGHT = 70;
 	final int BUTTONX = 390;
 	final int BUTTONY = 300;
 
- public GameOverFrame (){
+	public GameOverFrame() {
 		initData();
 		setInitLayout();
 		addEventListener();
@@ -30,7 +29,6 @@ public class GameOverFrame extends JFrame implements ActionListener {
 		setSize(1000, 570);
 		background = new JLabel(new ImageIcon("images/gameover.png"));
 		button1 = new JButton(new ImageIcon("images/retry.png"));
-	
 
 	}
 
@@ -61,8 +59,8 @@ public class GameOverFrame extends JFrame implements ActionListener {
 			new MapSelectPage();
 			setVisible(false);
 
+		}
+
 	}
 
-}
-	
 }
